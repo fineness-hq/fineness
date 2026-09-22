@@ -1,0 +1,102 @@
+{
+  "coindesk-research": {
+    "name": "CoinDesk Research",
+    "url": "https://www.coindesk.com/research",
+    "type": "research"
+  },
+  "airdropalert": {
+    "name": "AirdropAlert",
+    "url": "https://airdropalert.com",
+    "type": "research"
+  },
+  "defillama": {
+    "name": "DefiLlama",
+    "url": "https://defillama.com",
+    "type": "metrics"
+  },
+  "bitquery": {
+    "name": "Bitquery",
+    "url": "https://bitquery.io",
+    "type": "metrics"
+  },
+  "explorer": {
+    "name": "Robinhood Chain Explorer",
+    "url": "https://explorer.robinhood.com",
+    "type": "contracts"
+  },
+  "docs-venue": {
+    "name": "Venue Operator Documentation",
+    "url": "https://developers.robinhood.com",
+    "type": "docs"
+  },
+  "lookonchain": {
+    "name": "Lookonchain",
+    "url": "https://lookonchain.com",
+    "type": "metrics"
+  },
+  "chaincatcher": {
+    "name": "ChainCatcher",
+    "url": "https://www.chaincatcher.com",
+    "type": "metrics"
+  },
+  "gate-blog": {
+    "name": "Gate Blog",
+    "url": "https://www.gate.com/blog",
+    "type": "research"
+  },
+  "coinstelegram": {
+    "name": "Coinstelegram",
+    "url": "https://coinstelegram.com",
+    "type": "research"
+  },
+  "aicoin": {
+    "name": "AiCoin",
+    "url": "https://www.aicoin.com",
+    "type": "research"
+  },
+  "cryptonomist": {
+    "name": "The Cryptonomist",
+    "url": "https://en.cryptonomist.ch",
+    "type": "research"
+  },
+  "ntm": {
+    "name": "NTM.ai Academy",
+    "url": "https://ntm.ai",
+    "type": "research"
+  },
+  "blocmates": {
+    "name": "Blocmates",
+    "url": "https://www.blocmates.com",
+    "type": "research"
+  },
+  "catchthebull": {
+    "name": "CatchTheBull",
+    "url": "https://catchthebull.community",
+    "type": "research"
+  },
+  "bankr-docs": {
+    "name": "Bankr Documentation",
+    "url": "https://docs.bankr.bot",
+    "type": "docs"
+  },
+  "flap-docs": {
+    "name": "Flap Documentation",
+    "url": "https://docs.flap.sh",
+    "type": "docs"
+  },
+  "pair-press": {
+    "name": "PAIR Launch Announcement",
+    "url": "https://markets.businessinsider.com",
+    "type": "research"
+  },
+  "mexc": {
+    "name": "MEXC Learn",
+    "url": "https://www.mexc.co",
+    "type": "research"
+  },
+  "dune": {
+    "name": "Dune Analytics",
+    "url": "https://dune.com",
+    "type": "metrics"
+  }
+}

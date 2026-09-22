@@ -1,0 +1,69 @@
+:root{
+  color-scheme: light;
+
+  /* Mono stack: self-hosted variable font (see layout.tsx). */
+  --font-geist-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
+
+  /* TeraWallet reference palette, Fineness content only. */
+  --ground: #f2f0ee;
+  --bg: #f2f0ee;
+  --surface: #fff;
+  --surface-alt: #dedcda;
+  --surface-alt-2: #dbdbd3;
+  --tint: #f3f0f5;
+  --lavender: #f3f0f5;
+
+  --dark: #1d2b23;
+  --dark-2: #18251e;
+  --dark-overlay: #18251e99;
+
+  --ink: #000;
+  --ink-2: #4a4948;
+  --ink-2b: #3d3b3b;
+  --ink-2c: #616060;
+  --ink-3: #9e9e9e;
+  --faint: #c5c2bd;
+  --faint-2: #c0bab6;
+  --faint-3: #cccbc4;
+
+  --rule: #d2ceca;
+  --rule-2: #c5c2bd;
+  --rule-soft: #cfc9c5;
+  --rule-alpha: #cfcecc80;
+
+  --olive: #768143;
+  --gold: #b8a371;
+  --gold-bf: #b8a371bf;
+  --gold-f2: #b8a371f2;
+  --action: #e65800;
+  --action-alt: #e75800;
+
+  /* Brand aliases. Maroon name kept for API stability, value is Tera action orange. */
+  --maroon: #e65800;
+  --maroon-deep: #18251e;
+  --maroon-soft: #f3f0f5;
+
+  /* Grade bands stay semantic. Maroon/action never grades. */
+  --band-high: #2f6b4f;
+  --band-mid: #8a6115;
+  --band-low: #a3552b;
+  --band-none: #a13836;
+
+  --ok: #768143;
+  --warn: #b8a371;
+
+  /* Preloader inks, ported from /tera/preloader assets. */
+  --pre-ink: #253629;
+  --pre-muted: #707b5f;
+  --pre-muted-2: #637052;
+  --pre-muted-3: #687654;
+  --pre-shutter: #e8e9dc;
+  --pre-shutter-border: #84907138;
+  --pre-progress: #7e8954;
+  --pre-orbit: #7a855e5c;
+
+  /* Motion: Tera reveal + preloader exits. */
+  --ease-reveal: cubic-bezier(0.16, 0.33, 0.3, 1.01);
+  --ease-letters: cubic-bezier(0.2, 0.7, 0.25, 1);
+  --ease-shutter: cubic-bezier(0.76, 0, 0.24, 1);
+}
