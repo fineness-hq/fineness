@@ -1,7 +1,8 @@
-// Monthly hands-free run: ingest → snapshot → carried edition → validate.
-// Scores never move here; movement is a human review decision. Any validation
-// failure removes the snapshot again and exits non-zero, so a bad run leaves
-// no trace and the previous edition stays live.
+// Monthly hands-free run: ingest → AI analyst/editor → snapshot → edition.
+// Scores move only inside the ±1 cap with rewritten rationale (enforced in
+// code, not by trust). Without LLM credentials the run carries the previous
+// edition unchanged. Any validation failure removes the snapshot again and
+// exits non-zero, so a bad run leaves no trace.
 
 import { rm, readFile, rename, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -10,6 +11,8 @@ import { buildNextEdition } from '../src/build/carry';
 import { validateEdition } from '../src/build/validate';
 import { warnScoreMoves } from '../src/build/score-moves';
 import { run } from '../src/ingest/run';
+import { llmConfig, loadLlmEnv } from '../src/llm/client';
+import { reviewEdition } from '../src/llm/review';
 import type { Edition, Snapshot, SourceRegistry } from '../src/types';
 
 function arg(name: string, fallback: string): string {
@@ -32,6 +35,10 @@ async function atomicWrite(path: string, content: string): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  if (process.env['LLM_ENV_FILE'] === undefined) {
+    process.env['LLM_ENV_FILE'] = 'D:\\Project\\wealthypeople\\kentir\\.env.local';
+  }
+  loadLlmEnv();
   const root = process.cwd();
   const asOf = arg('as-of', today());
   const published = arg('published', today());
@@ -77,16 +84,20 @@ async function main(): Promise<void> {
   try {
     const raw = await readFile(snapshotPath, 'utf8');
     const snapshotHash = `sha256:${createHash('sha256').update(raw, 'utf8').digest('hex')}`;
+    const cfg = llmConfig();
+    const review = cfg ? await reviewEdition(cfg, prev, snapshot) : null;
+    console.log(review ? 'review: AI analyst/epilogue applied' : 'review: no LLM credentials, scores carried');
     const edition = buildNextEdition(prev, snapshot, providers, {
       edition: editionId,
       published,
       dataAsOf: asOf,
       snapshotHash,
       disclosures: [...prev.disclosures],
-    });
+    }, review);
     validateEdition(edition, sources);
     const warnings = warnScoreMoves(edition, prev);
     for (const w of warnings) console.log(`warn: ${w}`);
+    if (review) for (const n of review.notes) console.log(`note: ${n}`);
     await atomicWrite(
       join(editionsDir, `${editionId}.json`),
       JSON.stringify(edition, null, 2) + '\n',

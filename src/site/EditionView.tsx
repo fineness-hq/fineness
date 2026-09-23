@@ -22,6 +22,7 @@ interface EditionViewProps {
   initialWeights: Weights;
   initialRaw: Record<Criterion, number>;
   deltas?: Record<string, Delta>;
+  latestEdition?: string;
 }
 
 /** Full edition page. Server rendered so content reads without JavaScript. */
@@ -31,6 +32,7 @@ export default function EditionView({
   initialWeights,
   initialRaw,
   deltas = {},
+  latestEdition,
 }: EditionViewProps) {
   const peak = Math.max(...edition.venues.map((v) => v.fineness));
   const peakVenue = edition.venues.find((v) => v.fineness === peak);
@@ -40,7 +42,7 @@ export default function EditionView({
       : undefined;
   return (
     <>
-      <Masthead edition={edition.edition} />
+      <Masthead edition={edition.edition} latestEdition={latestEdition ?? edition.edition} />
       <AlertStrip message={alert} />
       <Hero
         edition={edition.edition}

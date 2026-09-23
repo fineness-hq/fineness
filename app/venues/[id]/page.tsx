@@ -56,7 +56,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
   const line = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
   return (
     <main>
-      <Masthead edition={LATEST_EDITION.edition} />
+      <Masthead edition={LATEST_EDITION.edition} latestEdition={LATEST_EDITION.edition} />
       <div className="mx-auto max-w-5xl px-4 pb-4 pt-12">
         <p className="mono text-xs uppercase tracking-widest text-[var(--ink-3)]">
           <Link href="/" className="underline-offset-4 hover:underline">

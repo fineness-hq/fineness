@@ -30,7 +30,7 @@ const BANDS: [string, string][] = [
 export default function MethodPage() {
   return (
     <main>
-      <Masthead edition={LATEST_EDITION.edition} />
+      <Masthead edition={LATEST_EDITION.edition} latestEdition={LATEST_EDITION.edition} />
       <div className="mx-auto max-w-5xl px-4 pb-4 pt-12">
         <p className="mono text-xs uppercase tracking-widest text-[var(--ink-3)]">
           Standing document

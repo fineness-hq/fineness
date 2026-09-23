@@ -4,6 +4,7 @@ import "@fontsource-variable/geist-mono";
 import "./globals.css";
 import Preloader from "../src/site/components/Preloader";
 import SmoothScroll from "../src/site/components/SmoothScroll";
+import { LATEST_EDITION } from "../src/site/editions";
 
 // Fonts: Inter for display/body, Geist_Mono (self-hosted variable font,
 // @fontsource-variable/geist-mono) for numbers/eyebrows/buttons/labels.
@@ -36,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${plexMono.variable}`}
     >
       <body>
-        <Preloader />
+        <Preloader edition={LATEST_EDITION.edition} />
         <SmoothScroll />
         {children}
       </body>

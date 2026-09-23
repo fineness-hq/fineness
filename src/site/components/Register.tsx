@@ -32,7 +32,10 @@ export default function Register({
   const [weights, setWeights] = useState<Weights>(initialWeights ?? { ...HOUSE_WEIGHTS });
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
-  const displayed = useMemo(() => applyWeights(venues, weights), [venues, weights]);
+  const displayed = useMemo(
+    () => applyWeights(venues.filter((v) => v.status !== 'struck'), weights),
+    [venues, weights],
+  );
   const cutIndex = displayed.findIndex((v) => v.fineness < 375);
 
   function toggle(id: string) {

@@ -73,3 +73,22 @@ bar reads `PEAK 745 — NOTHING CLEARS 18 KARAT`. No new admissions, no strikes.
 `npm run lint`: 0 errors, 0 warnings. `npx tsc --noEmit`: clean.
 `npm run build`: success, routes include `/editions/2026-10`,
 `/editions/2026-10/edition.json`, and two-point venue histories.
+
+## Edition 03 record (2026-11, AI review, data cut 2026-11-01)
+
+Date: 2026-09-22. First fully hands-free run: ingest → mimo-v2.5 analyst
+review → carried edition → validation. Model held all 10 scores steady on
+retained metrics (no fresh evidence); `warnScoreMoves` silent.
+
+`npm test` (final):
+
+```text
+Test Files  13 passed (13)
+     Tests  61 passed (61)
+```
+
+Suite `tests/edition-2026-11.test.ts` (4 tests): steady scores recompute,
+validation passes, header hash matches `data/snapshots/2026-11-01.json`
+bytes, all deltas zero against 2026-10. `npm run lint`: clean.
+`npx tsc --noEmit`: clean. `npm run build`: success with three edition
+routes and three-point venue histories.

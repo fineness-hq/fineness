@@ -30,6 +30,7 @@ export default async function Home({ searchParams }: HomeProps) {
         initialWeights={initialWeights}
         initialRaw={initialRaw}
         deltas={deltasFor(LATEST_EDITION)}
+        latestEdition={LATEST_EDITION.edition}
       />
     </main>
   );

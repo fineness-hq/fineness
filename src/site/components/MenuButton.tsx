@@ -14,9 +14,12 @@ const LINKS: Array<[string, string, string]> = [
 ];
 
 /** Dark menu button + slide-in overlay panel with numbered links. */
-export default function MenuButton() {
+export default function MenuButton({ latestEdition = '2026-10' }: { latestEdition?: string }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
+  const links: Array<[string, string, string]> = LINKS.map((l) =>
+    l[1] === 'Machine JSON' ? [l[0], l[1], `/editions/${latestEdition}.json`] : l,
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -51,7 +54,7 @@ export default function MenuButton() {
         <nav aria-label="Site menu" className="tera-panel">
           <p className="tera-panel-eyebrow">Explore Fineness</p>
           <ul>
-            {LINKS.map(([n, label, href], i) => (
+            {links.map(([n, label, href], i) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -67,7 +70,7 @@ export default function MenuButton() {
             ))}
           </ul>
           <div className="tera-panel-foot">
-            <Link href="/editions/2026-10.json" onClick={close} tabIndex={open ? 0 : -1} className="tera-panel-json">
+            <Link href={`/editions/${latestEdition}.json`} onClick={close} tabIndex={open ? 0 : -1} className="tera-panel-json">
               EDITION JSON ↗
             </Link>
             <span className="tera-panel-lang">LANGUAGE&nbsp;&nbsp;EN&nbsp;&nbsp;▾</span>

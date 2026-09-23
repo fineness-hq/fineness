@@ -3,10 +3,11 @@ import MenuButton from './MenuButton';
 
 interface MastheadProps {
   edition: string;
+  latestEdition?: string;
 }
 
 /** Fixed header: brand left, language + register + menu boxes right. */
-export default function Masthead({ edition }: MastheadProps) {
+export default function Masthead({ edition, latestEdition }: MastheadProps) {
   return (
     <>
       <header className="tera-header">
@@ -27,7 +28,7 @@ export default function Masthead({ edition }: MastheadProps) {
             <Link href="/#register" className="tera-open">
               OPEN REGISTER&nbsp;&nbsp;↗
             </Link>
-            <MenuButton />
+            <MenuButton latestEdition={latestEdition ?? edition} />
           </nav>
         </div>
       </header>

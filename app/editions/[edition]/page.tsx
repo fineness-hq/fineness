@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import EditionView from '../../../src/site/EditionView';
-import { deltasFor, KNOWN_EDITION_IDS, EDITIONS, SOURCES } from '../../../src/site/editions';
+import { deltasFor, KNOWN_EDITION_IDS, EDITIONS, LATEST_EDITION, SOURCES } from '../../../src/site/editions';
 import { parseRawSliders, parseWeights } from '../../../src/site/weight-url';
 
 export function generateStaticParams() {
@@ -43,6 +43,7 @@ export default async function EditionPage({ params, searchParams }: EditionPageP
         initialWeights={initialWeights}
         initialRaw={initialRaw}
         deltas={deltasFor(edition)}
+        latestEdition={LATEST_EDITION.edition}
       />
     </main>
   );

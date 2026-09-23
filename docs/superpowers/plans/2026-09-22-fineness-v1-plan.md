@@ -371,4 +371,6 @@ git commit -m "chore: verify Fineness v1 acceptance criteria green"
 - [x] **Step 3: Monthly runner with atomic writes + cleanup-on-failure**
 - [x] **Step 4: Dry-run proven (2026-11 built, hash/recompute/carry verified, files removed)**
 - [x] **Step 5: CI cron day 1 + full verify before commit**
-- [ ] **Step 6 (human, on judgement only): admission changes, score moves, sign-offs**
+- [x] **Step 6 (AI, no human): analyst/editor review via LLM with code-enforced caps (`src/llm/`, `docs/AI-REVIEW.md`)**
+- [x] **Step 7: proven end-to-end (2026-11 built hands-free, AI held steady, 61/61 green)**
+- [ ] **Step 8 (human, exception only): admission changes outside retain/strike, major-event overrides**
