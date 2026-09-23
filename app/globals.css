@@ -488,6 +488,20 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   }
 }
 
+/* Venue ticker tape. Duplicated content loops seamlessly, pauses on hover. */
+.tera-ticker {
+  animation: tera-ticker-scroll 30s linear infinite;
+  will-change: transform;
+}
+.tera-ticker:hover {
+  animation-play-state: paused;
+}
+@keyframes tera-ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Fixed header. */
 .tera-header {
   position: fixed;

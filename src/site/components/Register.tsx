@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { HOUSE_WEIGHTS, band } from '../../scoring/fineness';
 import type { Criterion, Weights } from '../../scoring/fineness';
 import type { Delta } from '../../build/deltas';
@@ -32,6 +33,7 @@ export default function Register({
 }: RegisterProps) {
   const [weights, setWeights] = useState<Weights>(initialWeights ?? { ...HOUSE_WEIGHTS });
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const reduce = useReducedMotion();
 
   const displayed = useMemo(
     () => applyWeights(venues.filter((v) => v.status !== 'struck'), weights),
@@ -60,20 +62,40 @@ export default function Register({
       <div className="mt-6 overflow-hidden border border-[var(--rule)]">
         <WeightPanel initialRaw={initialRaw} onWeightsChange={setWeights} />
         <div role="list" aria-label="Ranked venues">
-          {displayed.map((venue, i) => (
-            <div key={venue.id} role="listitem">
-              {i === cutIndex && <CutLine visible />}
-              <Entry
-                venue={venue}
-                displayFineness={venue.fineness}
-                displayBand={band(venue.fineness)}
-                rank={venue.rank}
-                delta={deltas[venue.id]}
-                expanded={expandedIds.has(venue.id)}
-                onToggle={() => toggle(venue.id)}
-              />
-            </div>
-          ))}
+          {displayed.map((venue, i) =>
+            reduce ? (
+              <div key={venue.id} role="listitem">
+                {i === cutIndex && <CutLine visible />}
+                <Entry
+                  venue={venue}
+                  displayFineness={venue.fineness}
+                  displayBand={band(venue.fineness)}
+                  rank={venue.rank}
+                  delta={deltas[venue.id]}
+                  expanded={expandedIds.has(venue.id)}
+                  onToggle={() => toggle(venue.id)}
+                />
+              </div>
+            ) : (
+              <motion.div
+                key={venue.id}
+                role="listitem"
+                layout
+                transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+              >
+                {i === cutIndex && <CutLine visible />}
+                <Entry
+                  venue={venue}
+                  displayFineness={venue.fineness}
+                  displayBand={band(venue.fineness)}
+                  rank={venue.rank}
+                  delta={deltas[venue.id]}
+                  expanded={expandedIds.has(venue.id)}
+                  onToggle={() => toggle(venue.id)}
+                />
+              </motion.div>
+            ),
+          )}
         </div>
       </div>
     </section>

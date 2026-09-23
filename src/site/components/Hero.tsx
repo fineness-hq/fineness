@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useSpring, useMotionValue } from 'framer-motion';
 import HeroDiagram from './HeroDiagram';
 import { WordText } from './Stagger';
 
@@ -19,7 +19,23 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
   const reduce = useReducedMotion();
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rotateX = useSpring(tiltX, { stiffness: 150, damping: 20 });
+  const rotateY = useSpring(tiltY, { stiffness: 150, damping: 20 });
   const lines = ['Most venues', 'launch memecoins.', 'We score purity.'];
+
+  function onTilt(e: React.MouseEvent<HTMLElement>) {
+    if (reduce || window.matchMedia('(pointer: coarse)').matches) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    tiltY.set(((e.clientX - rect.left) / rect.width - 0.5) * 10);
+    tiltX.set(-((e.clientY - rect.top) / rect.height - 0.5) * 10);
+  }
+
+  function resetTilt() {
+    tiltX.set(0);
+    tiltY.set(0);
+  }
 
   // Hold headline reveal until preloader lifts. Full reload replays
   // because ready flips false -> true on mount every time.
@@ -61,7 +77,13 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
   };
 
   return (
-    <section aria-labelledby="hero-title" className="tera-hero">
+    <section
+      aria-labelledby="hero-title"
+      className="tera-hero"
+      onMouseMove={onTilt}
+      onMouseLeave={resetTilt}
+      style={{ perspective: 1000 }}
+    >
       <div className="page-wrap tera-hero-grid">
         <div className="tera-hero-left">
           <p className="tera-badge">
@@ -124,6 +146,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
               initial={{ opacity: 0.001, scale: 1.2 }}
               animate={ready ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.2, duration: 1.1, ease: [0.16, 0.33, 0.3, 1.01] }}
+              style={reduce ? undefined : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
             >
               <motion.div
                 animate={{ y: [0, -6, 0] }}

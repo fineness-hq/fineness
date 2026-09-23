@@ -1,4 +1,5 @@
 import type { Venue } from '../../types';
+import CountUp from './CountUp';
 
 interface StatRowProps {
   venues: Venue[];
@@ -15,10 +16,10 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
         ? sorted[(sorted.length - 1) / 2]
         : Math.round((sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2);
   const below = venues.filter((v) => v.fineness < 375).length;
-  const stats: [string, string][] = [
-    ['Venues listed', String(venues.length)],
-    ['Median fineness', String(median)],
-    ['Below hallmark', String(below)],
+  const stats: [string, string | number][] = [
+    ['Venues listed', venues.length],
+    ['Median fineness', median],
+    ['Below hallmark', below],
     ['Data as of', dataAsOf],
   ];
   return (
@@ -29,7 +30,9 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
       {stats.map(([label, value]) => (
         <div key={label} className="bg-[var(--surface)] px-4 py-4">
           <dt className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">{label}</dt>
-          <dd className="mono mt-1 text-2xl tabular-nums text-[var(--ink)]">{value}</dd>
+          <dd className="mono mt-1 text-2xl tabular-nums text-[var(--ink)]">
+            {typeof value === 'number' ? <CountUp value={value} /> : value}
+          </dd>
         </div>
       ))}
     </dl>
