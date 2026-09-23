@@ -28,6 +28,9 @@ jobs:
     env:
       BITQUERY_API_KEY: ${{ secrets.BITQUERY_API_KEY }}
       EXPLORER_API_URL: ${{ vars.EXPLORER_API_URL }}
+      LLM_API_URL: ${{ secrets.LLM_API_URL }}
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+      LLM_MODEL: ${{ secrets.LLM_MODEL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
