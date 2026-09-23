@@ -27,7 +27,21 @@ afterEach(() => {
 
 describe('llmConfig', () => {
   it('null without credentials', () => {
-    expect(llmConfig()).toBeNull();
+    const saved = {
+      url: process.env['LLM_API_URL'],
+      key: process.env['LLM_API_KEY'],
+      model: process.env['LLM_MODEL'],
+    };
+    delete process.env['LLM_API_URL'];
+    delete process.env['LLM_API_KEY'];
+    delete process.env['LLM_MODEL'];
+    try {
+      expect(llmConfig()).toBeNull();
+    } finally {
+      if (saved.url !== undefined) process.env['LLM_API_URL'] = saved.url;
+      if (saved.key !== undefined) process.env['LLM_API_KEY'] = saved.key;
+      if (saved.model !== undefined) process.env['LLM_MODEL'] = saved.model;
+    }
   });
 
   it('reads config from env', () => {
