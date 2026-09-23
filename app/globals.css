@@ -908,182 +908,116 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   padding: 7px 9px;
 }
 
-/* File index cards. */
-.tera-file {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 46px;
-  height: 58px;
-  background: #fff;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
-  box-shadow: 0 1px 3px rgba(29, 43, 35, 0.12);
-  padding: 8px 6px 5px;
-}
-
-.tera-file-glyph {
-  font-size: 14px;
-  color: var(--olive);
-  line-height: 1;
-  text-align: center;
-}
-
-.tera-file-label {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 10px;
-  color: var(--ink-2);
-}
-
-.tera-file-mini {
-  width: 40px;
-  height: 50px;
-}
-
 /* Diagram. */
 .tera-hero-right {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 320px;
 }
 
-.tera-diagram {
+/* Hero board: interactive top-5 chart. */
+.tera-board {
   position: relative;
-  width: 320px;
-  margin-inline: auto;
-  padding-top: 8px;
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 14px 14px 10px;
 }
-
-.tera-diagram-top {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2px;
-}
-
-.tera-diagram-mid {
+.tera-board-head {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.tera-diagram-rail {
-  width: 110px;
-  height: 120px;
-  flex-shrink: 0;
-}
-
-.tera-diagram-out {
-  width: 70px;
-  height: 40px;
-  flex-shrink: 0;
-}
-
-.tera-dots {
-  stroke: var(--faint-2);
-  stroke-width: 1.5;
-  fill: none;
-  stroke-dasharray: 2 5;
-}
-
-.tera-dots-head {
-  stroke: var(--faint-2);
-  stroke-width: 1.5;
-  fill: none;
-}
-
-.tera-frame {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  flex-shrink: 0;
-  background-color: var(--olive);
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(242, 240, 238, 0.16) 0 2px,
-    transparent 2px 7px
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tera-frame-core {
-  width: 110px;
-  height: 110px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.tera-frame-peak {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  letter-spacing: -0.04em;
-  color: var(--dark);
-  line-height: 1;
-}
-
-.tera-frame-band {
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 10px;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+.tera-board-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--olive);
 }
-
-.tera-corner {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border: 0 solid #fff;
+.tera-board-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--olive);
+  animation: tera-blink 1.6s ease-in-out infinite;
 }
-
-.tera-corner-tl {
-  top: 12px;
-  left: 12px;
-  border-top-width: 3px;
-  border-left-width: 3px;
+@keyframes tera-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
 }
-
-.tera-corner-tr {
-  top: 12px;
-  right: 12px;
-  border-top-width: 3px;
-  border-right-width: 3px;
-}
-
-.tera-corner-bl {
-  bottom: 12px;
-  left: 12px;
-  border-bottom-width: 3px;
-  border-left-width: 3px;
-}
-
-.tera-corner-br {
-  bottom: 12px;
-  right: 12px;
-  border-bottom-width: 3px;
-  border-right-width: 3px;
-}
-
-.tera-diagram-vert {
-  display: flex;
-  justify-content: center;
-  height: 32px;
-}
-
-.tera-vert-svg {
-  width: 20px;
-  height: 32px;
-}
-
-.tera-diagram-bottom {
+.tera-board-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 4px;
+}
+.tera-board-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 8px;
   align-items: center;
-  gap: 2px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.tera-board-row:hover {
+  background: var(--surface-2);
+  border-color: var(--rule);
+}
+.tera-board-rank {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.tera-board-name {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tera-board-track {
+  grid-column: 1 / -1;
+  display: block;
+  height: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.tera-board-fill {
+  display: block;
+  height: 100%;
+}
+.tera-board-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tera-board-foot {
+  margin: 10px 0 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
 }
 
 /* Lede inside the hero column. */

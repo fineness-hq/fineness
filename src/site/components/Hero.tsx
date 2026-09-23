@@ -3,15 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion, useSpring, useMotionValue } from 'framer-motion';
-import HeroDiagram from './HeroDiagram';
+import HeroChart from './HeroChart';
 import { WordText } from './Stagger';
+import type { Venue } from '../../types';
 
 interface HeroProps {
   edition: string;
   dataAsOf: string;
   snapshotHash: string;
   peak: number;
-  peakBand: string;
+  venues: Venue[];
 }
 
 /**
@@ -20,7 +21,7 @@ interface HeroProps {
  * right, marquee hills behind. Trio ships as a separate strip below
  * so the viewport never overflows.
  */
-export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }: HeroProps) {
+export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: HeroProps) {
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
   const reduce = useReducedMotion();
@@ -168,26 +169,26 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
               </Link>
             </div>
           </div>
-          <div className="tera-hero-right">
-            {reduce ? (
-              <HeroDiagram peak={peak} band={peakBand} />
-            ) : (
+        <div className="tera-hero-right">
+          {reduce ? (
+            <HeroChart venues={venues} ready={ready} />
+          ) : (
+            <motion.div
+              key={ready ? 'zoom-ready' : 'zoom-waiting'}
+              initial={{ opacity: 0.001, scale: 1.2 }}
+              animate={ready ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.2, duration: 1.1, ease: [0.16, 0.33, 0.3, 1.01] }}
+              style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+            >
               <motion.div
-                key={ready ? 'zoom-ready' : 'zoom-waiting'}
-                initial={{ opacity: 0.001, scale: 1.2 }}
-                animate={ready ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.2, duration: 1.1, ease: [0.16, 0.33, 0.3, 1.01] }}
-                style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
               >
-                <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
-                >
-                  <HeroDiagram peak={peak} band={peakBand} />
-                </motion.div>
+                <HeroChart venues={venues} ready={ready} />
               </motion.div>
-            )}
-          </div>
+            </motion.div>
+          )}
+        </div>
         </div>
       </section>
       <div className="tera-trio-strip" aria-label="Register principles">

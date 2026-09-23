@@ -18,7 +18,7 @@ interface EntryProps {
   onToggle: () => void;
 }
 
-const BAND_COLOR: Record<Band, string> = {
+export const BAND_COLOR: Record<Band, string> = {
   '22k': 'var(--band-high)',
   '18k': 'var(--band-high)',
   '14k': 'var(--band-mid)',

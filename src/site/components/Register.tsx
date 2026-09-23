@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { HOUSE_WEIGHTS, band } from '../../scoring/fineness';
 import type { Criterion, Weights } from '../../scoring/fineness';
@@ -49,6 +49,22 @@ export default function Register({
       return next;
     });
   }
+
+  // Chart rows dispatch this to jump straight into an entry.
+  useEffect(() => {
+    const onExpand = (e: Event) => {
+      const id = (e as CustomEvent<string>).detail;
+      if (typeof id !== 'string' || id.length === 0) return;
+      setExpandedIds((prev) => new Set(prev).add(id));
+      requestAnimationFrame(() => {
+        document
+          .getElementById(`entry-button-${id}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    };
+    window.addEventListener('fineness:expand', onExpand);
+    return () => window.removeEventListener('fineness:expand', onExpand);
+  }, []);
 
   return (
     <section aria-labelledby="register-title" id="register" className="page-wrap py-10">

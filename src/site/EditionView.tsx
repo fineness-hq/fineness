@@ -35,7 +35,6 @@ export default function EditionView({
   latestEdition,
 }: EditionViewProps) {
   const peak = Math.max(...edition.venues.map((v) => v.fineness));
-  const peakVenue = edition.venues.find((v) => v.fineness === peak);
   const alert =
     peak >= 750
       ? `Edition peak fineness ${peak}. A venue cleared 18 karat.`
@@ -49,7 +48,7 @@ export default function EditionView({
         dataAsOf={edition.dataAsOf}
         snapshotHash={edition.snapshotHash}
         peak={peak}
-        peakBand={peakVenue ? peakVenue.band : '14k'}
+        venues={edition.venues}
       />
       <StatRow venues={edition.venues} dataAsOf={edition.dataAsOf} />
       <LogoRow items={edition.venues.map((v) => ({ name: v.name, fineness: v.fineness }))} />
