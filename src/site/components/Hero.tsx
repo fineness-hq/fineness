@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import HeroDiagram from './HeroDiagram';
 
 interface HeroProps {
@@ -18,24 +17,8 @@ interface HeroProps {
 export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }: HeroProps) {
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
-  const rootRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
   const lines = ['Most venues', 'launch memecoins.', 'We score purity.'];
-
-  // Parallax drift on the background hills. Scroll only, no layout shift.
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.to('.tera-bg-header', {
-        yPercent: 18,
-        ease: 'none',
-        scrollTrigger: { trigger: rootRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
-    }, rootRef);
-    return () => {
-      ctx.revert();
-    };
-  }, []);
 
   // Hold headline reveal until preloader lifts. Full reload replays
   // because ready flips false -> true on mount every time.
@@ -84,7 +67,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
   };
 
   return (
-    <section aria-labelledby="hero-title" className="tera-hero" ref={rootRef}>
+    <section aria-labelledby="hero-title" className="tera-hero">
       <div className="page-wrap tera-hero-grid">
         <div className="tera-hero-left">
           <p className="tera-badge">
@@ -92,21 +75,34 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
             <span className="tera-badge-label">EDITION {edition}</span>
           </p>
           <h1 id="hero-title" className="tera-h1" key={ready ? 'ready' : 'waiting'}>
-            {lines.map((line, i) => (
-              <span
-                key={line}
-                className="hero-line block"
-                style={{
-                  animationDelay: `${i * 0.08}s`,
-                  animationPlayState: ready ? 'running' : 'paused',
-                  opacity: ready ? undefined : 0,
-                }}
-              >
-                {line}
-              </span>
-            ))}
+            {lines.map((line, lineIdx) =>
+              ready && !reduce ? (
+                <motion.span
+                  key={line}
+                  className="hero-line block"
+                  initial={{ y: 24, opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  transition={{ duration: 0.7, delay: lineIdx * 0.15, ease: [0.2, 0.7, 0.25, 1] }}
+                >
+                  {line}
+                </motion.span>
+              ) : (
+                <span
+                  key={line}
+                  className="hero-line block"
+                  style={ready ? undefined : { opacity: 0 }}
+                >
+                  {line}
+                </span>
+              ),
+            )}
           </h1>
-          <div className="tera-editionbar">
+          <motion.div
+            className="tera-editionbar"
+            initial={ready && !reduce ? { opacity: 0, y: 12 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
             <div className="tera-editionbar-row">
               <span className="tera-editionbar-label">SNAPSHOT</span>
               <span className="tera-editionbar-hash">{snapshotHash.slice(0, 44)}…</span>
@@ -123,10 +119,19 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
             <p className="tera-editionbar-progress">
               {peak >= 750 ? `PEAK ${peak} — A VENUE CLEARED 18 KARAT` : `PEAK ${peak} — NOTHING CLEARS 18 KARAT`}
             </p>
-          </div>
+          </motion.div>
         </div>
         <div className="tera-hero-right">
-          <HeroDiagram peak={peak} band={peakBand} />
+          {reduce ? (
+            <HeroDiagram peak={peak} band={peakBand} />
+          ) : (
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+            >
+              <HeroDiagram peak={peak} band={peakBand} />
+            </motion.div>
+          )}
         </div>
       </div>
       <div className="page-wrap tera-hero-sub">

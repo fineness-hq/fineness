@@ -7,6 +7,7 @@
 
 html {
   overflow-x: clip;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -129,59 +130,9 @@ a {
   border-top: 1px solid var(--rule);
 }
 
-/* Hero line reveal: whole lines fade-rise with stagger, like the reference. */
+/* Hero lines are block-level; entrance motion runs via framer-motion. */
 .hero-line {
   display: block;
-  animation: hero-letter-in 0.7s var(--ease-letters) both;
-}
-
-.hero-letter {
-  display: inline-block;
-  animation: hero-letter-in 0.7s var(--ease-letters) both;
-}
-
-@keyframes hero-letter-in {
-  from {
-    opacity: 0;
-    transform: translateY(35px) rotateX(35deg);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
-
-/* View transitions + panel/dialog enter, ported 1:1 from Tera. */
-::view-transition-old(root) {
-  animation: tera-out 0.16s ease both;
-}
-::view-transition-new(root) {
-  animation: tera-in 0.28s ease both;
-}
-@keyframes tera-out {
-  to {
-    opacity: 0;
-  }
-}
-@keyframes tera-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes tera-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* Preloader orbit + float. */
@@ -250,7 +201,7 @@ a {
   display: flex;
   flex-direction: row;
   will-change: transform;
-  animation: tera-bg-slide 28s linear infinite;
+  animation: tera-bg-slide 45s linear infinite;
 }
 .tera-bg-track img {
   height: 100%;
