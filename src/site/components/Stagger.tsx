@@ -10,6 +10,7 @@ function useInViewOnce<T extends HTMLElement>(): [React.RefObject<T | null>, boo
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === 'undefined') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only fallback, no IO support
       setInView(true);
       return;
     }
