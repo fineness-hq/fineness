@@ -43,8 +43,6 @@ async function main(): Promise<void> {
   const root = process.cwd();
   const asOf = arg('as-of', today());
   const published = arg('published', today());
-  const editionId = arg('edition', asOf.slice(0, 7));
-  if (!/^\d{4}-\d{2}$/.test(editionId)) throw new Error(`bad edition id ${editionId}`);
 
   const editionsDir = join(root, 'data', 'editions');
   const snapshotsDir = join(root, 'data', 'snapshots');
@@ -55,6 +53,15 @@ async function main(): Promise<void> {
   const files = (await readdir(editionsDir)).filter((f) => f.endsWith('.json')).sort();
   if (files.length === 0) throw new Error('no published editions to carry from');
   const prev = await readJson<Edition>(join(editionsDir, files[files.length - 1]));
+
+  // Default edition is the month AFTER the latest frozen one, so the
+  // unattended cron always targets a fresh slot instead of refusing.
+  const [y, m] = prev.edition.split('-').map(Number);
+  const next = new Date(Date.UTC(y, m, 1));
+  const defaultEdition = `${next.getUTCFullYear()}-${String(next.getUTCMonth() + 1).padStart(2, '0')}`;
+  const editionId = arg('edition', defaultEdition);
+  if (!/^\d{4}-\d{2}$/.test(editionId)) throw new Error(`bad edition id ${editionId}`);
+
   if (prev.edition >= editionId) {
     throw new Error(`edition ${editionId} is not newer than ${prev.edition}; refusing to overwrite the register`);
   }
