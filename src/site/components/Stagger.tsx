@@ -5,12 +5,12 @@ import type { ReactNode } from 'react';
 
 const list: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
+  show: { transition: { staggerChildren: 0.22 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0.001 },
-  show: { opacity: 1, transition: { duration: 0.5 } },
+  hidden: { opacity: 0.001, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
 };
 
 /** Word-by-word emerge, like the reference split-text effect. */
