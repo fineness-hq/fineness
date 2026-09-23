@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Venue } from '../../types';
 import Reveal from './Reveal';
-import { WordText } from './Stagger';
+import { StaggerBody, WordText } from './Stagger';
 
 interface RegulatedTableProps {
   venues: Venue[];
@@ -41,7 +41,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
               ))}
             </tr>
           </thead>
-          <tbody>
+          <StaggerBody>
             {rows.map((v) => (
               <tr
                 key={v.id}
@@ -69,7 +69,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
                 </td>
               </tr>
             ))}
-          </tbody>
+          </StaggerBody>
         </table>
       </div>
       </Reveal>

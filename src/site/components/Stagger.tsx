@@ -98,6 +98,18 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
   );
 }
 
+/** Table body whose rows cascade in on scroll. */
+export function StaggerBody({ children }: { children: ReactNode }) {
+  const [ref, inView] = useInViewOnce<HTMLTableSectionElement>();
+  const reduce = useReduced();
+  const show = reduce || inView;
+  return (
+    <tbody ref={ref} data-rows={show ? 'show' : 'hidden'}>
+      {children}
+    </tbody>
+  );
+}
+
 /** Logo/lockup slide from the left. Bundle: x -392 spring 0.6s. */
 export function XSlide({
   children,

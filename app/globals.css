@@ -198,6 +198,31 @@ ul[data-words='show'] > li:nth-child(7) .w { opacity: 1; transform: none; transi
 ul[data-words='show'] > li:nth-child(8) .w { opacity: 1; transform: none; transition: opacity 0.45s ease, transform 0.45s ease; transition-delay: 0.98s; }
 ul[data-words='show'] > li:nth-child(n+9) .w { opacity: 1; transform: none; transition: opacity 0.45s ease, transform 0.45s ease; transition-delay: 1.1s; }
 
+/* Table row cascade. Rows hold hidden until scrolled into view. */
+tbody[data-rows] tr {
+  opacity: 0.001;
+  transform: translateY(8px);
+}
+tbody[data-rows='show'] tr {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    background-color 0.2s ease;
+}
+tbody[data-rows='show'] tr:nth-child(1) { transition-delay: 0s; }
+tbody[data-rows='show'] tr:nth-child(2) { transition-delay: 0.08s; }
+tbody[data-rows='show'] tr:nth-child(3) { transition-delay: 0.16s; }
+tbody[data-rows='show'] tr:nth-child(4) { transition-delay: 0.24s; }
+tbody[data-rows='show'] tr:nth-child(5) { transition-delay: 0.32s; }
+tbody[data-rows='show'] tr:nth-child(6) { transition-delay: 0.4s; }
+tbody[data-rows='show'] tr:nth-child(7) { transition-delay: 0.48s; }
+tbody[data-rows='show'] tr:nth-child(8) { transition-delay: 0.56s; }
+tbody[data-rows='show'] tr:nth-child(9) { transition-delay: 0.64s; }
+tbody[data-rows='show'] tr:nth-child(10) { transition-delay: 0.72s; }
+tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
+
 /* X-slide lockups. Hidden off-left until scrolled into view (or at once). */
 [data-xslide] {
   display: inline-flex;

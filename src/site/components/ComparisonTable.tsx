@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Venue } from '../../types';
 import { dash } from '../lib/format';
 import Reveal from './Reveal';
-import { WordText } from './Stagger';
+import { StaggerBody, WordText } from './Stagger';
 
 interface ComparisonTableProps {
   venues: Venue[];
@@ -35,7 +35,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
               ))}
             </tr>
           </thead>
-          <tbody>
+          <StaggerBody>
             {venues.map((v) => (
               <tr
                 key={v.id}
@@ -58,7 +58,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
                 </td>
               </tr>
             ))}
-          </tbody>
+          </StaggerBody>
         </table>
       </div>
       <p className="mono mt-2 text-xs text-[var(--ink-3)]">

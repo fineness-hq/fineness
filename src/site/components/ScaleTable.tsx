@@ -1,6 +1,6 @@
 /** Karat scale reference table. Band colors are semantic, never maroon. */
 import Reveal from './Reveal';
-import { WordText } from './Stagger';
+import { StaggerBody, WordText } from './Stagger';
 
 export default function ScaleTable() {
   const rows: [string, string, string][] = [
@@ -32,7 +32,7 @@ export default function ScaleTable() {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <StaggerBody>
             {rows.map(([bandName, range, color]) => (
               <tr
                 key={bandName}
@@ -49,7 +49,7 @@ export default function ScaleTable() {
                 <td className="mono px-4 py-2 text-sm tabular-nums text-[var(--ink-2)]">{range}</td>
               </tr>
             ))}
-          </tbody>
+          </StaggerBody>
         </table>
       </div>
       </Reveal>
