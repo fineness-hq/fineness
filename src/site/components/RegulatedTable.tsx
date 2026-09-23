@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Venue } from '../../types';
+import Reveal from './Reveal';
 
 interface RegulatedTableProps {
   venues: Venue[];
@@ -12,6 +13,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
   );
   return (
     <section aria-labelledby="regulated-title" id="regulated" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">04 / regulated</p>
       <h2
         id="regulated-title"
@@ -69,6 +71,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
           </tbody>
         </table>
       </div>
+      </Reveal>
     </section>
   );
 }

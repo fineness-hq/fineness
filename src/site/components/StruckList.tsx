@@ -1,4 +1,5 @@
 import type { Venue } from '../../types';
+import Reveal from './Reveal';
 
 interface StruckListProps {
   venues: Venue[];
@@ -9,6 +10,7 @@ export default function StruckList({ venues }: StruckListProps) {
   const struck = venues.filter((v) => v.status === 'struck');
   return (
     <section aria-labelledby="struck-title" id="struck" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">05 / struck</p>
       <h2
         id="struck-title"
@@ -35,6 +37,7 @@ export default function StruckList({ venues }: StruckListProps) {
           ))}
         </ul>
       )}
+      </Reveal>
     </section>
   );
 }

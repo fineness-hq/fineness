@@ -1,5 +1,6 @@
 import { ExternalLink } from 'lucide-react';
 import type { SourceRegistry } from '../../types';
+import Reveal from './Reveal';
 
 interface SourcesProps {
   sources: SourceRegistry;
@@ -10,6 +11,7 @@ interface SourcesProps {
 export default function Sources({ sources, disclosures = [] }: SourcesProps) {
   return (
     <section aria-labelledby="sources-title" id="sources" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">08 / sources</p>
       <h2
         id="sources-title"
@@ -49,6 +51,7 @@ export default function Sources({ sources, disclosures = [] }: SourcesProps) {
           ? 'No team holdings disclosed for this edition.'
           : `Disclosures: ${disclosures.join(' · ')}`}
       </p>
+      </Reveal>
     </section>
   );
 }

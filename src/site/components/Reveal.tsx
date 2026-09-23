@@ -9,7 +9,7 @@ interface RevealProps {
   delay?: number;
 }
 
-/** Scroll reveal wrapper. Tera tween: 1.1s [.16,.33,.3,1.01], delay .2s. Static when reduced motion. */
+/** Scroll reveal wrapper. Bundle appear engine: spring 180/27/1, y 24, once. */
 export default function Reveal({ children, className, delay = 0.2 }: RevealProps) {
   const reduce = useReducedMotion();
   if (reduce) return <div className={className}>{children}</div>;
@@ -19,7 +19,7 @@ export default function Reveal({ children, className, delay = 0.2 }: RevealProps
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 1.1, ease: [0.16, 0.33, 0.3, 1.01], delay }}
+      transition={{ type: 'spring', stiffness: 180, damping: 27, mass: 1, delay }}
     >
       {children}
     </motion.div>

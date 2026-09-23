@@ -8,6 +8,44 @@
 html {
   overflow-x: clip;
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/* View transitions between pages, exact bundle values. */
+::view-transition-old(root) {
+  animation: tera-out 0.16s ease both;
+}
+::view-transition-new(root) {
+  animation: tera-in 0.28s ease both;
+}
+@keyframes tera-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes tera-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Menu panel + dialog enter, exact bundle values. */
+@keyframes tera-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.tera-panel nav,
+.tera-panel-foot {
+  animation: tera-panel-in 0.26s ease both;
 }
 
 body {

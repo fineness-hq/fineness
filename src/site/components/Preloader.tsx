@@ -122,9 +122,15 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
     };
     window.addEventListener('keydown', onKey);
 
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) finish();
+    };
+    window.addEventListener('pageshow', onPageShow);
+
     return () => {
       timersAtStart.forEach((t) => window.clearTimeout(t));
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener('pageshow', onPageShow);
     };
   }, []);
 

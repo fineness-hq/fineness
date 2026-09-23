@@ -1,4 +1,6 @@
 /** Standing limits of the methodology. Static editorial copy. */
+import Reveal from './Reveal';
+
 export default function Limits() {
   const items = [
     'Scores are judgements on public information at the cut date, not measurements.',
@@ -8,6 +10,7 @@ export default function Limits() {
   ];
   return (
     <section aria-labelledby="limits-title" id="limits" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">06 / limits</p>
       <h2
         id="limits-title"
@@ -20,6 +23,7 @@ export default function Limits() {
           <li key={item}>{item}</li>
         ))}
       </ul>
+      </Reveal>
     </section>
   );
 }

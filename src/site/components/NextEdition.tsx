@@ -1,3 +1,5 @@
+import Reveal from './Reveal';
+
 interface NextEditionProps {
   currentEdition: string;
   nextDue?: string;
@@ -21,6 +23,7 @@ export default function NextEdition({ currentEdition, nextDue }: NextEditionProp
   const due = nextDue ?? nextMonth(currentEdition);
   return (
     <section aria-labelledby="next-title" id="next" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">07 / next</p>
       <h2
         id="next-title"
@@ -32,6 +35,7 @@ export default function NextEdition({ currentEdition, nextDue }: NextEditionProp
         Edition {currentEdition} is frozen. The next edition ships {due} with fresh
         snapshots, admission review, and fineness deltas against this edition.
       </p>
+      </Reveal>
     </section>
   );
 }

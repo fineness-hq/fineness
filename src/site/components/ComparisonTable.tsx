@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Venue } from '../../types';
 import { dash } from '../lib/format';
+import Reveal from './Reveal';
 
 interface ComparisonTableProps {
   venues: Venue[];
@@ -10,6 +11,7 @@ interface ComparisonTableProps {
 export default function ComparisonTable({ venues }: ComparisonTableProps) {
   return (
     <section aria-labelledby="compare-title" id="comparison" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">03 / comparison</p>
       <h2
         id="compare-title"
@@ -61,6 +63,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
       <p className="mono mt-2 text-xs text-[var(--ink-3)]">
         Daily volume sample: {dash(venues[0]?.metrics.dailyVolumeUsd ?? null)} ({venues[0]?.name ?? '—'})
       </p>
+      </Reveal>
     </section>
   );
 }

@@ -1,4 +1,6 @@
 /** Karat scale reference table. Band colors are semantic, never maroon. */
+import Reveal from './Reveal';
+
 export default function ScaleTable() {
   const rows: [string, string, string][] = [
     ['22k', '916 and above', 'var(--band-high)'],
@@ -9,6 +11,7 @@ export default function ScaleTable() {
   ];
   return (
     <section aria-labelledby="scale-title" id="scale" className="page-wrap py-10">
+      <Reveal>
       <p className="eyebrow">01 / scale</p>
       <h2
         id="scale-title"
@@ -48,6 +51,7 @@ export default function ScaleTable() {
           </tbody>
         </table>
       </div>
+      </Reveal>
     </section>
   );
 }
