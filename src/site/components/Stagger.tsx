@@ -5,15 +5,13 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 /** True once the element enters the viewport (80px margin). Never resets. */
 function useInViewOnce<T extends HTMLElement>(): [React.RefObject<T | null>, boolean] {
   const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(
+    () => typeof window !== 'undefined' && typeof IntersectionObserver === 'undefined',
+  );
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only fallback, no IO support
-      setInView(true);
-      return;
-    }
+    if (!el || typeof IntersectionObserver === 'undefined') return;
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -33,9 +31,16 @@ function useInViewOnce<T extends HTMLElement>(): [React.RefObject<T | null>, boo
 }
 
 function useReduced(): boolean {
-  const [reduce, setReduce] = useState(false);
+  const [reduce, setReduce] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
   useEffect(() => {
-    setReduce(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setReduce(query.matches);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
   }, []);
   return reduce;
 }
