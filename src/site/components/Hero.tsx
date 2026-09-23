@@ -25,14 +25,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
   useEffect(() => {
     let done = false;
     try {
-      const params = new URLSearchParams(window.location.search);
-      const replay = params.get('intro') === '1';
-      if (
-        !replay &&
-        (window.sessionStorage.getItem('fineness-preloader-v1') === '1' ||
-          window.sessionStorage.getItem('tera-preloader-v1') === '1' ||
-          window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-      ) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setReady(true);
         return;

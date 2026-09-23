@@ -2,42 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const DONE_KEY = 'fineness-preloader-v1';
-const LEGACY_KEY = 'tera-preloader-v1';
 const STAGES = [20, 40, 60, 80, 100];
 const HARD_DEADLINE_MS = 6000;
 const FALLBACK_TIMEOUT_MS = 1250;
 const EXIT_MS = 950;
 const SHUTTER_STAGGER_MS = 65;
 
-/** Return true when the preloader was already seen this session. */
-function seenThisSession(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('intro') === '1') return false;
-    return (
-      window.sessionStorage.getItem(DONE_KEY) === '1' ||
-      window.sessionStorage.getItem(LEGACY_KEY) === '1'
-    );
-  } catch {
-    return false;
-  }
-}
-
-function markSeen() {
-  try {
-    window.sessionStorage.setItem(DONE_KEY, '1');
-  } catch {
-    // Storage unavailable. Preloader simply runs again next visit.
-  }
-}
-
 /**
  * Preloader ported from the Tera reference markup and behavior.
- * Brand text adapted to Fineness. Stages 20/40/60/80/100 across
- * DOM ready, fonts, logo, header, and a 1250ms fallback timeout.
- * Hard deadline 6000ms. Esc skips. Focus trapped while visible.
+ * Brand text adapted to Fineness. Runs on every full page load:
+ * no session skip, so refresh always replays the intro.
+ * Stages 20/40/60/80/100 across DOM ready, fonts, logo, header,
+ * and a 1250ms fallback timeout. Hard deadline 6000ms. Esc skips.
+ * Focus trapped while visible.
  */
 export default function Preloader({ edition = '2026-10' }: { edition?: string }) {
   const [visible, setVisible] = useState(false);
@@ -49,15 +26,15 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
 
   useEffect(() => {
     const timersAtStart = timers.current;
-    if (seenThisSession()) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setRemoved(true);
-      return;
-    }
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
-      markSeen();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRemoved(true);
+      try {
+        window.dispatchEvent(new Event('fineness:ready'));
+      } catch {
+        // Event dispatch unavailable. Hero falls back to its timeout.
+      }
       return;
     }
     setVisible(true);
@@ -74,11 +51,10 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
       try {
         window.dispatchEvent(new Event('fineness:ready'));
       } catch {
-        // Event dispatch unavailable. Hero falls back to_SESSION check.
+        // Event dispatch unavailable. Hero falls back to its timeout.
       }
       later(() => {
         setRemoved(true);
-        markSeen();
       }, EXIT_MS);
     };
 
@@ -206,9 +182,13 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
             onClick={() => {
               setProgress(100);
               setExiting(true);
+              try {
+                window.dispatchEvent(new Event('fineness:ready'));
+              } catch {
+                // Event dispatch unavailable. Hero falls back to its timeout.
+              }
               window.setTimeout(() => {
                 setRemoved(true);
-                markSeen();
               }, EXIT_MS);
             }}
             className="uppercase tracking-[0.15em]"
