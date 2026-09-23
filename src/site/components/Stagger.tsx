@@ -1,41 +1,66 @@
 'use client';
 
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
-const list: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.22 } },
-};
+/** True once the element enters the viewport (80px margin). Never resets. */
+function useInViewOnce<T extends HTMLElement>(): [React.RefObject<T | null>, boolean] {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
 
-const item: Variants = {
-  hidden: { opacity: 0.001, y: 10 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
-};
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setInView(true);
+            io.disconnect();
+          }
+        }
+      },
+      { rootMargin: '0px 0px -80px 0px', threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return [ref, inView];
+}
+
+function useReduced(): boolean {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    setReduce(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
+  return reduce;
+}
 
 /** Word-by-word emerge, like the reference split-text effect. */
 export function WordText({ text, className }: { text: string; className?: string }) {
-  const reduce = useReducedMotion();
-  if (reduce) return <span className={className}>{text}</span>;
+  const [ref, inView] = useInViewOnce<HTMLSpanElement>();
+  const reduce = useReduced();
+  const show = reduce || inView;
   const words = text.split(' ');
   return (
-    <motion.span
+    <span
+      ref={ref}
       className={className}
-      variants={list}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
       aria-label={text}
+      data-words={show ? 'show' : 'hidden'}
     >
       {words.map((w, i) => (
         <span key={i} aria-hidden="true">
-          <motion.span variants={item} style={{ display: 'inline-block' }}>
+          <span className="w" style={{ '--wi': i } as CSSProperties}>
             {w}
-          </motion.span>
+          </span>
           {i < words.length - 1 ? ' ' : ''}
         </span>
       ))}
-    </motion.span>
+    </span>
   );
 }
 
@@ -48,72 +73,41 @@ interface StaggerListProps {
 
 /** Sequential fade for list children. Scroll-driven by default. */
 export function StaggerList({ children, className, open }: StaggerListProps) {
-  const reduce = useReducedMotion();
-  if (reduce) return <ul className={className}>{children}</ul>;
-  if (open !== undefined) {
-    return (
-      <motion.ul
-        className={className}
-        variants={list}
-        initial="hidden"
-        animate={open ? 'show' : 'hidden'}
-      >
-        {children}
-      </motion.ul>
-    );
-  }
+  const [ref, inView] = useInViewOnce<HTMLUListElement>();
+  const reduce = useReduced();
+  const show = reduce || (open === undefined ? inView : open);
   return (
-    <motion.ul
-      className={className}
-      variants={list}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
-    >
+    <ul ref={ref} className={className} data-words={show ? 'show' : 'hidden'}>
       {children}
-    </motion.ul>
+    </ul>
   );
 }
 
 /** Child wrapper for StaggerList items. Renders an li. */
 export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
-  const reduce = useReducedMotion();
-  if (reduce) return <li className={className}>{children}</li>;
   return (
-    <motion.li className={className} variants={item}>
-      {children}
-    </motion.li>
+    <li className={className}>
+      <span className="w">{children}</span>
+    </li>
   );
 }
 
-interface XSlideProps {
+/** Logo/lockup slide from the left. Bundle: x -392 spring 0.6s. */
+export function XSlide({
+  children,
+  className,
+  inView = false,
+}: {
   children: ReactNode;
   className?: string;
-  distance?: number;
-  /** Scroll-driven when true, on-mount otherwise. */
   inView?: boolean;
-}
-
-/** Logo/lockup slide from the left. Bundle: x -392 spring 0.6s. */
-export function XSlide({ children, className, distance = 64, inView = false }: XSlideProps) {
-  const reduce = useReducedMotion();
-  if (reduce) return <span className={className}>{children}</span>;
-  const anim = { x: 0, transition: { type: 'spring' as const, bounce: 0, duration: 0.6 } };
-  if (inView) {
-    return (
-      <motion.span
-        className={className}
-        initial={{ x: -distance }}
-        whileInView={anim}
-        viewport={{ once: true }}
-      >
-        {children}
-      </motion.span>
-    );
-  }
+}) {
+  const [ref, seen] = useInViewOnce<HTMLSpanElement>();
+  const reduce = useReduced();
+  const show = reduce || !inView || seen;
   return (
-    <motion.span className={className} initial={{ x: -distance }} animate={anim}>
+    <span ref={ref} className={className} data-xslide={show ? 'show' : 'hidden'}>
       {children}
-    </motion.span>
+    </span>
   );
 }
