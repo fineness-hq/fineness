@@ -1,6 +1,7 @@
 import { ExternalLink } from 'lucide-react';
 import type { SourceRegistry } from '../../types';
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 interface SourcesProps {
   sources: SourceRegistry;
@@ -17,7 +18,7 @@ export default function Sources({ sources, disclosures = [] }: SourcesProps) {
         id="sources-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Sources
+        <WordText text="Sources" />
       </h2>
       <ul className="mt-4 border border-[var(--rule)] bg-[var(--surface)]">
         {Object.entries(sources).map(([id, entry], i) => (

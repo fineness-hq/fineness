@@ -1,5 +1,6 @@
 import type { Venue } from '../../types';
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 interface StruckListProps {
   venues: Venue[];
@@ -16,7 +17,7 @@ export default function StruckList({ venues }: StruckListProps) {
         id="struck-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Struck from the register
+        <WordText text="Struck from the register" />
       </h2>
       {struck.length === 0 ? (
         <p className="prose mt-3 text-base leading-relaxed text-[var(--ink-2)]">

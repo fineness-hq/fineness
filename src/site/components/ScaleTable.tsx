@@ -1,5 +1,6 @@
 /** Karat scale reference table. Band colors are semantic, never maroon. */
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 export default function ScaleTable() {
   const rows: [string, string, string][] = [
@@ -17,7 +18,7 @@ export default function ScaleTable() {
         id="scale-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        The karat scale
+        <WordText text="The karat scale" />
       </h2>
       <div className="mt-4 overflow-x-auto border border-[var(--rule)] bg-[var(--surface)]">
         <table className="w-full min-w-[480px] border-collapse text-left">

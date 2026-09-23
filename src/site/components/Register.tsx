@@ -8,6 +8,7 @@ import type { Venue } from '../../types';
 import { applyWeights } from '../weight-url';
 import CutLine from './CutLine';
 import Entry from './Entry';
+import { WordText } from './Stagger';
 import WeightPanel from './WeightPanel';
 
 interface RegisterProps {
@@ -54,7 +55,7 @@ export default function Register({
         id="register-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        The register
+        <WordText text="The register" />
       </h2>
       <div className="mt-6 overflow-hidden border border-[var(--rule)]">
         <WeightPanel initialRaw={initialRaw} onWeightsChange={setWeights} />

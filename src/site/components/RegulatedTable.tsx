@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Venue } from '../../types';
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 interface RegulatedTableProps {
   venues: Venue[];
@@ -19,7 +20,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
         id="regulated-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Regulated standing
+        <WordText text="Regulated standing" />
       </h2>
       <p className="prose mt-3 max-w-[66ch] text-base leading-relaxed text-[var(--ink-2)]">
         Compliance scores with the custodian behind each pairing. Claims below

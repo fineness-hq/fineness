@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Venue } from '../../types';
 import { dash } from '../lib/format';
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 interface ComparisonTableProps {
   venues: Venue[];
@@ -17,7 +18,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
         id="compare-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Comparison
+        <WordText text="Comparison" />
       </h2>
       <div className="mt-4 overflow-x-auto border border-[var(--rule)] bg-[var(--surface)]">
         <table className="w-full min-w-[640px] border-collapse text-left">

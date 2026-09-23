@@ -1,4 +1,5 @@
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 interface NextEditionProps {
   currentEdition: string;
@@ -29,7 +30,7 @@ export default function NextEdition({ currentEdition, nextDue }: NextEditionProp
         id="next-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Next edition
+        <WordText text="Next edition" />
       </h2>
       <p className="prose mt-3 max-w-[66ch] text-base leading-relaxed text-[var(--ink-2)]">
         Edition {currentEdition} is frozen. The next edition ships {due} with fresh

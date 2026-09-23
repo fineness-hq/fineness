@@ -1,5 +1,6 @@
 /** Standing limits of the methodology. Static editorial copy. */
 import Reveal from './Reveal';
+import { WordText } from './Stagger';
 
 export default function Limits() {
   const items = [
@@ -16,7 +17,7 @@ export default function Limits() {
         id="limits-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"
       >
-        Limits
+        <WordText text="Limits" />
       </h2>
       <ul className="prose mt-4 max-w-[66ch] list-disc pl-6 text-base leading-relaxed text-[var(--ink-2)]">
         {items.map((item) => (
