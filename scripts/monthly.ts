@@ -17,7 +17,8 @@ import type { Edition, Snapshot, SourceRegistry } from '../src/types';
 
 function arg(name: string, fallback: string): string {
   const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
-  return hit ? hit.slice(name.length + 3) : fallback;
+  const value = hit ? hit.slice(name.length + 3) : '';
+  return value.length > 0 ? value : fallback;
 }
 
 function today(): string {

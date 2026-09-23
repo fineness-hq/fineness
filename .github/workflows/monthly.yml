@@ -5,6 +5,19 @@ on:
     # Day 1 of every month, 05:00 UTC: automated pull (runbook day 1).
     - cron: '0 5 1 * *'
   workflow_dispatch:
+    inputs:
+      edition:
+        description: 'Edition id (YYYY-MM). Must be newer than the latest frozen edition.'
+        required: false
+        default: ''
+      as-of:
+        description: 'Data cut date (YYYY-MM-DD). Defaults to today.'
+        required: false
+        default: ''
+      published:
+        description: 'Publish date (YYYY-MM-DD). Defaults to today.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -26,7 +39,7 @@ jobs:
       - name: Verify suite before the run
         run: npm test
       - name: Monthly pull and carried edition
-        run: npm run monthly
+        run: npm run monthly -- --edition="${{ inputs.edition }}" --as-of="${{ inputs.as-of }}" --published="${{ inputs.published }}"
       - name: Verify the built edition
         run: npm test && npx tsc --noEmit && npm run lint && npm run build
       - name: Commit snapshot and edition
