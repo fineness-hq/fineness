@@ -736,12 +736,12 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   padding: 10px 14px;
 }
 
-/* Hero: fits one viewport like the reference. Map is absolute behind. */
+/* Hero: locked to exactly one viewport on desktop, never overflows. */
 .tera-hero {
   position: relative;
   z-index: 1;
-  padding-top: 16px;
-  padding-bottom: 20px;
+  padding-top: 12px;
+  padding-bottom: 16px;
   min-height: calc(100svh - 72px);
   display: flex;
   flex-direction: column;
@@ -749,15 +749,12 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   overflow: clip;
 }
 
-/* Desktop: lock to exactly 1 viewport, clip like landing (height 100vh + max 1000px + hidden). */
 @media (min-width: 900px) {
   .tera-hero {
     height: calc(100svh - 72px);
-    min-height: 640px;
-    max-height: 1000px;
+    min-height: 600px;
+    max-height: 900px;
     overflow: hidden;
-    padding-top: 12px;
-    padding-bottom: 16px;
   }
 }
 
@@ -765,14 +762,24 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   position: relative;
   z-index: 2;
   display: grid;
-  gap: 24px;
+  gap: 20px;
+  flex: 1;
+  align-content: center;
 }
 
 @media (min-width: 900px) {
   .tera-hero-grid {
-    grid-template-columns: 1.08fr 0.92fr;
+    grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
+    gap: 32px;
   }
+}
+
+.tera-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
 }
 
 .tera-badge {
@@ -806,11 +813,21 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   background: var(--ground);
 }
 
+.tera-badge-asof {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  padding-inline: 12px;
+}
+
 .tera-h1 {
-  margin: 16px 0 0;
+  margin: 0;
   font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
-  font-size: clamp(40px, 4.25vw, 68px);
+  font-size: clamp(36px, 3.8vw, 60px);
   letter-spacing: -0.05em;
   line-height: 1.04;
   color: var(--dark);
@@ -820,16 +837,14 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 .tera-editionbar {
   border: 1px solid var(--rule);
   background: var(--ground);
-  padding: 12px 16px 14px;
-  max-width: 470px;
-  margin-top: 20px;
+  padding: 10px 14px 12px;
+  max-width: 460px;
 }
 
 .tera-editionbar-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 12px;
 }
@@ -1071,20 +1086,14 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   gap: 2px;
 }
 
-/* Lede + dot map + CTAs + trio. */
-.tera-hero-sub {
-  position: relative;
-  z-index: 2;
-  margin-top: 14px;
-}
-
+/* Lede inside the hero column. */
 .tera-lede {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #000;
-  max-width: 360px;
+  max-width: 52ch;
   margin: 0;
   text-transform: uppercase;
 }
@@ -1093,7 +1102,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   position: relative;
   z-index: 2;
   display: grid;
-  margin-top: 14px;
+  gap: 0;
 }
 
 @media (min-width: 810px) {
@@ -1134,13 +1143,19 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   background: var(--dark-2);
 }
 
+.tera-trio-strip {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+}
+
 .tera-trio {
   position: relative;
   z-index: 2;
   display: grid;
   gap: 16px;
-  margin-top: 14px;
-  padding-bottom: 4px;
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
 @media (min-width: 810px) {
