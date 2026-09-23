@@ -119,10 +119,17 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
             <HeroDiagram peak={peak} band={peakBand} />
           ) : (
             <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+              key={ready ? 'zoom-ready' : 'zoom-waiting'}
+              initial={{ opacity: 0.001, scale: 1.2 }}
+              animate={ready ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.2, duration: 1.1, ease: [0.16, 0.33, 0.3, 1.01] }}
             >
-              <HeroDiagram peak={peak} band={peakBand} />
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+              >
+                <HeroDiagram peak={peak} band={peakBand} />
+              </motion.div>
             </motion.div>
           )}
         </div>

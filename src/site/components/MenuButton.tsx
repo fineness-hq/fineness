@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
+import { StaggerItem, StaggerList } from './Stagger';
 
 const LINKS: Array<[string, string, string]> = [
   ['01', 'Home', '/'],
@@ -53,9 +54,9 @@ export default function MenuButton({ latestEdition = '2026-10' }: { latestEditio
         <button type="button" aria-label="Close menu" onClick={close} tabIndex={open ? 0 : -1} className="tera-overlay-scrim" />
         <nav aria-label="Site menu" className="tera-panel">
           <p className="tera-panel-eyebrow">Explore Fineness</p>
-          <ul>
+          <StaggerList open={open}>
             {links.map(([n, label, href], i) => (
-              <li key={href}>
+              <StaggerItem key={href}>
                 <Link
                   href={href}
                   onClick={close}
@@ -66,9 +67,9 @@ export default function MenuButton({ latestEdition = '2026-10' }: { latestEditio
                   <span>{label}</span>
                   {i === 0 && <span aria-hidden="true">↗</span>}
                 </Link>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerList>
           <div className="tera-panel-foot">
             <Link href={`/editions/${latestEdition}.json`} onClick={close} tabIndex={open ? 0 : -1} className="tera-panel-json">
               EDITION JSON ↗

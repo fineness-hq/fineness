@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { StaggerItem, StaggerList, XSlide } from './Stagger';
 
 interface FooterProps {
   edition: string;
@@ -25,7 +26,7 @@ export default function Footer({ edition }: FooterProps) {
         <div>
           <p className="eyebrow">09 / Contact</p>
           <p className="mt-3 font-[var(--font-inter)] text-[42px] font-bold leading-none tracking-tight text-[var(--ink)]">
-            Fineness
+            <XSlide inView>Fineness</XSlide>
           </p>
           <p className="prose mt-3 max-w-[52ch] text-sm leading-relaxed text-[var(--ink-2)]">
             Scores are editorial judgements on public information. Fineness is
@@ -36,35 +37,35 @@ export default function Footer({ edition }: FooterProps) {
               <p className="mono text-xs uppercase tracking-widest text-[var(--ink-3)]">
                 Menu
               </p>
-              <ul className="service-list mt-3 space-y-2">
+              <StaggerList className="service-list mt-3 space-y-2">
                 {menu.map(([label, href]) => (
-                  <li key={href + label}>
+                  <StaggerItem key={href + label}>
                     <Link
                       href={href}
                       className="site-link mono text-xs uppercase tracking-widest text-[var(--ink-2)]"
                     >
                       {label}
                     </Link>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerList>
             </nav>
             <nav aria-label="Footer service">
               <p className="mono text-xs uppercase tracking-widest text-[var(--ink-3)]">
                 Service
               </p>
-              <ul className="service-list mt-3 space-y-2">
+              <StaggerList className="service-list mt-3 space-y-2">
                 {service.map(([label, href]) => (
-                  <li key={href + label}>
+                  <StaggerItem key={href + label}>
                     <Link
                       href={href}
                       className="site-link mono text-xs uppercase tracking-widest text-[var(--ink-2)]"
                     >
                       {label}
                     </Link>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerList>
             </nav>
           </div>
         </div>
