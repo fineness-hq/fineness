@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import HeroDiagram from './HeroDiagram';
+import { WordText } from './Stagger';
 
 interface HeroProps {
   edition: string;
@@ -136,9 +137,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
       </div>
       <div className="page-wrap tera-hero-sub">
         <p className="tera-lede">
-          A MONTHLY REGISTER SCORING TOKENIZED VENUES ON WHAT ACTUALLY BACKS
-          THE TOKEN. THE HOUSE WEIGHS FIVE CRITERIA. YOU CAN REWEIGH AND SHARE
-          YOUR OWN ORDER.
+          <WordText text="A MONTHLY REGISTER SCORING TOKENIZED VENUES ON WHAT ACTUALLY BACKS THE TOKEN. THE HOUSE WEIGHS FIVE CRITERIA. YOU CAN REWEIGH AND SHARE YOUR OWN ORDER." />
         </p>
       </div>
       <div aria-hidden="true" className="tera-bg-header">
@@ -168,21 +167,15 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, peakBand }
       <div className="page-wrap tera-trio">
         <p>
           <span className="tera-trio-mark" aria-hidden="true" />
-          EVERY FIGURE
-          <br />
-          CARRIES A SOURCE
+          <WordText text="EVERY FIGURE CARRIES A SOURCE" />
         </p>
         <p>
           <span className="tera-trio-mark" aria-hidden="true" />
-          FIVE WEIGHTED
-          <br />
-          CRITERIA
+          <WordText text="FIVE WEIGHTED CRITERIA" />
         </p>
         <p>
           <span className="tera-trio-mark" aria-hidden="true" />
-          REWEIGH AND SHARE
-          <br />
-          YOUR OWN ORDER
+          <WordText text="REWEIGH AND SHARE YOUR OWN ORDER" />
         </p>
       </div>
     </section>

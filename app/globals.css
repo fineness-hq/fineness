@@ -173,43 +173,209 @@ a {
   display: block;
 }
 
-/* Preloader orbit + float. */
-@keyframes tera-orbit {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Preloader, exact reference system. */
+.tera-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  color: var(--pre-ink);
+  isolation: isolate;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow: hidden;
 }
-
-@keyframes tera-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-5deg);
-  }
-  50% {
-    transform: translateY(-7px) rotate(4deg);
-  }
+.tera-load-shutters {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  z-index: -1;
 }
-
-.tera-orbit {
-  animation: tera-orbit 2.8s linear infinite;
+.tera-load-shutters i {
+  background: var(--pre-shutter);
+  border-right: 1px solid var(--pre-shutter-border);
+  position: relative;
+  transform-origin: top;
 }
-
-.tera-float {
-  animation: tera-float 2.4s ease-in-out infinite alternate;
+.tera-load-top,
+.tera-load-bottom {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
-
-/* Preloader shutters + exit. */
-.tera-shutter {
-  transition: transform 0.65s var(--ease-shutter);
+.tera-load-top { top: 28px; }
+.tera-load-bottom { bottom: 28px; }
+.tera-load-brand {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.025em;
 }
-
-.tera-exit {
+.tera-load-edition { color: var(--pre-muted); }
+.tera-load-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  box-sizing: border-box;
+}
+.tera-load-mark {
+  position: relative;
+  width: 152px;
+  height: 152px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 42px;
+}
+.tera-load-mark::before,
+.tera-load-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--pre-orbit);
+  transform: rotate(45deg);
+  animation: tera-load-orbit 2.8s ease-in-out infinite alternate;
+}
+.tera-load-mark::after {
+  inset: 17px;
+  transform: rotate(0deg);
+  opacity: 0.6;
+  animation-direction: alternate-reverse;
+}
+.tera-load-mark .tera-mark {
+  width: 64px;
+  height: 64px;
+  animation: tera-load-float 2.4s ease-in-out infinite;
+}
+.tera-load-title {
+  font-size: clamp(64px, 9vw, 138px);
+  line-height: 0.95;
+  font-weight: 450;
+  letter-spacing: -0.065em;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  gap: 0.02em;
+}
+.tera-load-title span {
+  display: inline-block;
+  animation: tera-load-letter 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+.tera-load-subtitle {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 26px 0 36px;
+  color: var(--pre-muted-2);
+  text-align: center;
+}
+.tera-load-track {
+  width: min(320px, 80vw);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+.tera-load-track i {
+  height: 3px;
+  background: var(--pre-track);
+  transition: background 0.2s;
+}
+.tera-load-track i[data-active="true"] {
+  background: var(--pre-progress);
+}
+.tera-load-readout {
+  width: min(320px, 80vw);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--pre-muted-3);
+}
+.tera-load-percent {
+  font-variant-numeric: tabular-nums;
+  color: var(--pre-ink);
+}
+.tera-load-skip {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--pre-progress);
+  padding: 10px 0;
+  cursor: pointer;
+  min-height: 44px;
+  text-transform: uppercase;
+}
+.tera-load-skip:hover {
+  color: var(--pre-progress);
+}
+@keyframes tera-load-orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(90deg); }
+}
+@keyframes tera-load-float {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-7px) rotate(4deg); }
+}
+@keyframes tera-load-letter {
+  0% { opacity: 0; transform: translateY(35px) rotateX(35deg); filter: blur(4px); }
+  100% { opacity: 1; transform: none; filter: blur(0); }
+}
+.tera-preloader.is-exiting {
+  pointer-events: none;
+}
+.tera-preloader.is-exiting .tera-load-center,
+.tera-preloader.is-exiting .tera-load-top,
+.tera-preloader.is-exiting .tera-load-bottom {
+  opacity: 0;
+  transform: translateY(-12px);
   transition:
     opacity 0.22s ease,
     transform 0.3s ease;
+}
+.tera-preloader.is-exiting .tera-load-shutters i {
+  transform: translateY(-101%);
+  transition-property: transform;
+  transition-duration: 0.65s;
+  transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  transition-delay: calc(var(--i, 0) * 65ms);
+}
+@media (max-width: 600px) {
+  .tera-load-top,
+  .tera-load-bottom {
+    left: 24px;
+    right: 24px;
+    font-size: 10px;
+  }
+  .tera-load-edition { display: none; }
+  .tera-load-mark {
+    width: 112px;
+    height: 112px;
+    margin-bottom: 40px;
+  }
+  .tera-load-mark .tera-mark {
+    width: 48px;
+    height: 48px;
+  }
+  .tera-load-title { font-size: 78px; }
 }
 
 /* BG header, exact spec from live reference. Full-bleed slim hills drifting left. */

@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 
 const STAGES = [20, 40, 60, 80, 100];
 const HARD_DEADLINE_MS = 6000;
 const FALLBACK_TIMEOUT_MS = 1250;
 const EXIT_MS = 950;
-const SHUTTER_STAGGER_MS = 65;
 
 /**
  * Preloader ported from the Tera reference markup and behavior.
@@ -118,98 +118,69 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
       ref={rootRef}
       role="status"
       aria-label="Loading Fineness"
-      className={exiting ? 'tera-exit' : undefined}
-      style={exiting ? { opacity: 0, transform: 'translateY(-12px)' } : undefined}
+      className={`tera-preloader${exiting ? ' is-exiting' : ''}`}
     >
-      <div className="fixed inset-0 z-[100] flex flex-col justify-between bg-[var(--pre-shutter)] p-6">
-        <div className="pre-readout flex items-center justify-between text-[var(--pre-muted)]">
-          <span>Tokenized venue register</span>
-          <span>Edition {edition}</span>
+      <div className="tera-load-shutters" aria-hidden="true">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <i key={i} style={{ '--i': i } as CSSProperties} />
+        ))}
+      </div>
+      <div className="tera-load-top">
+        <span className="tera-load-brand">FINENESS</span>
+        <span className="tera-load-edition">Edition {edition}</span>
+      </div>
+      <div className="tera-load-center">
+        <div className="tera-load-mark" aria-hidden="true">
+          <span className="tera-mark" />
         </div>
-        <div className="flex flex-col items-center gap-6">
-          <div className="tera-float relative flex h-20 w-20 items-center justify-center">
-            <div
-              aria-hidden="true"
-              className="tera-orbit absolute inset-0 rounded-full border border-dashed"
-              style={{ borderColor: 'var(--pre-orbit)' }}
-            />
-            <span
-              aria-hidden="true"
-              className="block h-3 w-3 rounded-full"
-              style={{ background: 'var(--pre-progress)' }}
-            />
-          </div>
-          <p
-            aria-hidden="true"
-            className="font-[var(--font-inter)] text-[clamp(64px,9vw,138px)] font-medium leading-none tracking-[-0.065em] text-[var(--pre-ink)]"
-            style={{ fontWeight: 450 }}
-          >
-            {title.split('').map((ch, i) => (
-              <span
-                key={i}
-                className="hero-letter"
-                style={{ animationDelay: `${i * 0.07}s` }}
-              >
-                {ch}
-              </span>
-            ))}
-          </p>
-          <p className="font-[var(--font-inter)] text-[15px] font-semibold text-[var(--pre-ink)]">
-            Fineness
-          </p>
-          <div
-            role="progressbar"
-            aria-valuenow={progress}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            className="h-[2px] w-56 overflow-hidden bg-[var(--pre-shutter-border)]"
-          >
-            <div
-              className="h-full"
-              style={{
-                width: `${progress}%`,
-                background: 'var(--pre-progress)',
-                transition: 'width 0.3s ease',
-              }}
-            />
-          </div>
-          <p className="pre-readout text-[var(--pre-muted-2)]">{progress}%</p>
+        <p className="tera-load-title" aria-hidden="true">
+          {title.split('').map((ch, i) => (
+            <span key={i} style={{ '--i': i } as CSSProperties}>
+              {ch}
+            </span>
+          ))}
+        </p>
+        <p className="tera-load-subtitle">Tokenized venue register</p>
+        <div
+          className="tera-load-track"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-hidden="true"
+        >
+          {[1, 2, 3, 4, 5].map((step) => (
+            <i key={step} data-active={String(progress >= step * 20)} />
+          ))}
         </div>
-        <div className="pre-readout flex items-center justify-between text-[var(--pre-muted-3)]">
+        <div className="tera-load-readout">
           <span>Scoring 0-1000</span>
-          <button
-            type="button"
-            onClick={() => {
-              setProgress(100);
-              setExiting(true);
-              try {
-                window.dispatchEvent(new Event('fineness:ready'));
-              } catch {
-                // Event dispatch unavailable. Hero falls back to its timeout.
-              }
-              window.setTimeout(() => {
-                setRemoved(true);
-              }, EXIT_MS);
-            }}
-            className="uppercase tracking-[0.15em]"
-          >
-            Skip
-          </button>
+          <span className="tera-load-percent">
+            {String(progress).padStart(2, '0')} / 100
+          </span>
         </div>
       </div>
-      {/* Shutters. */}
-      {[0, 1].map((i) => (
-        <div
-          key={i}
-          aria-hidden="true"
-          className="tera-shutter fixed inset-x-0 top-0 z-[99] h-1/2 bg-[var(--pre-shutter)]"
-          style={{
-            borderBottom: '1px solid var(--pre-shutter-border)',
-            transitionDelay: exiting ? `${i * SHUTTER_STAGGER_MS}ms` : '0ms',
-            transform: exiting ? 'translateY(-101%)' : 'translateY(0)',
+      <div className="tera-load-bottom">
+        <span>Editorial judgement, not audits</span>
+        <button
+          type="button"
+          onClick={() => {
+            setProgress(100);
+            setExiting(true);
+            try {
+              window.dispatchEvent(new Event('fineness:ready'));
+            } catch {
+              // Event dispatch unavailable. Hero falls back to its timeout.
+            }
+            window.setTimeout(() => {
+              setRemoved(true);
+            }, EXIT_MS);
           }}
-        />
-      ))}
+          className="tera-load-skip"
+        >
+          Enter site ↗
+        </button>
+      </div>
     </div>
   );
 }
