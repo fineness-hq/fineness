@@ -7,9 +7,9 @@ proposes; code disposes.
 ## Wiring
 
 - Credentials: `LLM_API_URL`, `LLM_API_KEY`, `LLM_MODEL` from the
-  environment. Locally they load from `LLM_ENV_FILE` (default: the kentir
-  env file outside this repo). In CI they come from secrets. Keys never
-  enter this repo.
+  environment. Locally they load from the project's own `.env.local`
+  (gitignored, never committed; override path with `LLM_ENV_FILE`). In CI
+  they come from secrets. Keys never enter this repo.
 - Upstream: OpenAI-compatible chat completions, temperature 0, 120s timeout.
 - Prompt: previous edition (scores, rationale, thesis, pairing, facts) plus
   fresh snapshot metrics plus the ±1-cap and cited-evidence rules.

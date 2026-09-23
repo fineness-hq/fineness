@@ -36,7 +36,7 @@ async function atomicWrite(path: string, content: string): Promise<void> {
 
 async function main(): Promise<void> {
   if (process.env['LLM_ENV_FILE'] === undefined) {
-    process.env['LLM_ENV_FILE'] = 'D:\\Project\\wealthypeople\\kentir\\.env.local';
+    process.env['LLM_ENV_FILE'] = join(process.cwd(), '.env.local');
   }
   loadLlmEnv();
   const root = process.cwd();
