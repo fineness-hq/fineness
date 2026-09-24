@@ -4,16 +4,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Scale,
-  ShieldCheck,
-  Sparkles,
   Database,
-  Cpu,
   Stamp,
   Radio,
-  Layers,
-  ArrowRight,
   Flame,
-  CheckCircle2,
   ScanLine,
 } from 'lucide-react';
 

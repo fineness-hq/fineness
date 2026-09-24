@@ -7,13 +7,7 @@ import {
   TrendingUp,
   ShieldCheck,
   Sliders,
-  Check,
-  AlertTriangle,
-  Radio,
   Sparkles,
-  ArrowRight,
-  Activity,
-  Layers,
   Crosshair,
   Compass,
 } from 'lucide-react';

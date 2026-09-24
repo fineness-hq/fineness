@@ -18,64 +18,54 @@ interface BandSpec {
 
 const BANDS: BandSpec[] = [
   {
-    name: '24 Karat (Sovereign Pure)',
-    from: 999,
-    to: 1000,
-    karat: '24K',
-    purity: '999.0 - 1000 / 1000',
-    color: '#0F1419',
-    goldEquivalent: 'Pure Unalloyed Bullion',
-    note: 'Investment-grade LBMA allocated bullion with verifiable legal title.',
-  },
-  {
-    name: '22 Karat (Crown Coinage)',
+    name: '22k',
     from: 916,
-    to: 998,
+    to: 1000,
     karat: '22K',
-    purity: '916.0 - 998.0 / 1000',
-    color: '#3A3222',
-    goldEquivalent: 'Crown Gold (Krugerrand standard)',
-    note: 'High-density physical allocation with minor programmatic wrapper friction.',
+    purity: '916 - 1000 / 1000',
+    color: 'var(--band-high)',
+    goldEquivalent: '22 karat standard',
+    note: 'Top of the scale. No venue in the current register reaches it.',
   },
   {
-    name: '18 Karat (Standard Alloy)',
+    name: '18k',
     from: 750,
     to: 915,
     karat: '18K',
-    purity: '750.0 - 915.0 / 1000',
-    color: '#7A622A',
-    goldEquivalent: 'Standard Fine Alloy (75% Pure)',
-    note: 'Sufficient physical backing but carries secondary market spread friction.',
+    purity: '750 - 915 / 1000',
+    color: 'var(--band-high)',
+    goldEquivalent: '18 karat standard',
+    note: 'High fineness. Nothing in this category clears it as of the latest edition.',
   },
   {
-    name: '14 Karat (Commercial Grade)',
+    name: '14k',
     from: 585,
     to: 749,
     karat: '14K',
-    purity: '585.0 - 749.0 / 1000',
-    color: '#B08830',
-    goldEquivalent: 'Commercial Gold (58.5% Pure)',
-    note: 'Partially allocated; elevated counterparty and custody risk.',
+    purity: '585 - 749 / 1000',
+    color: 'var(--band-mid)',
+    goldEquivalent: '14 karat standard',
+    note: 'Where the current leaders sit.',
   },
   {
-    name: '9 Karat (Hallmark Cutoff)',
+    name: '9k',
     from: 375,
     to: 584,
     karat: '9K',
-    purity: '375.0 - 584.0 / 1000',
-    color: '#D4AF37',
-    goldEquivalent: 'Legal Hallmark Floor (37.5% Pure)',
-    note: 'Minimum threshold to receive an official hallmark. High surveillance.',
+    purity: '375 - 584 / 1000',
+    color: 'var(--band-low)',
+    goldEquivalent: '9 karat hallmark floor',
+    note: 'At or above the hallmark: certified.',
   },
   {
-    name: 'Uncertified (Disqualified)',
+    name: 'Below hallmark',
     from: 0,
     to: 374,
-    karat: '0K',
-    purity: '0.0 - 374.0 / 1000',
-    color: '#C93B2B',
-    goldEquivalent: 'Sub-Standard Synthetic Claim',
-    note: 'Fails assay. Denied hallmark. Extreme insolvency / depeg risk.',
+    karat: '—',
+    purity: '0 - 374 / 1000',
+    color: 'var(--band-none)',
+    goldEquivalent: 'Listed, not certified',
+    note: 'Listed for public scrutiny, not certified.',
   },
 ];
 
@@ -114,8 +104,8 @@ export default function ScaleTable() {
               <WordText text="The Hallmark Karat Scale" />
             </h2>
             <p className="prose mt-1 max-w-[68ch] text-sm leading-relaxed text-[var(--ink-2)]">
-              Fineness is calibrated on a standard 0 to 1000 basis. The official assay cutoff is strictly 375 / 1000 (9K).
-              Venues below 375 / 1000 remain uncertified and are denied institutional hallmark status.
+              Fineness runs 0 to 1000. The gate sits at 375 — everything below it
+              is listed but not certified.
             </p>
           </div>
 
@@ -241,14 +231,12 @@ export default function ScaleTable() {
                 <div className="flex items-center md:justify-end min-w-[140px]">
                   <span
                     className={`mono rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
-                      b.from >= 750
+                      b.from >= 375
                         ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/30'
-                        : b.from >= 375
-                        ? 'bg-amber-500/10 text-amber-700 border border-amber-500/30'
                         : 'bg-red-500/10 text-red-600 border border-red-500/30'
                     }`}
                   >
-                    {b.from >= 750 ? '★ TIER 1 HALLMARK' : b.from >= 375 ? 'SURVEILLANCE' : 'DISQUALIFIED'}
+                    {b.from >= 375 ? 'CERTIFIED' : 'LISTED ONLY'}
                   </span>
                 </div>
               </motion.div>

@@ -3,14 +3,9 @@ import Link from 'next/link';
 import {
   Scale,
   ShieldCheck,
-  Award,
-  Sparkles,
   CheckCircle2,
   Lock,
-  Layers,
-  FileCheck,
   XCircle,
-  Radio,
   FileCode,
   ArrowRight,
 } from 'lucide-react';
@@ -37,93 +32,93 @@ const CRITERIA_SPECS: WeightItem[] = [
     criterion: 'Asset Quality & Verifiability',
     weight: '30%',
     weightPct: 30,
-    tag: 'PHYSICAL ALLOCATION',
-    desc: 'Tangible LBMA good delivery gold backing legally allocated with segregated property title. Rehypothecated debt or unallocated promises are severely penalized.',
+    tag: 'BACKING EVIDENCE',
+    desc: 'What backs the token and how it verifies: custody, redemption terms, and verifiability of the pairing asset.',
   },
   {
     criterion: 'Traction & Market Depth',
     weight: '25%',
     weightPct: 25,
-    tag: 'SECONDARY LIQUIDITY',
-    desc: '30-day velocity, AMM liquidity pool depth, trading volume across DEXs and CEXs, and secondary market trading spread relative to spot XAU/USD.',
+    tag: 'VOLUME & DEPTH',
+    desc: 'Cumulative and daily volume, venue share, fee revenue and pool depth across the observation window.',
   },
   {
-    criterion: 'Transparency & Reserve Feeds',
+    criterion: 'Transparency',
     weight: '20%',
     weightPct: 20,
-    tag: 'PUBLIC REGISTRY',
-    desc: 'Live bar-by-bar inventory registers, public depository audit hashes, Chainlink oracle telemetry, and verifiable independent assayer reports.',
+    tag: 'CONTRACTS & DOCS',
+    desc: 'Verified contracts, lock schedules, public docs and a named operating entity.',
   },
   {
-    criterion: 'Compliance & Custodyremote Trust',
+    criterion: 'Compliance & Standing',
     weight: '15%',
     weightPct: 15,
-    tag: 'LEGAL REMOTENESS',
-    desc: 'Bankruptcy-remote depository custody in Zurich, London, or New York. Complete segregation from operator balance sheets with clear redemption rights.',
+    tag: 'DISCLOSURE',
+    desc: 'Regulatory standing and disclosure: licences, prospectus route, terms and risk statements.',
   },
   {
-    criterion: 'Durability & Dependency Isolation',
+    criterion: 'Durability',
     weight: '10%',
     weightPct: 10,
-    tag: 'SYSTEMIC RESILIENCE',
-    desc: 'Smart contract age, immutable admin key governance, bridge dependency isolation, and structural resilience against market stress events.',
+    tag: 'TRACK RECORD',
+    desc: 'Age, shock resilience and dependencies: uptime across market cycles and operator continuity.',
   },
 ];
 
 const BANDS = [
   {
-    name: '22 Karat (Crown Coinage)',
+    name: '22k',
     range: '916 to 1000',
     color: '#0F1419',
     goldPct: '91.6% - 100%',
-    desc: 'Investment-grade segregated physical allocation with verifiable legal title.',
+    desc: 'Top band on the 0–1000 scale. No venue in the current register reaches it.',
   },
   {
-    name: '18 Karat (Standard Alloy)',
+    name: '18k',
     range: '750 to 915',
     color: '#3A3222',
     goldPct: '75.0% - 91.5%',
-    desc: 'Fully backed physical reserves with minor operational or wrapping frictions.',
+    desc: 'High fineness. Nothing in this category clears it as of the latest edition.',
   },
   {
-    name: '14 Karat (Commercial Grade)',
+    name: '14k',
     range: '585 to 749',
     color: '#7A622A',
     goldPct: '58.5% - 74.9%',
-    desc: 'Partial physical allocation; elevated corporate and counterparty exposure.',
+    desc: 'Where the current leaders sit: documented backing with real volume.',
   },
   {
-    name: '9 Karat (Hallmark Gate Minimum)',
+    name: '9k',
     range: '375 to 584',
     color: '#B08830',
     goldPct: '37.5% - 58.4%',
-    desc: 'Minimum qualifying threshold for institutional hallmarking.',
+    desc: 'At or above the 375 hallmark: certified, with thinner evidence or flow.',
   },
   {
-    name: 'Below Hallmark (Uncertified)',
+    name: 'Below hallmark',
     range: 'Under 375',
     color: '#943A2A',
     goldPct: '< 37.5%',
-    desc: 'Disqualified from hallmark status. Listed for public scrutiny, not certified.',
+    desc: 'Listed for public scrutiny, not certified.',
   },
 ];
 
 const ADMISSION_RULES = [
   {
-    title: 'Verified On-Chain Smart Contract',
-    desc: 'A deployed smart contract on an EVM or SVM public chain, with verified source code on the canonical block explorer.',
+    title: 'Deployed & Verified Contract',
+    desc: 'A deployed contract on a public chain, verified on that chain explorer.',
   },
   {
-    title: 'Tangible Real-World Asset Pairing',
-    desc: 'A tokenized asset claiming physical commodity backing, or a launch mechanic that direct-routes liquidity into tangible vaulted reserves.',
+    title: 'Real-World Pairing Claim',
+    desc: 'A pairing asset that claims real world backing, or a launch mechanic that routes value to a real world asset.',
   },
   {
-    title: 'Completed Public Launch & Secondary Market',
-    desc: 'At least one completed public launch, active liquidity pool, or live verifiable trading venue with organic volume.',
+    title: 'Completed Public Launch',
+    desc: 'At least one completed public launch or live market at the cut date.',
   },
   {
-    title: 'Reachable Public Infrastructure',
-    desc: 'A reachable public interface, transparent fee schedule, and published technical documentation under an operator-controlled domain.',
+    title: 'Reachable Public Interface',
+    desc: 'A reachable public interface or documentation under a domain the operator controls.',
   },
 ];
 
@@ -187,7 +182,7 @@ export default function MethodPage() {
             <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
               <Scale size={13} className="text-[var(--gold)]" />
               <span className="text-[var(--ink-2)]">FORMULA:</span>
-              <span className="font-bold text-[var(--ink)]">5-PILLAR HARMONIC MEAN</span>
+              <span className="font-bold text-[var(--ink)]">WEIGHTED MEAN × 100</span>
             </div>
             <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
               <ShieldCheck size={13} className="text-emerald-600" />

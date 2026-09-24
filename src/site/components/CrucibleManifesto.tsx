@@ -6,7 +6,6 @@ import {
   Flame,
   FileX,
   Award,
-  Sparkles,
   RefreshCw,
   XCircle,
   ShieldCheck,
@@ -90,13 +89,13 @@ export default function CrucibleManifesto() {
   const smoothRotY = useSpring(mouseRotY, { stiffness: 180, damping: 22 });
 
   // Drag handlers for the caliper slider
-  function updateSliderFromClientX(clientX: number, target: HTMLElement) {
+  const updateSliderFromClientX = React.useCallback((clientX: number, target: HTMLElement) => {
     const rect = target.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
     // Invert because Layer 2 is clipped from right to left
     const pct = Math.round((1 - x / rect.width) * 100);
     manualSliderPos.set(Math.max(5, Math.min(95, pct)));
-  }
+  }, [manualSliderPos]);
 
   useEffect(() => {
     function handleMouseUp() {
@@ -112,7 +111,7 @@ export default function CrucibleManifesto() {
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', handleMouseMoveDoc);
     };
-  }, [isDragging]);
+  }, [isDragging, updateSliderFromClientX]);
 
   // 3D holographic tilt on mouse move
   function handleCardMouseMove(e: MouseEvent<HTMLDivElement>) {

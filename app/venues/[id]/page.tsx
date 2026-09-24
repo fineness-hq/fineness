@@ -1,21 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  Award,
-  ShieldCheck,
-  Scale,
-  Sparkles,
-  ArrowLeft,
-  ArrowRight,
-  TrendingUp,
-  FileCheck,
-  CheckCircle2,
-  Calendar,
-  Layers,
-  Activity,
-  AlertTriangle,
-} from 'lucide-react';
+import { Award, ArrowLeft, ArrowRight } from 'lucide-react';
 import { CRITERIA, HOUSE_WEIGHTS } from '../../../src/scoring/fineness';
 import Footer from '../../../src/site/components/Footer';
 import Masthead from '../../../src/site/components/Masthead';

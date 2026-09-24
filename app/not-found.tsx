@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { AlertCircle, ArrowLeft, BookOpen, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, BookOpen, ShieldAlert } from 'lucide-react';
 import Masthead from '../src/site/components/Masthead';
 import Footer from '../src/site/components/Footer';
 import { LATEST_EDITION } from '../src/site/editions';

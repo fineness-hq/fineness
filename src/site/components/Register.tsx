@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Search, Layers } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { HOUSE_WEIGHTS, band } from '../../scoring/fineness';
 import type { Criterion, Weights } from '../../scoring/fineness';
 import type { Delta } from '../../build/deltas';

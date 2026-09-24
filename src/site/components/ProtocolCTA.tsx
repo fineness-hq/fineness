@@ -10,9 +10,6 @@ import {
   ShieldCheck,
   Copy,
   Check,
-  Radio,
-  FileCode,
-  Sparkles,
 } from 'lucide-react';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
@@ -35,22 +32,20 @@ export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
   const [copied, setCopied] = useState(false);
 
   const snippets: Record<TabKey, string> = {
-    curl: `curl -s https://fineness.io/editions/${edition}.json \\
-  | jq '.venues[] | select(.fineness >= 750) | {name, fineness, band}'`,
-    ts: `import type { Edition } from '@fineness/types';
+    curl: `curl -s <host>/editions/${edition}.json \\
+  | jq '.venues[] | {name, fineness, band}'`,
+    ts: `const res = await fetch('/editions/${edition}.json');
+const editionData = await res.json();
 
-const res = await fetch('https://fineness.io/editions/${edition}.json');
-const edition: Edition = await res.json();
-
-// Parameterize Aave / Morpho liquidation gate
-const admitted = edition.venues.filter(v => v.fineness >= 375);`,
+// Venues at or above the 375 hallmark
+const certified = editionData.venues.filter(v => v.fineness >= 375);`,
     json: `{
   "edition": "${edition}",
-  "snapshotHash": "sha256:d8388ed9157e4b9...",
+  "snapshotHash": "sha256:69c7d65307a33bba6e82fc1b3…",
   "venues": [
-    { "id": "long-xyz", "name": "Long.xyz", "fineness": 999, "band": "24k" },
-    { "id": "pons", "name": "Pons", "fineness": 812, "band": "18k" },
-    { "id": "stonkfun", "name": "stonk.fun", "fineness": 342, "band": "none" }
+    { "id": "pons", "name": "Pons", "fineness": 745, "band": "14k" },
+    { "id": "long-xyz", "name": "Long.xyz", "fineness": 720, "band": "14k" },
+    { "id": "csl", "name": "CSL", "fineness": 220, "band": "below-hallmark" }
   ]
 }`,
   };
@@ -220,11 +215,11 @@ const admitted = edition.venues.filter(v => v.fineness >= 375);`,
                         <span className="text-emerald-400">$ </span>
                         <span className="text-amber-300 font-bold">curl</span>
                         <span className="text-slate-400"> -s </span>
-                        <span className="text-cyan-300">https://fineness.io/editions/{edition}.json</span>
+                        <span className="text-cyan-300">&lt;host&gt;/editions/{edition}.json</span>
                         <span className="text-slate-400"> \</span>
                         {'\n'}  <span className="text-purple-400">| </span>
                         <span className="text-amber-300 font-bold">jq</span>
-                        <span className="text-emerald-300"> &apos;.venues[] | select(.fineness &gt;= 750) | &#123;name, fineness, band&#125;&apos;</span>
+                        <span className="text-emerald-300"> &apos;.venues[] | &#123;name, fineness, band&#125;&apos;</span>
                       </code>
                     )}
 
@@ -233,7 +228,7 @@ const admitted = edition.venues.filter(v => v.fineness >= 375);`,
                         <span className="text-purple-400">import type </span>
                         <span className="text-amber-200">&#123; Edition &#125; </span>
                         <span className="text-purple-400">from </span>
-                        <span className="text-emerald-300">&apos;@fineness/types&apos;</span>;
+                        <span className="text-emerald-300">&apos;./types&apos;</span>;
                         {'\n\n'}
                         <span className="text-purple-400">const </span>
                         <span className="text-cyan-300">res </span>
@@ -241,7 +236,7 @@ const admitted = edition.venues.filter(v => v.fineness >= 375);`,
                         <span className="text-purple-400">await </span>
                         <span className="text-amber-300">fetch</span>
                         <span className="text-slate-400">(</span>
-                        <span className="text-emerald-300">&apos;https://fineness.io/editions/{edition}.json&apos;</span>
+                        <span className="text-emerald-300">&apos;/editions/{edition}.json&apos;</span>
                         <span className="text-slate-400">)</span>;
                         {'\n'}
                         <span className="text-purple-400">const </span>
@@ -251,6 +246,14 @@ const admitted = edition.venues.filter(v => v.fineness >= 375);`,
                         <span className="text-slate-400">= </span>
                         <span className="text-purple-400">await </span>
                         <span className="text-cyan-300">res</span>.<span className="text-amber-300">json</span>();
+                        {'\n'}
+                        <span className="text-slate-400">{`// Venues at or above the 375 hallmark`}</span>
+                        {'\n'}
+                        <span className="text-purple-400">const </span>
+                        <span className="text-cyan-300">certified </span>
+                        <span className="text-slate-400">= </span>
+                        <span className="text-cyan-300">data</span>.<span className="text-amber-300">venues</span>.<span className="text-amber-300">filter</span>
+                        <span className="text-slate-400">(v =&gt; v.fineness &gt;= 375)</span>;
                       </code>
                     )}
 
@@ -258,10 +261,10 @@ const admitted = edition.venues.filter(v => v.fineness >= 375);`,
                       <code>
                         <span className="text-slate-400">&#123;</span>
                         {'\n'}  <span className="text-cyan-300">&quot;edition&quot;</span>: <span className="text-emerald-300">&quot;{edition}&quot;</span>,
-                        {'\n'}  <span className="text-cyan-300">&quot;snapshotHash&quot;</span>: <span className="text-emerald-300">&quot;sha256:d8388ed9157...&quot;</span>,
+                        {'\n'}  <span className="text-cyan-300">&quot;snapshotHash&quot;</span>: <span className="text-emerald-300">&quot;sha256:69c7d65307a33…&quot;</span>,
                         {'\n'}  <span className="text-cyan-300">&quot;venues&quot;</span>: [
-                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Long.xyz&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">999</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-[var(--gold)] font-bold">&quot;24k&quot;</span> &#125;,
-                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Pons&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">812</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-amber-400">&quot;18k&quot;</span> &#125;
+                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Pons&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">745</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-[var(--gold)] font-bold">&quot;14k&quot;</span> &#125;,
+                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Long.xyz&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">720</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-amber-400">&quot;14k&quot;</span> &#125;
                         {'\n'}  ]
                         {'\n'}<span className="text-slate-400">&#125;</span>
                       </code>
