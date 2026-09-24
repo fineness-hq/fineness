@@ -124,53 +124,69 @@ export default function Register({
         <WeightPanel initialRaw={initialRaw} onWeightsChange={setWeights} />
 
         {/* Table filter bar */}
-        <div className="flex items-center justify-between border-b border-[var(--rule)] bg-[var(--surface-alt)]/60 px-5 py-2.5 text-xs">
-          <div className="flex items-center gap-1.5">
-            <Layers size={13} className="text-[var(--ink-3)]" />
-            <span className="mono text-[11px] font-semibold text-[var(--ink)]">
-              Showing {displayed.length} of {reweighted.length} venues
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] bg-[var(--surface-alt)] px-5 py-3 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--gold)] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--gold)]" />
+            </span>
+            <span className="mono text-xs font-bold text-[var(--ink)]">
+              {displayed.length} OF {reweighted.length} VENUES ADMITTED
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5 font-mono text-[11px]">
             <button
               type="button"
               onClick={() => setBandFilter('all')}
-              className={`mono rounded px-2.5 py-1 text-[11px] font-medium transition-all ${
+              className={`rounded-md px-3 py-1 font-bold transition-all shadow-2xs ${
                 bandFilter === 'all'
                   ? 'bg-[var(--dark)] text-white'
-                  : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
+                  : 'border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--ink)] hover:border-[var(--dark)]'
               }`}
             >
-              All
+              ALL
             </button>
             <button
               type="button"
               onClick={() => setBandFilter('certified')}
-              className={`mono rounded px-2.5 py-1 text-[11px] font-medium transition-all ${
+              className={`rounded-md px-3 py-1 font-bold transition-all shadow-2xs ${
                 bandFilter === 'certified'
-                  ? 'bg-[var(--dark)] text-white'
-                  : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
+                  ? 'bg-[var(--gold)] text-white'
+                  : 'border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--ink)] hover:border-[var(--gold)]'
               }`}
             >
-              Certified (≥375)
+              CERTIFIED (≥375‰)
             </button>
             <button
               type="button"
               onClick={() => setBandFilter('below-hallmark')}
-              className={`mono rounded px-2.5 py-1 text-[11px] font-medium transition-all ${
+              className={`rounded-md px-3 py-1 font-bold transition-all shadow-2xs ${
                 bandFilter === 'below-hallmark'
-                  ? 'bg-[var(--dark)] text-white'
-                  : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
+                  ? 'bg-[var(--band-none)] text-white'
+                  : 'border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--ink)]'
               }`}
             >
-              Below Hallmark
+              BELOW CUTOFF
             </button>
           </div>
         </div>
 
+        {/* Ledger Column Headers */}
+        <div className="hidden sm:flex items-center justify-between border-b border-[var(--rule)] bg-[var(--surface-2)]/80 px-5 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">
+          <div className="flex items-center gap-4">
+            <span className="w-8">POS</span>
+            <span>VENUE IDENTITY & THESIS</span>
+          </div>
+          <div className="flex items-center gap-8">
+            <span className="hidden md:inline-block w-32 text-right">PURITY GAUGE</span>
+            <span className="w-28 text-right">FINENESS SCORE</span>
+            <span className="w-4" />
+          </div>
+        </div>
+
         {/* Venue Entries List */}
-        <div role="list" aria-label="Ranked venues">
+        <div role="list" aria-label="Ranked venues" className="divide-y divide-[var(--rule)]">
           {displayed.length === 0 ? (
             <div className="py-12 text-center text-sm text-[var(--ink-3)] mono">
               No venues matching &ldquo;{search}&rdquo;

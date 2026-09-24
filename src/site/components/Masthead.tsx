@@ -25,9 +25,6 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
             </XSlide>
           </Link>
           <nav aria-label="Primary" className="tera-header-right">
-            <span className="tera-lang" title="English only">
-              LANGUAGE&nbsp;&nbsp;EN&nbsp;&nbsp;▾
-            </span>
             <Link href="/#register" className="tera-open">
               OPEN REGISTER&nbsp;&nbsp;↗
             </Link>

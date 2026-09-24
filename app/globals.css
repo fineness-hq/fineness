@@ -843,10 +843,26 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   margin: 0;
   font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(36px, 3.8vw, 60px);
+  font-size: clamp(40px, 4.4vw, 68px);
   letter-spacing: -0.04em;
-  line-height: 1.04;
+  line-height: 1.02;
   color: var(--ink);
+}
+
+/* Typographic contrast inside the hero headline. */
+.tera-h1 .h1-small {
+  font-size: 0.58em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.tera-h1 .h1-accent {
+  display: inline-block;
+  font-style: italic;
+  color: var(--gold);
+  transition: transform 0.3s ease;
+}
+.tera-h1:hover .h1-accent {
+  transform: rotate(-2deg) scale(1.03);
 }
 
 /* Edition bar: snapshot hash + copy + JSON + progress. */

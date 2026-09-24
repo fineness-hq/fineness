@@ -16,6 +16,15 @@ interface HeroChartProps {
 
 type ViewMode = 'purity' | 'backing' | 'volume';
 
+/** Compact backing labels for the mini card. */
+const SHORT_BACKING: Record<string, string> = {
+  'tokenized-equity': 'EQUITY',
+  'inventory-index': 'INDEX',
+  collectible: 'VAULT',
+  synthetic: 'SYNTH',
+  none: '—',
+};
+
 /**
  * Web3 Crucible Stage:
  * Features:
@@ -37,7 +46,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
   }
 
   return (
-    <div className="relative w-full max-w-[500px] select-none flex flex-col items-center justify-center">
+    <div className="relative w-full max-w-[560px] select-none flex flex-col items-center justify-center">
       {/* 1. The Grand Bureaucrat Auditor Cat (Seamless on Background Canvas) */}
       <div className="relative w-full">
         <AuditorCat className="w-full" />
@@ -45,7 +54,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
 
       {/* 2. Floating Glassmorphic Crucible Leaderboard HUD (Overlapping Left Side) */}
       <motion.div
-        className="w-full sm:w-[280px] md:w-[295px] sm:absolute sm:left-0 sm:bottom-0 z-20 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-3 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
+        className="w-full sm:w-[200px] md:w-[215px] sm:absolute sm:-left-16 md:-left-24 sm:top-8 z-20 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-2 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
         initial={reduce ? false : { opacity: 0, x: -16, y: 10 }}
         animate={ready || reduce ? { opacity: 1, x: 0, y: 0 } : {}}
         transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 0.33, 0.3, 1.01] }}
@@ -62,14 +71,15 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--gold)]" />
             </span>
             <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink)]">
-              CRUCIBLE // TOP 5
+              TOP 5
             </span>
           </div>
 
-          {/* Mode pills */}
+          {/* Mode pills — abbreviated to fit the mini card */}
           <div className="flex items-center gap-0.5 rounded bg-[var(--surface-alt)] p-0.5 font-mono text-[9px]">
             <button
               type="button"
+              title="Purity"
               onClick={() => setMode('purity')}
               className={`rounded px-1.5 py-0.5 font-semibold transition-all ${
                 mode === 'purity'
@@ -77,10 +87,11 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                   : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
               }`}
             >
-              PURITY
+              PUR
             </button>
             <button
               type="button"
+              title="Backing"
               onClick={() => setMode('backing')}
               className={`rounded px-1.5 py-0.5 font-semibold transition-all ${
                 mode === 'backing'
@@ -88,10 +99,11 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                   : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
               }`}
             >
-              BACKING
+              BKG
             </button>
             <button
               type="button"
+              title="24h volume"
               onClick={() => setMode('volume')}
               className={`rounded px-1.5 py-0.5 font-semibold transition-all ${
                 mode === 'volume'
@@ -111,7 +123,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
               <button
                 type="button"
                 onClick={() => jump(v.id)}
-                className="group relative flex w-full flex-col gap-1 rounded border border-transparent bg-[var(--surface-2)] p-1.5 sm:p-2 text-left transition-all hover:border-[var(--gold)] hover:bg-[var(--tint)] hover:shadow-xs"
+                className="group relative flex w-full flex-col gap-1 rounded border border-transparent bg-[var(--surface-2)] p-1 sm:p-1.5 text-left transition-all hover:border-[var(--gold)] hover:bg-[var(--tint)] hover:shadow-xs"
                 aria-label={`${v.name}, fineness score ${v.fineness}`}
               >
                 <div className="flex items-center justify-between text-[11px]">
@@ -119,32 +131,27 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                     <span className="mono flex h-4 w-4 items-center justify-center rounded bg-[var(--surface-alt)] text-[9px] font-bold text-[var(--ink-2)] group-hover:bg-[var(--dark)] group-hover:text-white">
                       0{i + 1}
                     </span>
-                    <span className="font-semibold text-[var(--ink)] group-hover:text-[var(--action)] text-xs">
+                    <span className="max-w-[72px] truncate font-semibold text-[var(--ink)] group-hover:text-[var(--action)] text-[11px]">
                       {v.name}
                     </span>
-                    <span className="mono rounded bg-[var(--surface-alt)] px-1 py-0.2 text-[8px] uppercase tracking-wider text-[var(--ink-3)]">
+                    <span className="mono rounded bg-[var(--surface-alt)] px-1 py-0.2 text-[8px] uppercase tracking-wider text-[var(--ink-3)] sm:hidden">
                       {v.chain}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     {mode === 'purity' && (
-                      <div className="flex items-center gap-1">
-                        <span
-                          className="mono text-[11px] font-bold tabular-nums"
-                          style={{ color: BAND_COLOR[v.band as Band] }}
-                        >
-                          {v.fineness}‰
-                        </span>
-                        <span className="mono rounded border border-[var(--rule)] bg-[var(--surface)] px-1 text-[8px] uppercase font-semibold text-[var(--ink-2)]">
-                          {v.band}
-                        </span>
-                      </div>
+                      <span
+                        className="mono text-[11px] font-bold tabular-nums"
+                        style={{ color: BAND_COLOR[v.band as Band] }}
+                      >
+                        {v.fineness}
+                      </span>
                     )}
                     {mode === 'backing' && (
                       <span className="mono flex items-center gap-1 text-[10px] font-medium text-[var(--ink-2)]">
                         <ShieldCheck size={11} className="text-[var(--ok)]" />
-                        {v.pairing.assetType}
+                        {SHORT_BACKING[v.pairing.assetType] ?? v.pairing.assetType}
                       </span>
                     )}
                     {mode === 'volume' && (
@@ -184,9 +191,9 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
         <div className="mt-2 flex items-center justify-between border-t border-[var(--rule)] pt-1.5 text-[9px] text-[var(--ink-3)] font-mono">
           <span className="flex items-center gap-1">
             <BarChart2 size={10} className="text-[var(--action)]" />
-            CUTOFF: 375‰
+            375 CUT
           </span>
-          <span className="font-semibold text-[var(--gold)]">EXPAND AUDIT ↓</span>
+          <span className="font-semibold text-[var(--gold)]">AUDIT ↓</span>
         </div>
       </motion.div>
     </div>

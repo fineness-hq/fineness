@@ -1,3 +1,6 @@
+'use client';
+
+import { motion, useReducedMotion } from 'framer-motion';
 import { Activity, ShieldAlert, Award, Calendar } from 'lucide-react';
 import type { Venue } from '../../types';
 import CountUp from './CountUp';
@@ -8,11 +11,12 @@ interface StatRowProps {
 }
 
 /**
- * Web3 Telemetry Bento Row:
- * Realtime cryptographic and financial statistics with animated count-up numbers,
- * status indicators, and sleek tabular figures.
+ * Edition telemetry strip:
+ * One ruled bar, four cells split by hairlines. Label over numeral,
+ * unit inline. Compact by design — no dead space.
  */
 export default function StatRow({ venues, dataAsOf }: StatRowProps) {
+  const reduce = useReducedMotion();
   const sorted = [...venues].map((v) => v.fineness).sort((a, b) => a - b);
   const median =
     sorted.length === 0
@@ -23,63 +27,55 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
   const below = venues.filter((v) => v.fineness < 375).length;
 
   const stats = [
-    {
-      label: 'Venues Listed',
-      value: venues.length,
-      unit: 'ADMITTED',
-      icon: Activity,
-      color: 'text-[var(--dark)]',
-    },
-    {
-      label: 'Median Fineness',
-      value: median,
-      unit: '‰ PURITY',
-      icon: Award,
-      color: 'text-[var(--gold)]',
-    },
-    {
-      label: 'Below Hallmark',
-      value: below,
-      unit: '< 375 CUT',
-      icon: ShieldAlert,
-      color: 'text-[var(--band-none)]',
-    },
-    {
-      label: 'Data As Of',
-      value: dataAsOf,
-      unit: 'UTC FROZEN',
-      icon: Calendar,
-      color: 'text-[var(--action)]',
-    },
+    { label: 'Venues Listed', value: venues.length, unit: 'ADMITTED', icon: Activity },
+    { label: 'Median Fineness', value: median, unit: '‰ PURITY', icon: Award },
+    { label: 'Below Hallmark', value: below, unit: '< 375 CUT', icon: ShieldAlert },
+    { label: 'Data As Of', value: dataAsOf, unit: 'UTC FROZEN', icon: Calendar },
   ];
 
   return (
-    <section aria-label="Edition Telemetry" className="border-b border-[var(--rule)] bg-[var(--surface-alt)]">
+    <section aria-label="Edition Telemetry" className="relative border-b border-[var(--rule)] bg-[var(--surface-alt)]/80 backdrop-blur-xs">
+      {/* Bullion gold accent hairline */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-80" />
+
       <div className="page-wrap py-4">
-        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {stats.map(({ label, value, unit, icon: Icon, color }) => (
+        <motion.dl
+          className="grid grid-cols-2 divide-y divide-[var(--rule)] rounded-lg border border-[var(--rule)] bg-[var(--surface)] shadow-xs sm:grid-cols-4 sm:divide-x sm:divide-y-0"
+          initial={reduce ? false : { opacity: 0, y: 6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.4, ease: [0.16, 0.33, 0.3, 1] }}
+        >
+          {stats.map(({ label, value, unit, icon: Icon }, idx) => (
             <div
               key={label}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-xs transition-all hover:border-[var(--dark)] hover:shadow-md"
+              className="group relative flex flex-col justify-between p-4 transition-colors hover:bg-[var(--tint)]/40"
             >
-              <div className="flex items-center justify-between">
-                <dt className="mono text-[10px] font-semibold uppercase tracking-wider text-[var(--ink-3)]">
-                  {label}
-                </dt>
-                <Icon size={14} className={`${color} transition-transform group-hover:scale-110`} />
-              </div>
+              {/* Subtle index mark */}
+              <span className="mono absolute right-3 top-3 text-[9px] font-semibold text-[var(--ink-3)] opacity-40 group-hover:opacity-100 transition-opacity">
+                0{idx + 1}
+              </span>
 
-              <div className="mt-3 flex items-baseline justify-between">
-                <dd className="mono text-2xl font-bold tabular-nums tracking-tight text-[var(--ink)]">
-                  {typeof value === 'number' ? <CountUp value={value} /> : value}
-                </dd>
-                <span className="mono text-[9px] font-semibold uppercase tracking-widest text-[var(--ink-3)]">
+              <dt className="mono flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[var(--ink-2)]">
+                <span className="flex h-5 w-5 items-center justify-center rounded border border-[var(--rule)] bg-[var(--surface-alt)] text-[var(--gold)] shadow-2xs group-hover:border-[var(--gold)] group-hover:bg-[var(--dark)] group-hover:text-white transition-all">
+                  <Icon size={11} aria-hidden="true" />
+                </span>
+                {label}
+              </dt>
+
+              <dd className="mono mt-3 flex items-baseline gap-2 text-[26px] font-extrabold tabular-nums leading-none tracking-tight text-[var(--ink)]">
+                {typeof value === 'number' ? (
+                  <CountUp value={value} />
+                ) : (
+                  <span className="whitespace-nowrap text-[20px]">{value}</span>
+                )}
+                <span className="mono rounded border border-[var(--rule)] bg-[var(--surface-alt)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--ink-2)]">
                   {unit}
                 </span>
-              </div>
+              </dd>
             </div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   );

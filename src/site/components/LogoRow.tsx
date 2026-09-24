@@ -1,12 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { band } from '../../scoring/fineness';
+import { BAND_COLOR } from './Entry';
 
 interface LogoRowProps {
   items: { name: string; fineness: number }[];
 }
 
-/** Infinite ticker tape. Duplicated content loops seamlessly, pauses on hover. */
+/**
+ * Venue ticker tape: rank pills with band-colored score chips.
+ * Duplicated content loops seamlessly, pauses on hover, edges fade.
+ */
 export default function LogoRow({ items }: LogoRowProps) {
   const [reduced] = useState(
     () =>
@@ -34,22 +39,46 @@ export default function LogoRow({ items }: LogoRowProps) {
 
   const row = (hidden: boolean) => (
     <div className="flex shrink-0 items-center" aria-hidden={hidden}>
-      {items.map((v) => (
-        <span
-          key={`${hidden ? 'b' : 'a'}-${v.name}`}
-          className="mono flex items-center gap-2 whitespace-nowrap px-8 text-xs uppercase tracking-widest text-[var(--ink-2)]"
-        >
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
-          {v.name}
-          <span className="tabular-nums text-[var(--ink)]">{v.fineness}</span>
-        </span>
-      ))}
+      {items.map((v, i) => {
+        const b = band(v.fineness);
+        return (
+          <span
+            key={`${hidden ? 'b' : 'a'}-${v.name}`}
+            className="mono flex items-center whitespace-nowrap text-xs uppercase tracking-widest text-[var(--ink-2)]"
+          >
+            <span className="flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface)] py-1.5 pl-2 pr-3 shadow-2xs transition-all hover:-translate-y-px hover:border-[var(--gold)] hover:shadow-xs">
+              <span className="flex h-5 w-5 items-center justify-center rounded bg-[var(--surface-alt)] border border-[var(--rule)] text-[10px] font-black tabular-nums text-[var(--ink)]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="font-extrabold text-[var(--ink)] tracking-tight">{v.name}</span>
+              <span
+                className="rounded px-1.5 py-0.2 text-[10px] font-black tabular-nums shadow-2xs"
+                style={{
+                  backgroundColor: BAND_COLOR[b],
+                  color: '#ffffff',
+                }}
+              >
+                {v.fineness}‰
+              </span>
+              <span className="text-[9px] font-bold text-[var(--ink-3)]">
+                [{b.toUpperCase()}]
+              </span>
+            </span>
+            <span
+              aria-hidden="true"
+              className="mx-4 text-[var(--gold)] opacity-70 font-bold"
+            >
+              ★
+            </span>
+          </span>
+        );
+      })}
     </div>
   );
 
   return (
-    <div aria-label="Venue ticker" className="overflow-hidden border-b border-[var(--rule)] bg-[var(--surface)]">
-      <div className="tera-ticker flex w-max py-3">
+    <div aria-label="Venue ticker" className="overflow-hidden border-b border-[var(--rule)] bg-[var(--surface-2)]">
+      <div className="tera-ticker flex w-max py-3 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
         {row(false)}
         {row(true)}
       </div>

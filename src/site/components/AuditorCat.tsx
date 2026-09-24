@@ -26,6 +26,8 @@ function formatNumber(n: number) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+const STAMP_PHRASES = ['24K VERIFIED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED', '18K CLEARED'];
+
 export default function AuditorCat({ className = '' }: AuditorCatProps) {
   const reduce = useReducedMotion();
   const [stampCount, setStampCount] = useState(1482);
@@ -85,7 +87,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
         setStampActive(true);
         setStampCount((c) => c + 1);
 
-        const phrases = ['24K VERIFIED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED', '18K CLEARED'];
+        const phrases = STAMP_PHRASES;
         setStampText(phrases[Math.floor(Math.random() * phrases.length)]);
 
         // 3. Keep stamp held down on certificate
@@ -129,7 +131,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
       title="Click cat to speed up audit stamping!"
     >
       {/* Floating Status Bar (Direct on background) */}
-      <div className="w-full flex items-center justify-between px-1 mb-1 font-mono text-[11px]">
+      <div className="w-full flex items-center justify-end gap-2 px-1 mb-1 font-mono text-[11px]">
         <div className="flex items-center gap-1.5">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--action)] opacity-75" />
@@ -148,8 +150,17 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
         </div>
       </div>
 
-      {/* 3D Cat Stage — Seamlessly Sitting on Background Canvas */}
-      <div className="relative flex h-[300px] sm:h-[350px] md:h-[390px] w-full items-center justify-end overflow-visible">
+      {/* 3D Cat Stage — Seamlessly Sitting on Background Canvas.
+          Bottom fades into the page bg so the cut edge melts away. */}
+      <div
+        className="relative flex h-[400px] sm:h-[470px] md:h-[530px] w-full items-center justify-end overflow-visible"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent 0%, #000 12%, #000 76%, transparent 97%)',
+          maskImage:
+            'linear-gradient(to bottom, transparent 0%, #000 12%, #000 76%, transparent 97%)',
+        }}
+      >
         {/* Parallax Container */}
         <motion.div
           className="relative z-10 flex h-full w-full items-center justify-end cursor-pointer"
@@ -204,8 +215,17 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
             </div>
           )}
 
-          {/* Grand Stamping Cat Character (Arm Up vs Arm Down Slam) */}
-          <div className="relative h-[280px] sm:h-[330px] md:h-[370px] w-[280px] sm:w-[330px] md:w-[370px]">
+          {/* Grand Stamping Cat Character (Arm Up vs Arm Down Slam).
+              Left edge fades so it melts into the bg instead of a hard cut. */}
+          <div
+            className="relative h-[380px] sm:h-[450px] md:h-[510px] w-[380px] sm:w-[450px] md:w-[510px]"
+            style={{
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, #000 14%, #000 84%, transparent 100%)',
+              maskImage:
+                'linear-gradient(to right, transparent 0%, #000 14%, #000 84%, transparent 100%)',
+            }}
+          >
             {/* Frame 1: Arm Raised High in the Air holding Stamp */}
             <motion.div
               className="absolute inset-0"
@@ -222,7 +242,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
                 alt="Auditor Cat arm raised high ready to stamp"
                 fill
                 priority
-                sizes="(max-width: 640px) 280px, 370px"
+                sizes="(max-width: 640px) 380px, 510px"
                 className="object-contain drop-shadow-[0_14px_28px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
@@ -243,42 +263,68 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
                 alt="Auditor Cat arm stamping certificate down"
                 fill
                 priority
-                sizes="(max-width: 640px) 280px, 370px"
+                sizes="(max-width: 640px) 380px, 510px"
                 className="object-contain drop-shadow-[0_14px_28px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
 
-            {/* Impact Shockwave Ring on the Desk Certificate */}
+            {/* Impact Shockwaves on the Desk Certificate (double ring) */}
             {!reduce && stampActive && (
-              <motion.div
-                className="absolute left-[44%] bottom-[23%] z-20 pointer-events-none h-12 w-18 rounded-full border-2 border-[var(--band-high)]"
-                initial={{ scale: 0.5, opacity: 1 }}
-                animate={{ scale: 2.2, opacity: 0 }}
-                transition={{ duration: 0.38, ease: 'easeOut' }}
-              />
+              <>
+                <motion.div
+                  className="absolute left-[44%] bottom-[29%] z-20 pointer-events-none h-12 w-18 rounded-full border-2 border-[var(--band-high)]"
+                  initial={{ scale: 0.5, opacity: 1 }}
+                  animate={{ scale: 2.2, opacity: 0 }}
+                  transition={{ duration: 0.38, ease: 'easeOut' }}
+                />
+                <motion.div
+                  className="absolute left-[44%] bottom-[29%] z-20 pointer-events-none h-12 w-18 rounded-full border border-[var(--gold)]"
+                  initial={{ scale: 0.4, opacity: 0.9 }}
+                  animate={{ scale: 3, opacity: 0 }}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
+                />
+              </>
             )}
 
-            {/* Live Certified Stamp Imprint */}
+            {/* Ink burst particles on every slam */}
+            {!reduce && stampActive && (
+              <div className="pointer-events-none absolute left-[46%] bottom-[31%] z-30" aria-hidden="true">
+                {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+                  const angle = (i / 8) * Math.PI * 2;
+                  return (
+                    <motion.span
+                      key={`${stampCount}-${i}`}
+                      className="absolute block h-1.5 w-1.5 rounded-full bg-[var(--band-high)]"
+                      initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                      animate={{
+                        x: Math.cos(angle) * (22 + (i % 3) * 10),
+                        y: Math.sin(angle) * (16 + (i % 2) * 8),
+                        opacity: 0,
+                        scale: 0.3,
+                      }}
+                      transition={{ duration: 0.45, ease: 'easeOut' }}
+                    />
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Main Certified Stamp Imprint — big slam, double ring, grunge tilt */}
             <motion.div
-              className="absolute left-[38%] bottom-[21%] z-30 pointer-events-none rotate-[-6deg] rounded border border-[var(--band-high)] bg-[var(--surface)]/95 px-2 py-0.5 shadow-md"
+              className="absolute left-[36%] bottom-[27%] z-30 pointer-events-none rotate-[-6deg] rounded-md border-[3px] border-[var(--band-high)] bg-[var(--surface)]/95 px-3 py-1.5 shadow-lg"
+              style={{ boxShadow: 'inset 0 0 0 1px var(--surface), inset 0 0 0 2px var(--band-high), 0 6px 16px rgba(15,20,25,0.25)' }}
               animate={
                 stampActive
-                  ? {
-                      scale: [1.35, 1],
-                      opacity: 1,
-                    }
-                  : {
-                      scale: 1,
-                      opacity: 0.95,
-                    }
+                  ? { scale: [1.7, 0.94, 1], rotate: [-12, -4, -6], opacity: 1 }
+                  : { scale: 1, rotate: -6, opacity: 0.95 }
               }
-              transition={{ duration: 0.18 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
             >
-              <div className="flex items-center gap-1.5 font-mono text-[9px] font-bold text-[var(--band-high)]">
-                <Stamp size={10} />
+              <div className="flex items-center gap-1.5 rounded-sm border border-dashed border-[var(--band-high)] px-1.5 py-0.5 font-mono text-[13px] font-bold tracking-widest text-[var(--band-high)]">
+                <Stamp size={14} />
                 <span>{stampText}</span>
-              </div>
-            </motion.div>
+          </div>
+        </motion.div>
           </div>
         </motion.div>
       </div>

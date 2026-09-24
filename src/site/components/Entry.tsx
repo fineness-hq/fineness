@@ -93,7 +93,40 @@ export default function Entry({
   };
 
   const detail = (
-    <div className="border-t border-[var(--rule)] bg-[var(--surface)] px-5 py-6">
+    <div className="border-t border-[var(--rule)] bg-[var(--surface-alt)]/40 px-5 py-6">
+      {/* Official Audit Dossier Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4 mb-4">
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded bg-[var(--gold)] text-white shadow-xs">
+            <ShieldCheck size={14} />
+          </span>
+          <div>
+            <h3 className="mono text-xs font-black uppercase tracking-wider text-[var(--ink)]">
+              OFFICIAL AUDIT DOSSIER // {venue.name}
+            </h3>
+            <p className="mono text-[10px] text-[var(--ink-3)]">
+              CRUCIBLE REPRODUCIBLE ASSAY LEDGER
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 font-mono text-[11px]">
+          <span
+            className="rounded border px-2.5 py-1 font-extrabold uppercase tracking-wider shadow-xs"
+            style={{
+              borderColor: BAND_COLOR[displayBand],
+              backgroundColor: 'var(--surface)',
+              color: BAND_COLOR[displayBand],
+            }}
+          >
+            {displayBand} STANDING
+          </span>
+          <span className="rounded bg-[var(--dark)] px-2.5 py-1 font-bold text-white shadow-xs">
+            {displayFineness}‰ PURITY
+          </span>
+        </div>
+      </div>
+
       {/* 5 Criteria Grid */}
       <h3 className="mono text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
         Editorial Score Breakdown
@@ -273,22 +306,25 @@ export default function Entry({
         className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors"
       >
         {/* Rank Number */}
-        <span className="mono flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[var(--surface-alt)] text-sm font-bold tabular-nums text-[var(--ink-2)] group-hover:bg-[var(--dark)] group-hover:text-white transition-colors">
+        <span className="mono flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-xs font-black tabular-nums text-[var(--ink)] shadow-2xs group-hover:border-[var(--dark)] group-hover:bg-[var(--dark)] group-hover:text-white transition-all">
           {String(rank).padStart(2, '0')}
         </span>
 
         {/* Venue Info */}
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <span className="font-[var(--font-inter)] text-base font-bold text-[var(--ink)] group-hover:text-[var(--action)] transition-colors">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="font-[var(--font-inter)] text-base font-extrabold text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
               {venue.name}
             </span>
-            <span className="mono rounded bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
+            <span className="mono rounded border border-[var(--rule)] bg-[var(--surface-alt)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--ink-2)]">
               {venue.chain}
             </span>
+            <span className="mono rounded bg-[var(--surface-2)] px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--ink-3)]">
+              {venue.pairing.assetType}
+            </span>
             {venue.resident && (
-              <span className="mono rounded bg-[var(--tint)] px-1.5 py-0.5 text-[9px] uppercase font-semibold text-[var(--action)]">
-                Resident
+              <span className="mono rounded border border-[var(--gold)]/40 bg-[var(--tint)] px-1.5 py-0.5 text-[9px] uppercase font-bold text-[var(--gold)]">
+                ★ RESIDENT
               </span>
             )}
           </div>
@@ -302,17 +338,19 @@ export default function Entry({
           </span>
         </div>
 
-        {/* Mini Purity Bar in Row */}
-        <div className="hidden md:flex flex-col items-end gap-1 shrink-0 w-32">
-          <div className="flex items-center justify-between w-full text-[10px]">
-            <span className="mono text-[var(--ink-3)]">HALLMARK</span>
-            <span className="mono font-semibold" style={{ color: BAND_COLOR[displayBand] }}>
+        {/* Precision Purity Gauge in Row */}
+        <div className="hidden md:flex flex-col items-end gap-1 shrink-0 w-36">
+          <div className="flex items-center justify-between w-full text-[10px] font-mono">
+            <span className="text-[var(--ink-3)] font-semibold">PURITY GAUGE</span>
+            <span className="font-extrabold" style={{ color: BAND_COLOR[displayBand] }}>
               {displayFineness}‰
             </span>
           </div>
-          <div className="relative h-1.5 w-full rounded-full bg-[var(--surface-alt)] overflow-hidden">
+          <div className="relative h-2 w-full rounded-full bg-[var(--surface-alt)] overflow-hidden border border-[var(--rule)]/60">
+            {/* Hallmark 375 line */}
+            <div className="absolute inset-y-0 left-[37.5%] w-[1px] bg-white z-10 opacity-70" title="375 Cutoff" />
             <div
-              className="h-full rounded-full"
+              className="h-full rounded-full transition-all"
               style={{
                 width: `${(displayFineness / 1000) * 100}%`,
                 backgroundColor: BAND_COLOR[displayBand],
@@ -322,12 +360,15 @@ export default function Entry({
         </div>
 
         {/* Score & Band Stamp */}
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="mono text-xl font-bold tabular-nums text-[var(--ink)]">
-            {displayFineness}
-          </span>
+        <div className="flex items-center gap-2.5 shrink-0 font-mono">
+          <div className="flex flex-col items-end">
+            <span className="text-lg font-black tabular-nums text-[var(--ink)] leading-none">
+              {displayFineness}<span className="text-xs font-bold text-[var(--gold)]">‰</span>
+            </span>
+            <DeltaMark delta={delta} />
+          </div>
           <span
-            className="mono rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
+            className="flex items-center justify-center rounded border px-2 py-1 text-[10px] font-black uppercase tracking-wider shadow-2xs"
             style={{
               borderColor: BAND_COLOR[displayBand],
               color: BAND_COLOR[displayBand],
@@ -336,7 +377,6 @@ export default function Entry({
           >
             {displayBand}
           </span>
-          <DeltaMark delta={delta} />
         </div>
 
         {/* Accordion Chevron */}
