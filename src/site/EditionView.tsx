@@ -15,6 +15,11 @@ import Sources from './components/Sources';
 import StatRow from './components/StatRow';
 import StruckList from './components/StruckList';
 import LogoRow from './components/LogoRow';
+import CrucibleManifesto from './components/CrucibleManifesto';
+import AssayWorkflow from './components/AssayWorkflow';
+import WhyFinenessBento from './components/WhyFinenessBento';
+import AssayFAQ from './components/AssayFAQ';
+import ProtocolCTA from './components/ProtocolCTA';
 
 interface EditionViewProps {
   edition: Edition;
@@ -52,6 +57,12 @@ export default function EditionView({
       />
       <StatRow venues={edition.venues} dataAsOf={edition.dataAsOf} />
       <LogoRow items={edition.venues.map((v) => ({ name: v.name, fineness: v.fineness }))} />
+
+      {/* Educational & Narrative Sections ("What is Fineness & The Crucible?") */}
+      <CrucibleManifesto />
+      <AssayWorkflow />
+      <WhyFinenessBento />
+
       <ScaleTable />
       <RegisterClient
         venues={edition.venues}
@@ -63,6 +74,11 @@ export default function EditionView({
       <RegulatedTable venues={edition.venues} />
       <StruckList venues={edition.venues} />
       <Limits />
+
+      {/* Primer FAQ & Open Protocol Developer CTA */}
+      <AssayFAQ />
+      <ProtocolCTA edition={edition.edition} />
+
       <NextEdition currentEdition={edition.edition} />
       <Sources sources={sources} disclosures={edition.disclosures} />
       <Footer edition={edition.edition} />
