@@ -110,7 +110,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                 </h2>
 
                 <p className="mt-4 text-xs sm:text-sm md:text-base leading-relaxed text-[var(--ink-2)]">
-                  Every frozen edition ships beside a verifiable machine-readable JSON dossier containing the exact data rendered on-screen: venues, scores, bands, ranks, raw metrics, and audit source registries.
+                  Every frozen edition ships beside a verifiable machine-readable JSON dossier containing the exact data rendered on-screen: venues, scores, bands, ranks, raw metrics, and publication source registries.
                 </p>
 
                 <div className="mt-5 space-y-2 font-mono text-xs text-[var(--ink-2)]">

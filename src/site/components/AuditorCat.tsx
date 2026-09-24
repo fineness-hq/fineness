@@ -19,7 +19,7 @@ interface AuditorCatProps {
  * - Lazy tail swish loop
  * - Steaming espresso cup rising vapor particles
  * - On-chain ticker tape ribbon
- * - Interactive click-to-stamp & rapid audit mode
+ * - Interactive click-to-stamp & rapid assay mode
  * - 3D cursor perspective tilt tracking
  */
 function formatNumber(n: number) {

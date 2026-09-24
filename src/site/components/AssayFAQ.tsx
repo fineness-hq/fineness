@@ -135,7 +135,7 @@ export default function AssayFAQ() {
               <div className="relative mt-3.5 h-44 sm:h-48 w-full rounded-lg overflow-hidden border border-[var(--rule)] bg-[#0C1014] shadow-inner group">
                 <Image
                   src="/images/cat-inspector-8bit.jpg"
-                  alt="Chief Swiss Gold Auditor Cat Inspecting Bullion with Loupe"
+                  alt="Chief Swiss Gold Assayer Cat Inspecting Bullion with Loupe"
                   fill
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-300"

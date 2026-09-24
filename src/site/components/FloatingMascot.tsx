@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X } from 'lucide-react';
 
 const MASCOT_QUOTES = [
-  'Auditing 999.9 gold purity...',
+  'Assaying 999.9 gold purity...',
   'Zero listing bribes accepted.',
   'Calm, unhurried vigilance.',
   'Frozen edition published.',
@@ -26,7 +26,7 @@ export default function FloatingMascot() {
   }
 
   return (
-    <aside aria-label="Auditor Cat Mascot Widget" className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <aside aria-label="Chief Assayer Mascot Widget" className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Speech Bubble */}
       <AnimatePresence>
         {isOpen && (
@@ -40,7 +40,7 @@ export default function FloatingMascot() {
             <div className="flex items-center justify-between pb-1.5 border-b border-[var(--rule)] mb-1.5">
               <span className="text-[10px] font-bold text-[var(--gold)] flex items-center gap-1">
                 <Sparkles size={11} className="text-[var(--gold)]" />
-                <span>CHIEF AUDITOR CAT</span>
+                <span>CHIEF ASSAYER CAT</span>
               </span>
               <button
                 type="button"
@@ -59,7 +59,7 @@ export default function FloatingMascot() {
               onClick={nextQuote}
               className="mt-2 w-full rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] py-1 text-[10px] font-bold text-[var(--gold)] hover:border-[var(--gold)] transition-colors cursor-pointer"
             >
-              {stamped ? '★ PASSED 999.9 ★' : 'TAP TO AUDIT ↗'}
+              {stamped ? '★ PASSED 999.9 ★' : 'TAP TO ASSAY ↗'}
             </button>
             {/* Bubble arrow */}
             <div className="absolute -bottom-2 right-6 h-3 w-3 rotate-45 border-b-2 border-r-2 border-[var(--gold)] bg-[var(--surface)]" />
@@ -77,12 +77,12 @@ export default function FloatingMascot() {
           else nextQuote();
         }}
         className="relative group flex items-center gap-2 rounded-full border-2 border-[var(--gold)] bg-[#0C1014] p-1.5 pr-3 shadow-xl hover:shadow-[0_0_20px_rgba(196,139,15,0.4)] transition-all cursor-pointer"
-        aria-label="Auditor Cat Mascot — Click for audit quote"
+        aria-label="Chief Assayer Mascot — Click for assay quote"
       >
         <div className="relative h-10 w-10 rounded-full overflow-hidden border border-[var(--gold)]/60 bg-black">
           <Image
             src="/images/cat-inspector-8bit.jpg"
-            alt="Auditor Cat Mascot"
+            alt="Chief Assayer Cat Mascot"
             fill
             sizes="40px"
             className="object-cover"
@@ -90,7 +90,7 @@ export default function FloatingMascot() {
         </div>
         <div className="hidden sm:flex flex-col items-start text-left font-mono">
           <span className="text-[10px] font-black text-[var(--gold)] leading-none">
-            AUDITOR CAT
+            CHIEF ASSAYER
           </span>
           <span className="text-[9px] text-emerald-400 font-semibold leading-none mt-0.5">
             CALM VIGILANCE

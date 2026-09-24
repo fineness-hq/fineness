@@ -309,7 +309,7 @@ export default function AssayWorkflow() {
                           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
                             <Image
                               src="/images/cat-scanner-8bit.jpg"
-                              alt="Chief Auditor Cat Scanning Gold Bullion"
+                              alt="Chief Assayer Cat Scanning Gold Bullion"
                               fill
                               sizes="(max-width: 768px) 100vw, 300px"
                               className="object-cover object-center opacity-85 hover:opacity-100 transition-opacity"
@@ -318,7 +318,7 @@ export default function AssayWorkflow() {
                             <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
                               <span className="text-[var(--gold)] font-bold flex items-center gap-1">
                                 <ScanLine size={11} className="text-[var(--gold)] animate-pulse" />
-                                <span>BAY 01 · CHIEF AUDITOR</span>
+                                <span>BAY 01 · CHIEF ASSAYER</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
                                 999.9 SCAN
