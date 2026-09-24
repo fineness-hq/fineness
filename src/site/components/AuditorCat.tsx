@@ -14,8 +14,8 @@ interface AuditorCatProps {
  * An anti-mainstream character: grumpy banker cat passionately slamming
  * a heavy brass assay stamp onto cryptographic audit certificates.
  * Features:
- * - Rhythmic stamping arm slam loop with impact shockwave
- * - Dynamic stamp imprint reveal ("24K VERIFIED")
+ * - Real 2-frame physical stamping animation (arm raises high in the air & slams down)
+ * - Impact shockwave & dynamic certificate stamp imprint reveal ("24K VERIFIED")
  * - Lazy tail swish loop
  * - Steaming espresso cup rising vapor particles
  * - Continuous ticker tape slide
@@ -25,6 +25,7 @@ interface AuditorCatProps {
 export default function AuditorCat({ className = '' }: AuditorCatProps) {
   const reduce = useReducedMotion();
   const [stampCount, setStampCount] = useState(1482);
+  const [isArmUp, setIsArmUp] = useState(false);
   const [stampActive, setStampActive] = useState(false);
   const [stampText, setStampText] = useState('24K VERIFIED');
   const [isRapid, setIsRapid] = useState(false);
@@ -55,34 +56,61 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
     setIsRapid(false);
   }
 
-  // Auto stamping loop
+  // Real Stamping Arm Movement Loop
   useEffect(() => {
     if (reduce) return;
 
-    const intervalTime = isRapid ? 900 : 1800;
-    const stampInterval = setInterval(() => {
-      // Trigger slam impact
-      setStampActive(true);
-      setStampCount((c) => c + 1);
+    let isMounted = true;
+    let timer: NodeJS.Timeout;
 
-      const phrases = ['24K VERIFIED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED'];
-      setStampText(phrases[Math.floor(Math.random() * phrases.length)]);
+    function runCycle() {
+      if (!isMounted) return;
 
-      setTimeout(() => {
-        setStampActive(false);
-      }, 400);
-    }, intervalTime);
+      // 1. Arm winds UP high in the air
+      setIsArmUp(true);
 
-    return () => clearInterval(stampInterval);
+      const upDuration = isRapid ? 350 : 700;
+      const downHoldDuration = isRapid ? 300 : 600;
+      const pauseDuration = isRapid ? 200 : 400;
+
+      timer = setTimeout(() => {
+        if (!isMounted) return;
+
+        // 2. WHAM! Arm SLAMS down onto the desk certificate
+        setIsArmUp(false);
+        setStampActive(true);
+        setStampCount((c) => c + 1);
+
+        const phrases = ['24K VERIFIED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED', '18K CLEARED'];
+        setStampText(phrases[Math.floor(Math.random() * phrases.length)]);
+
+        // 3. Keep stamp held down on certificate
+        timer = setTimeout(() => {
+          if (!isMounted) return;
+          setStampActive(false);
+
+          // 4. Brief pause before next audit cycle
+          timer = setTimeout(runCycle, pauseDuration);
+        }, downHoldDuration);
+      }, upDuration);
+    }
+
+    runCycle();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
   }, [reduce, isRapid]);
 
   function handleManualStamp() {
     setIsRapid(true);
+    setIsArmUp(false);
     setStampActive(true);
     setStampCount((c) => c + 1);
     setTimeout(() => {
       setStampActive(false);
-    }, 400);
+    }, 300);
   }
 
   return (
@@ -93,7 +121,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
       onClick={handleManualStamp}
       style={{ perspective: 1000 }}
       role="region"
-      aria-label="The Bureaucrat Auditor Cat — Realtime Stamping Mascot"
+      aria-label="The Bureaucrat Auditor Cat — Real Stamping Mascot"
       title="Click cat to speed up audit stamping!"
     >
       {/* Top status bar */}
@@ -169,69 +197,57 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
             </div>
           )}
 
-          {/* Main Cat Illustration */}
-          <motion.div
-            className="relative h-48 sm:h-52 w-48 sm:w-52"
-            animate={
-              reduce
-                ? undefined
-                : {
-                    y: stampActive ? [0, 2, 0] : [0, -1.5, 0],
-                  }
-            }
-            transition={{
-              duration: stampActive ? 0.15 : 2,
-              repeat: stampActive ? 0 : Infinity,
-              ease: 'easeInOut',
-            }}
-          >
-            <Image
-              src="/mascot-cat.png"
-              alt="The Bureaucrat Auditor Cat"
-              fill
-              priority
-              sizes="(max-width: 640px) 210px, 240px"
-              className="object-contain drop-shadow-[0_12px_24px_rgba(15,20,25,0.12)]"
-            />
+          {/* Stamping Cat Character (Arm Up vs Arm Down Slam) */}
+          <div className="relative h-48 sm:h-52 w-48 sm:w-52">
+            {/* Frame 1: Arm Raised High in the Air holding Stamp */}
+            <motion.div
+              className="absolute inset-0"
+              initial={false}
+              animate={{
+                opacity: isArmUp ? 1 : 0,
+                y: isArmUp ? -4 : 0,
+                scale: isArmUp ? 1.01 : 1,
+              }}
+              transition={{ duration: 0.12 }}
+            >
+              <Image
+                src="/cat-up.png"
+                alt="Auditor Cat arm raised high ready to stamp"
+                fill
+                priority
+                sizes="(max-width: 640px) 210px, 240px"
+                className="object-contain drop-shadow-[0_12px_24px_rgba(15,20,25,0.12)]"
+              />
+            </motion.div>
 
-            {/* Animated Brass Stamp Arm & Motion Blur */}
-            {!reduce && (
-              <motion.div
-                className="absolute left-[38%] top-[40%] z-30 flex h-20 w-16 items-center justify-center pointer-events-none"
-                animate={
-                  stampActive
-                    ? {
-                        y: [ -14, 4, 0 ],
-                        rotate: [ -12, 4, 0 ],
-                        scale: [ 1.05, 0.95, 1 ],
-                      }
-                    : {
-                        y: [ 0, -4, 0 ],
-                        rotate: [ 0, -2, 0 ],
-                      }
-                }
-                transition={{
-                  duration: stampActive ? 0.35 : 1.8,
-                  repeat: stampActive ? 0 : Infinity,
-                  ease: stampActive ? 'easeIn' : 'easeInOut',
-                }}
-              >
-                {/* Visual stamping indicator aura */}
-                <div
-                  className={`h-10 w-10 rounded-full border-2 border-[var(--gold)] transition-opacity duration-200 ${
-                    stampActive ? 'opacity-80 scale-110' : 'opacity-0 scale-90'
-                  }`}
-                />
-              </motion.div>
-            )}
+            {/* Frame 2: Arm Slammed Down Stamping Certificate */}
+            <motion.div
+              className="absolute inset-0"
+              initial={false}
+              animate={{
+                opacity: isArmUp ? 0 : 1,
+                y: isArmUp ? 0 : [ -4, 2, 0 ],
+                scale: isArmUp ? 1 : [ 1.02, 0.98, 1 ],
+              }}
+              transition={{ duration: 0.14 }}
+            >
+              <Image
+                src="/cat-down.png"
+                alt="Auditor Cat arm stamping certificate down"
+                fill
+                priority
+                sizes="(max-width: 640px) 210px, 240px"
+                className="object-contain drop-shadow-[0_12px_24px_rgba(15,20,25,0.12)]"
+              />
+            </motion.div>
 
             {/* Impact Shockwave Ring on the Desk Certificate */}
             {!reduce && stampActive && (
               <motion.div
                 className="absolute left-[44%] bottom-[24%] z-20 pointer-events-none h-10 w-14 rounded-full border-2 border-[var(--band-high)]"
-                initial={{ scale: 0.6, opacity: 1 }}
-                animate={{ scale: 1.8, opacity: 0 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+                initial={{ scale: 0.5, opacity: 1 }}
+                animate={{ scale: 2, opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
               />
             )}
 
@@ -241,7 +257,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
               animate={
                 stampActive
                   ? {
-                      scale: [1.3, 1],
+                      scale: [1.35, 1],
                       opacity: 1,
                     }
                   : {
@@ -249,14 +265,14 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
                       opacity: 0.95,
                     }
               }
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
             >
               <div className="flex items-center gap-1 font-mono text-[8px] font-bold text-[var(--band-high)]">
                 <Stamp size={9} />
                 <span>{stampText}</span>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
@@ -288,7 +304,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
           <span>CLICK CAT TO SPEED UP AUDIT</span>
         </div>
         <span className="text-[var(--gold)] font-bold">
-          {isRapid ? '⚡ RAPID STAMPING' : '60FPS ACTIVE LOOP'}
+          {isRapid ? '⚡ RAPID STAMPING' : 'REAL STAMPING LOOP'}
         </span>
       </div>
     </div>
