@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Scale,
   ShieldCheck,
@@ -97,20 +98,19 @@ const REFINERY_STATIONS: Station[] = [
 
 /**
  * AssayWorkflow:
- * Pinned Horizontal Conveyor Rail (Smelting Assembly Line).
+ * Hardware-accelerated 60/120fps Pinned Horizontal Conveyor Rail.
  * Features:
- * - Pinned 240vh section.
- * - Viewport locks at `top-0 h-screen` and centers cleanly with no vertical cutoff.
- * - Vertical scrolling drives the horizontal conveyor rail from Bay 01 to Bay 03.
- * - Molten gold conduit connecting each station with animated pulses.
- * - Interactive station jump buttons with live track position indicator.
+ * - Spring-dampened motion values via Framer Motion useSpring for liquid inertia.
+ * - Hardware accelerated translate3d with will-change: transform.
+ * - Zero layout reflow or transition-conflict stutters.
  */
 export default function AssayWorkflow() {
   const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [maxTranslate, setMaxTranslate] = useState(0);
+  const [maxTranslate, setMaxTranslate] = useState(1200);
+  const [scrollPct, setScrollPct] = useState(0);
   const [activeStationIndex, setActiveStationIndex] = useState(0);
+  const reduce = useReducedMotion();
 
   // Measure track scrollable width
   useEffect(() => {
@@ -127,34 +127,35 @@ export default function AssayWorkflow() {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Scroll listener for horizontal translation
+  // Framer Motion scroll and buttery spring physics
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 85,
+    damping: 24,
+    mass: 0.6,
+    restDelta: 0.0005,
+  });
+
+  const x = useTransform(smoothProgress, [0, 1], [0, -maxTranslate]);
+
+  // Synchronize telemetry and active bay without re-rendering the animation loop
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const totalScrollable = rect.height - vh;
-      if (totalScrollable <= 0) return;
-
-      const p = Math.max(0, Math.min(1, -rect.top / totalScrollable));
-      setScrollProgress(p);
-
-      // Active station indicator
-      if (p < 0.33) {
+    const unsubscribe = smoothProgress.on('change', (latest) => {
+      setScrollPct(Math.round(latest * 100));
+      if (latest < 0.33) {
         setActiveStationIndex(0);
-      } else if (p < 0.66) {
+      } else if (latest < 0.66) {
         setActiveStationIndex(1);
       } else {
         setActiveStationIndex(2);
       }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const currentTranslateX = scrollProgress * maxTranslate;
+    });
+    return () => unsubscribe();
+  }, [smoothProgress]);
 
   // Jump to specific station
   const jumpToStation = (index: number) => {
@@ -202,7 +203,7 @@ export default function AssayWorkflow() {
                 <button
                   key={st.id}
                   onClick={() => jumpToStation(idx)}
-                  className={`px-3 py-1.5 rounded-md font-mono text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-md font-mono text-[11px] font-bold transition-colors cursor-pointer ${
                     activeStationIndex === idx
                       ? 'bg-[var(--gold)] text-white shadow-xs'
                       : 'text-[var(--ink-2)] hover:text-[var(--ink)] hover:bg-[var(--surface-alt)]'
@@ -215,7 +216,7 @@ export default function AssayWorkflow() {
 
             <div className="hidden sm:flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--gold)] font-bold">
               <Radio size={13} className="animate-pulse" />
-              <span>RAIL: {Math.round(scrollProgress * 100)}%</span>
+              <span>RAIL: {scrollPct}%</span>
             </div>
           </div>
         </div>
@@ -226,13 +227,11 @@ export default function AssayWorkflow() {
           {/* Molten Gold Overhead Rail Wire */}
           <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-[var(--rule)] via-[var(--gold)]/40 to-[var(--rule)] pointer-events-none z-0" />
 
-          {/* The Moving Track */}
-          <div
+          {/* The Moving Track - Hardware Accelerated */}
+          <motion.div
             ref={trackRef}
-            className="flex items-center gap-6 sm:gap-8 px-4 sm:px-12 transition-transform duration-100 ease-out will-change-transform z-10"
-            style={{
-              transform: `translateX(-${currentTranslateX}px)`,
-            }}
+            style={{ x: reduce ? 0 : x }}
+            className="flex items-center gap-6 sm:gap-8 px-4 sm:px-12 will-change-transform z-10"
           >
             {REFINERY_STATIONS.map((station, idx) => {
               const StIcon = station.icon;
@@ -241,7 +240,7 @@ export default function AssayWorkflow() {
               return (
                 <div
                   key={station.id}
-                  className={`shrink-0 w-[85vw] max-w-[580px] sm:max-w-[680px] md:max-w-[760px] rounded-2xl border-2 transition-all duration-300 p-6 sm:p-8 bg-[var(--surface)] shadow-xl ${
+                  className={`shrink-0 w-[85vw] max-w-[580px] sm:max-w-[680px] md:max-w-[760px] rounded-2xl border-2 transition-colors duration-200 p-6 sm:p-8 bg-[var(--surface)] shadow-xl ${
                     isActive
                       ? 'border-[var(--gold)] shadow-[0_12px_40px_-15px_rgba(196,139,15,0.25)]'
                       : 'border-[var(--rule)] opacity-85 hover:opacity-100'
@@ -370,7 +369,7 @@ export default function AssayWorkflow() {
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom Rail Track Indicators */}

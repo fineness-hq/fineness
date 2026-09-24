@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Lock,
   TrendingUp,
@@ -16,44 +17,40 @@ import {
   Crosshair,
   Compass,
 } from 'lucide-react';
-import Reveal from './Reveal';
 
 /**
  * WhyFinenessBento:
- * Architectural 4-Deck Bento Grid with Scroll Parallax & Vernier Telemetry Caliper.
- * 
- * Mechanical difference vs AssayWorkflow:
- * - AssayWorkflow is a pinned horizontal conveyor belt (100vh lock).
- * - WhyFinenessBento is an OPEN asymmetric bento grid in natural document flow.
- * - Scroll drives a live Vernier Caliper precision hairline and multi-plane 3D column parallax.
- * - Dynamic gold spotlighting illuminates the 4 institutional decks as user scrolls past.
+ * Architectural 4-Deck Bento Grid with Spring-Dampened Parallax & Vernier Caliper.
+ * Hardware-accelerated with Framer Motion motion values for 60/120fps buttery smooth scroll.
  */
 export default function WhyFinenessBento() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [caliperPct, setCaliperPct] = useState(0);
+  const reduce = useReducedMotion();
 
-  // Measure scroll through this section for Vernier Caliper and subtle parallax
+  // Framer Motion scroll and spring dampening
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 80,
+    damping: 24,
+    mass: 0.6,
+    restDelta: 0.0005,
+  });
+
+  const leftColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [28, -28]);
+  const rightColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [-28, 28]);
+  const caliperScale = useTransform(smoothProgress, [0.1, 0.9], [0, 1]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const vh = window.innerHeight;
-      
-      // Calculate how far through the section the viewport is
-      const total = rect.height + vh;
-      const current = vh - rect.top;
-      const progress = Math.max(0, Math.min(1, current / total));
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Parallax offsets
-  const leftColOffset = (scrollProgress - 0.5) * -20;
-  const rightColOffset = (scrollProgress - 0.5) * 20;
+    return smoothProgress.on('change', (v) => {
+      const clamped = Math.max(0, Math.min(100, Math.round(v * 100)));
+      setCaliperPct(clamped);
+    });
+  }, [smoothProgress]);
 
   return (
     <section
@@ -85,16 +82,13 @@ export default function WhyFinenessBento() {
           <div className="shrink-0 flex flex-col items-end font-mono">
             <div className="flex items-center gap-2 text-xs font-bold text-[var(--gold)] mb-1">
               <Compass size={14} className="animate-spin" />
-              <span>VERNIER CALIPER: {Math.round(scrollProgress * 100)}%</span>
+              <span>VERNIER CALIPER: {caliperPct}%</span>
             </div>
             {/* Caliper Hairline */}
             <div className="w-48 h-2 rounded-full bg-[var(--surface-alt)] border border-[var(--rule)] overflow-hidden relative">
-              <div
-                className="absolute top-0 bottom-0 bg-[var(--gold)] transition-all duration-75"
-                style={{
-                  left: 0,
-                  width: `${scrollProgress * 100}%`,
-                }}
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-[var(--gold)] w-full origin-left will-change-transform"
+                style={{ scaleX: reduce ? 1 : caliperScale }}
               />
             </div>
             <span className="text-[10px] text-[var(--ink-3)] mt-1">AXIS DEPTH: 4 INSTITUTIONAL QUADRANTS</span>
@@ -105,12 +99,9 @@ export default function WhyFinenessBento() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
           {/* DECK 1: COLLATERAL DEFENSE ENGINE (Cols 1-7) */}
-          <div
-            className="lg:col-span-7 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-all duration-300 relative group overflow-hidden"
-            style={{
-              transform: `translateY(${leftColOffset}px)`,
-              transition: 'transform 0.1s ease-out, border-color 0.3s ease',
-            }}
+          <motion.div
+            style={{ y: leftColY }}
+            className="lg:col-span-7 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
           >
             {/* Gold Spotlight Corner Accent */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_top_right,rgba(196,139,15,0.12),transparent_70%)] pointer-events-none" />
@@ -161,15 +152,12 @@ export default function WhyFinenessBento() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* DECK 2: DEPEG ARBITRAGE RADAR (Cols 8-12) */}
-          <div
-            className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-all duration-300 relative group overflow-hidden"
-            style={{
-              transform: `translateY(${rightColOffset}px)`,
-              transition: 'transform 0.1s ease-out, border-color 0.3s ease',
-            }}
+          <motion.div
+            style={{ y: rightColY }}
+            className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
           >
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]">
@@ -222,15 +210,12 @@ export default function WhyFinenessBento() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* DECK 3: ASSAYER'S SANCTUARY (Cols 1-5) */}
-          <div
-            className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-all duration-300 relative group overflow-hidden"
-            style={{
-              transform: `translateY(${leftColOffset}px)`,
-              transition: 'transform 0.1s ease-out, border-color 0.3s ease',
-            }}
+          <motion.div
+            style={{ y: leftColY }}
+            className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
           >
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]">
@@ -268,15 +253,12 @@ export default function WhyFinenessBento() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* DECK 4: HARMONIC EQUALIZER (Cols 6-12) */}
-          <div
-            className="lg:col-span-7 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-all duration-300 relative group overflow-hidden"
-            style={{
-              transform: `translateY(${rightColOffset}px)`,
-              transition: 'transform 0.1s ease-out, border-color 0.3s ease',
-            }}
+          <motion.div
+            style={{ y: rightColY }}
+            className="lg:col-span-7 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
           >
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]">
@@ -304,22 +286,31 @@ export default function WhyFinenessBento() {
                 <span className="text-[var(--gold)] font-bold">30 / 25 / 20 / 15 / 10 HOUSE</span>
               </div>
 
-              {/* Equalizer Frequency Dancing Bars */}
+              {/* Equalizer Frequency Dancing Bars - Hardware Accelerated Transform */}
               <div className="flex items-end justify-between gap-2 h-16 pt-2 pb-1 px-4 rounded-lg bg-[var(--surface-alt)] border border-[var(--rule)]">
                 {[
-                  { label: 'BACK', pct: '85%', delay: '0s' },
-                  { label: 'VOL', pct: '65%', delay: '0.2s' },
-                  { label: 'RES', pct: '92%', delay: '0.4s' },
-                  { label: 'CUST', pct: '78%', delay: '0.1s' },
-                  { label: 'DUR', pct: '60%', delay: '0.3s' },
-                  { label: 'HARMONIC', pct: '95%', delay: '0.5s' },
-                  { label: 'KARAT', pct: '100%', delay: '0.25s' },
+                  { label: 'BACK', scale: 0.85, delay: 0 },
+                  { label: 'VOL', scale: 0.65, delay: 0.2 },
+                  { label: 'RES', scale: 0.92, delay: 0.4 },
+                  { label: 'CUST', scale: 0.78, delay: 0.1 },
+                  { label: 'DUR', scale: 0.60, delay: 0.3 },
+                  { label: 'HARMONIC', scale: 0.95, delay: 0.5 },
+                  { label: 'KARAT', scale: 1.0, delay: 0.25 },
                 ].map((bar, bIdx) => (
                   <div key={bIdx} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                    <div
-                      className="w-full bg-[var(--gold)] rounded-t transition-all duration-300"
+                    <motion.div
+                      animate={{
+                        scaleY: [bar.scale * 0.7, bar.scale, bar.scale * 0.8],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                        duration: 1.6 + (bIdx % 3) * 0.3,
+                        delay: bar.delay,
+                        ease: 'easeInOut',
+                      }}
+                      className="w-full h-full bg-[var(--gold)] rounded-t will-change-transform origin-bottom"
                       style={{
-                        height: bar.pct,
                         opacity: 0.75 + (bIdx % 3) * 0.1,
                       }}
                     />
@@ -330,7 +321,7 @@ export default function WhyFinenessBento() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 

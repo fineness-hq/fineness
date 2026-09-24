@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState, useRef, useEffect, MouseEvent, TouchEvent } from 'react';
+import React, { useState, useRef, useEffect, MouseEvent } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Flame,
   FileX,
   Award,
   Sparkles,
-  Scan,
   Check,
   RefreshCw,
   XCircle,
-  ShieldAlert,
   ShieldCheck,
-  SlidersHorizontal,
   Lock,
   Eye,
   CheckCircle2,
@@ -20,27 +18,49 @@ import {
 
 /**
  * CrucibleManifesto:
- * Elevated beyond simple text-splitting into an interactive "Touchstone X-Ray & Thermal Scorch" stage.
+ * Touchstone X-Ray & Thermal Scorch stage with Framer Motion spring physics.
  * Features:
- * - Scroll-driven pinned reveal + interactive horizontal drag caliper (scrub between Paper IOU and 24K Bullion).
- * - Real-time comparison clipping mask revealing the interior cryptographic crystalline gold structure.
+ * - Buttery smooth spring-lerped clip-path scrubbing (120fps).
+ * - Hardware-accelerated 3D holographic tilt with momentum physics.
  * - Interactive Crucible Thermal Smelt button (1,064°C) with spark waves and live assay hallmark die-stamp.
- * - Live spot parity metrics and verifiable vault telemetry.
  */
 export default function CrucibleManifesto() {
   const containerRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
 
-  // Slider position (0 = all paper, 100 = all 24K gold, default 50)
-  const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [isSmelting, setIsSmelting] = useState(false);
   const [hasSmelted, setHasSmelted] = useState(false);
+  const [displaySliderPct, setDisplaySliderPct] = useState(50);
 
-  // 3D holographic cursor tracking
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50, rotX: 0, rotY: 0 });
+  // Motion values with spring damping for liquid smoothness
+  const sliderMotion = useMotionValue(50);
+  const smoothSlider = useSpring(sliderMotion, {
+    stiffness: 140,
+    damping: 24,
+    mass: 0.4,
+    restDelta: 0.001,
+  });
 
-  // Scroll driven progression that automatically moves the caliper if not manually dragging
+  // Tilt spring physics
+  const mouseRotX = useMotionValue(0);
+  const mouseRotY = useMotionValue(0);
+  const smoothRotX = useSpring(mouseRotX, { stiffness: 180, damping: 22 });
+  const smoothRotY = useSpring(mouseRotY, { stiffness: 180, damping: 22 });
+
+  // Clip path transform
+  const clipPathValue = useTransform(smoothSlider, (v) => `inset(0 0 0 ${100 - v}%)`);
+  const caliperLeft = useTransform(smoothSlider, (v) => `${v}%`);
+
+  // Update numerical label smoothly
+  useEffect(() => {
+    return smoothSlider.on('change', (v) => {
+      setDisplaySliderPct(Math.round(v));
+    });
+  }, [smoothSlider]);
+
+  // Scroll driven progression that automatically sweeps the caliper if not dragging
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current || isDragging) return;
@@ -49,27 +69,21 @@ export default function CrucibleManifesto() {
       const totalScrollable = rect.height - vh;
       if (totalScrollable <= 0) return;
 
-      // Calculate 0 to 1 scroll progress through the section
       const progress = Math.max(0, Math.min(1, -rect.top / totalScrollable));
-      // Map scroll progress to slider reveal (starts at 20% paper, sweeps to 85% gold)
-      const targetPos = Math.round(20 + progress * 65);
-      setSliderPos(targetPos);
+      const targetPos = 20 + progress * 65;
+      sliderMotion.set(targetPos);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isDragging]);
+  }, [isDragging, sliderMotion]);
 
   // Drag handlers for the caliper slider
   function updateSliderFromClientX(clientX: number, target: HTMLElement) {
     const rect = target.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
     const pct = Math.round((x / rect.width) * 100);
-    setSliderPos(pct);
-  }
-
-  function handleMouseDown() {
-    setIsDragging(true);
+    sliderMotion.set(pct);
   }
 
   useEffect(() => {
@@ -77,11 +91,8 @@ export default function CrucibleManifesto() {
       setIsDragging(false);
     }
     function handleMouseMoveDoc(e: globalThis.MouseEvent) {
-      if (!isDragging || !stageRef.current) return;
-      const caliperTrack = stageRef.current.querySelector('.caliper-track') as HTMLElement;
-      if (caliperTrack) {
-        updateSliderFromClientX(e.clientX, caliperTrack);
-      }
+      if (!isDragging || !trackRef.current) return;
+      updateSliderFromClientX(e.clientX, trackRef.current);
     }
     window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mousemove', handleMouseMoveDoc);
@@ -93,18 +104,19 @@ export default function CrucibleManifesto() {
 
   // 3D holographic tilt on mouse move
   function handleCardMouseMove(e: MouseEvent<HTMLDivElement>) {
+    if (reduce) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const px = (x / rect.width) * 100;
-    const py = (y / rect.height) * 100;
-    const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 4;
-    const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 4;
-    setMousePos({ x: px, y: py, rotX, rotY });
+    const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 4.5;
+    const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 4.5;
+    mouseRotX.set(rotX);
+    mouseRotY.set(rotY);
   }
 
   function handleCardMouseLeave() {
-    setMousePos({ x: 50, y: 50, rotX: 0, rotY: 0 });
+    mouseRotX.set(0);
+    mouseRotY.set(0);
   }
 
   function triggerSmelt() {
@@ -112,77 +124,90 @@ export default function CrucibleManifesto() {
     setTimeout(() => {
       setIsSmelting(false);
       setHasSmelted(true);
-      setSliderPos(95); // Reveal gold fully upon smelting
+      sliderMotion.set(95); // Reveal gold fully upon smelting
     }, 1000);
   }
 
   return (
     <section
       ref={containerRef}
-      id="crucible-disclosure"
-      aria-labelledby="manifesto-title"
-      className="relative w-full border-b border-[var(--rule)] bg-[var(--surface-alt)]"
-      style={{ minHeight: '180svh' }}
+      id="crucible-manifesto"
+      aria-label="The Touchstone X-Ray Caliper Stage"
+      className="relative w-full border-b border-[var(--rule)] bg-[var(--surface-alt)] py-20 md:py-28 overflow-hidden"
     >
-      {/* Sticky Stage Container */}
-      <div
-        ref={stageRef}
-        className="sticky top-16 md:top-20 h-[calc(100svh-64px)] md:h-[calc(100svh-80px)] min-h-[620px] flex flex-col justify-center items-center overflow-hidden px-[max(4vw,20px)] py-6"
-      >
-        {/* Subtle Ambient Radial Glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(196,139,15,0.09)_0%,transparent_60%)]"
-        />
-
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        
         {/* Section Header */}
-        <div className="relative z-10 text-center max-w-2xl mx-auto mb-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-[11px] font-bold text-[var(--gold)] mb-3 shadow-2xs">
-            <Flame size={12} className="text-[var(--gold)] animate-pulse" />
-            <span>THE TOUCHSTONE X-RAY ASSAY</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--rule)] pb-6 mb-8">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[var(--gold)]" />
+              <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
+                THE CRUCIBLE DISCLOSURE // TOUCHSTONE X-RAY CALIPER
+              </p>
+            </div>
+            <h2 className="mt-2 font-[var(--font-inter)] text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[var(--ink)]">
+              Peel the Wrapper. Inspect the Vault.
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] max-w-2xl leading-relaxed">
+              Drag the golden caliper or scroll to peer through the outer corporate contract into the physical crystalline bullion vault beneath.
+            </p>
           </div>
 
-          <h2
-            id="manifesto-title"
-            className="font-[var(--font-inter)] text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[var(--ink)] leading-tight"
-          >
-            Peeling Back Paper Promises to Reveal Physical 24K Bullion
-          </h2>
-          <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed max-w-lg mx-auto">
-            Drag the caliper handle or scroll to dissect the synthetic paper wrapper vs true LBMA-allocated cryptographic gold.
-          </p>
+          {/* Thermal Smelt Trigger Button */}
+          <div className="shrink-0 flex items-center gap-3">
+            <button
+              onClick={triggerSmelt}
+              disabled={isSmelting}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-bold transition-all shadow-md cursor-pointer ${
+                hasSmelted
+                  ? 'border border-[var(--gold)] bg-[var(--tint)] text-[var(--gold)]'
+                  : 'bg-[var(--dark)] text-white hover:bg-[var(--gold)] hover:text-white'
+              }`}
+            >
+              <Flame size={15} className={isSmelting ? 'animate-bounce text-amber-400' : 'text-[var(--gold)]'} />
+              <span>
+                {isSmelting
+                  ? 'SMELTING AT 1,064°C...'
+                  : hasSmelted
+                    ? '24K CERTIFIED SMELTED'
+                    : 'TRIGGER 1,064°C TEST'}
+              </span>
+            </button>
+          </div>
         </div>
 
-        {/* Interactive Caliper Stage (Unified Dual-Layer Bullion Comparator) */}
-        <div className="relative z-20 w-full max-w-4xl mx-auto flex flex-col items-center">
+        {/* The Interactive Touchstone X-Ray Caliper Stage */}
+        <div className="relative w-full">
           
-          {/* Caliper Control Header Bar */}
-          <div className="w-full flex items-center justify-between pb-2 font-mono text-xs text-[var(--ink-3)]">
+          {/* Caliper Scrub Labels */}
+          <div className="flex items-center justify-between mb-3 text-xs font-mono px-2">
             <span className="flex items-center gap-1.5 text-red-600 font-bold">
-              <FileX size={13} />
-              <span>PAPER FRACTIONAL IOU ({100 - sliderPos}%)</span>
+              <FileX size={14} />
+              <span>SYNTHETIC PAPER IOU ({100 - displaySliderPct}%)</span>
             </span>
 
-            <span className="flex items-center gap-1 text-[var(--gold)] font-bold text-[10px] uppercase">
-              <SlidersHorizontal size={12} />
-              <span className="hidden sm:inline">TOUCHSTONE CALIPER:</span> {sliderPos}% ASSAYED
+            <span className="text-[11px] text-[var(--ink-3)] hidden sm:inline">
+              ← DRAG CALIPER OR SCROLL TO REVEAL ALLOCATION →
             </span>
 
             <span className="flex items-center gap-1.5 text-[var(--gold)] font-bold">
               <Award size={14} />
-              <span>24K SOVEREIGN BULLION ({sliderPos}%)</span>
+              <span>24K SOVEREIGN BULLION ({displaySliderPct}%)</span>
             </span>
           </div>
 
-          {/* Unified Comparison Viewer with Clip-Path */}
-          <div
+          {/* Unified Comparison Viewer with Clip-Path & Hardware-Accelerated 3D Tilt */}
+          <motion.div
+            ref={trackRef}
             onMouseMove={handleCardMouseMove}
             onMouseLeave={handleCardMouseLeave}
             style={{
               perspective: 1000,
-              transform: `rotateX(${mousePos.rotX}deg) rotateY(${mousePos.rotY}deg)`,
+              rotateX: smoothRotX,
+              rotateY: smoothRotY,
             }}
-            className="caliper-track relative w-full h-[360px] sm:h-[380px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden select-none cursor-ew-resize transition-transform duration-100 ease-out"
+            className="caliper-track relative w-full h-[360px] sm:h-[380px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden select-none cursor-ew-resize will-change-transform"
             onMouseDown={(e) => {
               setIsDragging(true);
               updateSliderFromClientX(e.clientX, e.currentTarget);
@@ -243,24 +268,15 @@ export default function CrucibleManifesto() {
               </div>
             </div>
 
-            {/* Layer 2 (Clipped Overlay): The Pure 24K Sovereign Bullion */}
-            <div
-              className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] overflow-hidden"
+            {/* Layer 2 (Clipped Overlay): The Pure 24K Sovereign Bullion - Spring Driven */}
+            <motion.div
+              className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] overflow-hidden will-change-transform"
               style={{
-                clipPath: `inset(0 0 0 ${100 - sliderPos}%)`,
+                clipPath: clipPathValue,
               }}
             >
               {/* Gold Bullion Edge Highlight */}
               <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
-
-              {/* Dynamic Specular Sheen */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-40"
-                style={{
-                  background: `radial-gradient(circle 300px at ${mousePos.x}% ${mousePos.y}%, rgba(196,139,15,0.35), transparent 70%)`,
-                }}
-              />
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between pb-3 border-b border-[var(--gold)]/30">
@@ -270,104 +286,59 @@ export default function CrucibleManifesto() {
                     </span>
                     <div>
                       <span className="mono text-xs font-black uppercase tracking-wider text-[var(--gold)]">
-                        24K SOVEREIGN BULLION
+                        24 KARAT ALLOCATED BULLION
                       </span>
-                      <div className="mono text-[9px] text-[var(--ink-3)]">ALLOCATED LBMA 400oz BAR</div>
+                      <div className="mono text-[9px] text-[var(--ink-3)]">SEGREGATED TITLE • LONDON GOOD DELIVERY</div>
                     </div>
                   </div>
-                  <span className="mono text-[10px] font-black text-[var(--gold)] bg-[var(--tint)] border border-[var(--gold)]/50 px-2.5 py-0.5 rounded shadow-2xs">
-                    ≥ 750 / 1000 HALLMARKED
+                  <span className="mono text-[10px] font-black text-[var(--gold)] bg-[var(--tint)] border border-[var(--gold)]/40 px-2.5 py-0.5 rounded shadow-xs">
+                    999.9 FINE GOLD PASS
                   </span>
                 </div>
 
-                <div className="mt-5 max-w-md ml-auto text-right">
+                <div className="mt-5 max-w-md">
                   <h3 className="font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)]">
-                    Independently Assayed 24-Karat Gold
+                    Pure Sovereign Title in Allocated Vaults
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                    Every token is bound to a specific, serial-numbered LBMA 400oz bar safely held in Zurich Freeport with bankruptcy-remote legal title and 1:1 redemption.
+                    Every token is legally paired to a specific serial-numbered 400 oz gold bar in Zurich or London. True bankruptcy-remote custody means the issuer can dissolve, and your gold remains untouched.
                   </p>
 
-                  <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink)] flex flex-col items-end">
+                  <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink)]">
                     <div className="flex items-center gap-2">
-                      <span>Serial Bar #AU-999.9-CH-8821 verified</span>
-                      <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                      <CheckCircle2 size={13} className="text-[var(--gold)] shrink-0" />
+                      <span>Public bar-by-bar registry with real-time audit hashes</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>Monthly independent Bureau Veritas attestations</span>
-                      <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                      <CheckCircle2 size={13} className="text-[var(--gold)] shrink-0" />
+                      <span>Legal bailment agreement: holder holds direct property title</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>Direct 1:1 physical redemption contractually secured</span>
-                      <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                      <CheckCircle2 size={13} className="text-[var(--gold)] shrink-0" />
+                      <span>Unconditional physical redemption right to vaulted bars</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="relative z-10 pt-3 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-[10px]">
-                <span className="text-[var(--ink-3)]">CUSTODY STATUS:</span>
-                <span className="font-bold text-[var(--gold)]">ALLOCATED SWISS VAULT</span>
+              <div className="relative z-10 pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[10px]">
+                <span className="text-[var(--ink-3)]">LEGAL STANDING:</span>
+                <span className="font-bold text-[var(--gold)]">DIRECT PROPRIETARY OWNER</span>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Draggable Brass Caliper Blade Divider */}
-            <div
-              className="absolute top-0 bottom-0 w-1 bg-[var(--gold)] shadow-[0_0_12px_var(--gold)] z-30 pointer-events-none"
-              style={{ left: `${100 - sliderPos}%` }}
+            {/* The Caliper Vertical Blade Needle - Spring Driven */}
+            <motion.div
+              style={{ left: caliperLeft }}
+              className="absolute inset-y-0 w-1 bg-[var(--gold)] z-30 pointer-events-none -translate-x-1/2 shadow-[0_0_12px_var(--gold),0_0_0_1px_#fff] will-change-transform"
             >
-              {/* Center Caliper Thumb Handle */}
-              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center h-10 w-10 rounded-full border-2 border-[var(--gold)] bg-[var(--dark)] text-[var(--gold)] shadow-xl cursor-grab active:cursor-grabbing pointer-events-auto">
-                <SlidersHorizontal size={14} />
+              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 h-10 w-10 rounded-full border-2 border-white bg-[var(--dark)] flex items-center justify-center text-[var(--gold)] shadow-xl cursor-ew-resize">
+                <span className="font-mono text-[10px] font-black">{displaySliderPct}%</span>
               </div>
-            </div>
-
-            {/* Thermal Smelt Spark Flash Overlay */}
-            {isSmelting && (
-              <div className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center bg-gradient-to-t from-amber-600/40 via-[var(--gold)]/30 to-transparent backdrop-blur-[2px] animate-pulse">
-                <div className="flex flex-col items-center gap-2 rounded-xl bg-[var(--dark)] px-4 py-2 font-mono text-xs font-black text-[var(--gold)] shadow-2xl border border-[var(--gold)]">
-                  <Flame size={28} className="text-amber-400 animate-bounce" />
-                  <span>SMELTING 1,064°C // PURITY 999.9 CONFIRMED</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Interactive Action Controls Bar Below Caliper */}
-          <div className="mt-4 w-full flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
-            <div className="flex items-center gap-2 text-[var(--ink-2)] text-[11px]">
-              <span className="h-2 w-2 rounded-full bg-[var(--gold)] animate-ping" />
-              <span>DRAG CALIPER BLADE TO DISSECT LAYERS</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={triggerSmelt}
-                disabled={isSmelting}
-                className="inline-flex items-center gap-2 rounded-lg border border-[var(--gold)] bg-[var(--dark)] px-4 py-2 font-bold text-white shadow-md transition-all hover:bg-[var(--gold)] hover:text-black active:scale-95 disabled:opacity-70 cursor-pointer"
-              >
-                {isSmelting ? (
-                  <>
-                    <RefreshCw size={12} className="animate-spin text-[var(--gold)]" />
-                    <span>SMELTING WITH CRUCIBLE FLAME...</span>
-                  </>
-                ) : hasSmelted ? (
-                  <>
-                    <ShieldCheck size={13} className="text-emerald-400" />
-                    <span>METALLURGICALLY CERTIFIED (24K AU)</span>
-                  </>
-                ) : (
-                  <>
-                    <Flame size={13} className="text-[var(--gold)]" />
-                    <span>IGNITE CRUCIBLE FLAME (1,064°C)</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
+            </motion.div>
+          </motion.div>
         </div>
+
       </div>
     </section>
   );

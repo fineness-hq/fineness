@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import { Activity, ShieldAlert, Award, Calendar } from 'lucide-react';
 import type { Venue } from '../../types';
 import CountUp from './CountUp';
@@ -35,13 +35,19 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
     { label: 'Data As Of', value: dataAsOf, unit: 'UTC FROZEN', icon: Calendar },
   ];
 
-  // Scroll-driven top laser hairline sweep
+  // Scroll-driven top laser hairline sweep with spring physics
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
-  const laserScaleX = useTransform(scrollYProgress, [0, 0.4], reduce ? [1, 1] : [0, 1]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
+  const laserScaleX = useTransform(smoothProgress, [0, 0.4], reduce ? [1, 1] : [0, 1]);
 
   return (
     <section

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
@@ -83,14 +83,20 @@ export default function ScaleTable() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
 
-  // Scroll-driven needle progression along the Karat scale
+  // Scroll-driven needle progression along the Karat scale with spring dampening
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
   const needleX = useTransform(
-    scrollYProgress,
+    smoothProgress,
     [0.15, 0.75],
     reduce ? ['37.5%', '37.5%'] : ['2%', '96%'],
   );
