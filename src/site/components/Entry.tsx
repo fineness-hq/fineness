@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowDown, ArrowUp, ChevronDown, Minus } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronDown, Minus, Check, Copy, ExternalLink, ShieldCheck, Link2 } from 'lucide-react';
 import { CRITERIA } from '../../scoring/fineness';
 import type { Band } from '../../scoring/fineness';
 import type { Delta } from '../../build/deltas';
@@ -20,14 +21,14 @@ interface EntryProps {
 
 export const BAND_COLOR: Record<Band, string> = {
   '22k': 'var(--band-high)',
-  '18k': 'var(--band-high)',
+  '18k': 'var(--gold)',
   '14k': 'var(--band-mid)',
   '9k': 'var(--band-low)',
   'below-hallmark': 'var(--band-none)',
 };
 
 /** One-line venue profile from pairing and status. Published inputs only. */
-function profileStrip(venue: Venue): string {
+export function profileStrip(venue: Venue): string {
   const bits = [
     venue.pairing.assetType,
     venue.pairing.custodian ?? 'no custodian named',
@@ -41,20 +42,22 @@ function profileStrip(venue: Venue): string {
 function DeltaMark({ delta }: { delta?: Delta }) {
   if (!delta) {
     return (
-      <span className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">New</span>
+      <span className="mono rounded bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
+        New
+      </span>
     );
   }
   if (delta.fineness === 0 && delta.rank === 0) {
     return (
-      <span className="mono flex items-center gap-1 text-xs tabular-nums text-[var(--ink-3)]">
-        <Minus size={12} aria-hidden="true" />0
+      <span className="mono flex items-center gap-0.5 text-xs tabular-nums text-[var(--ink-3)]">
+        <Minus size={11} aria-hidden="true" /> 0
       </span>
     );
   }
   const up = delta.fineness > 0;
   return (
     <span
-      className="mono flex items-center gap-1 text-xs tabular-nums"
+      className="mono flex items-center gap-0.5 text-xs font-semibold tabular-nums"
       style={{ color: up ? 'var(--ok)' : 'var(--band-none)' }}
       aria-label={`Fineness delta ${delta.fineness}, rank delta ${delta.rank}`}
     >
@@ -75,28 +78,68 @@ export default function Entry({
   onToggle,
 }: EntryProps) {
   const reduce = useReducedMotion();
+  const [copiedContract, setCopiedContract] = useState<string | null>(null);
   const panelId = `entry-panel-${venue.id}`;
   const buttonId = `entry-button-${venue.id}`;
+
+  const copyAddress = async (addr: string) => {
+    try {
+      await navigator.clipboard.writeText(addr);
+      setCopiedContract(addr);
+      setTimeout(() => setCopiedContract(null), 1800);
+    } catch {
+      setCopiedContract(null);
+    }
+  };
+
   const detail = (
-    <div className="border-t border-[var(--rule)] px-4 py-4">
-      <div className="grid gap-3 sm:grid-cols-2">
-        {CRITERIA.map((c) => (
-          <div key={c} className="border border-[var(--rule)] bg-[var(--surface-2)] p-3">
-            <p className="flex items-baseline justify-between">
-              <span className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
-                {c}
-              </span>
-              <span className="mono text-sm font-semibold tabular-nums text-[var(--ink)]">
-                {venue.scores[c]}/10
-              </span>
-            </p>
-            <p className="prose mt-1 text-sm leading-relaxed text-[var(--ink-2)]">
-              {venue.rationale[c]}
-            </p>
-          </div>
-        ))}
+    <div className="border-t border-[var(--rule)] bg-[var(--surface)] px-5 py-6">
+      {/* 5 Criteria Grid */}
+      <h3 className="mono text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
+        Editorial Score Breakdown
+      </h3>
+      <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {CRITERIA.map((c) => {
+          const score = venue.scores[c];
+          return (
+            <div key={c} className="flex flex-col justify-between rounded border border-[var(--rule)] bg-[var(--surface-2)] p-3">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="mono text-[11px] font-semibold uppercase tracking-wider text-[var(--ink-2)]">
+                    {c}
+                  </span>
+                  <span className="mono text-xs font-bold tabular-nums text-[var(--ink)]">
+                    {score}/10
+                  </span>
+                </div>
+                {/* Score bar */}
+                <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-alt)]">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{
+                      width: `${(score / 10) * 100}%`,
+                      backgroundColor:
+                        score >= 8
+                          ? 'var(--ok)'
+                          : score >= 6
+                          ? 'var(--gold)'
+                          : score >= 4
+                          ? 'var(--band-low)'
+                          : 'var(--band-none)',
+                    }}
+                  />
+                </div>
+                <p className="prose mt-2 text-xs leading-relaxed text-[var(--ink-2)]">
+                  {venue.rationale[c]}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
-      <dl className="mt-4 grid grid-cols-2 gap-px border border-[var(--rule)] bg-[var(--rule)] sm:grid-cols-4">
+
+      {/* Key Financial Metrics Bento */}
+      <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded border border-[var(--rule)] bg-[var(--rule)] sm:grid-cols-4">
         {(
           [
             ['Cumulative volume', usd(venue.metrics.cumulativeVolumeUsd)],
@@ -105,57 +148,111 @@ export default function Entry({
             ['TVL', dash(venue.metrics.tvlUsd)],
           ] as [string, string][]
         ).map(([label, value]) => (
-          <div key={label} className="bg-[var(--surface)] px-3 py-2">
-            <dt className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
+          <div key={label} className="bg-[var(--surface)] px-4 py-3">
+            <dt className="mono text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
               {label}
             </dt>
-            <dd className="mono mt-0.5 text-sm tabular-nums text-[var(--ink)]">{value}</dd>
+            <dd className="mono mt-1 text-sm font-semibold tabular-nums text-[var(--ink)]">
+              {value}
+            </dd>
           </div>
         ))}
       </dl>
-      <ul className="prose mt-3 text-sm text-[var(--ink-2)]">
-        {venue.facts.map(([figure, note]) => (
-          <li key={`${figure}-${note}`}>
-            <strong className="mono tabular-nums">{figure}</strong> — {note}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <div className="border border-[var(--rule)] bg-[var(--surface-2)] p-3">
-          <p className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
-            Contracts
-          </p>
-          <ul className="mt-1 space-y-1">
+
+      {/* Editorial Facts & Quotes */}
+      {venue.facts.length > 0 && (
+        <ul className="mt-4 space-y-1.5 border-l-2 border-[var(--gold)] pl-3 text-xs text-[var(--ink-2)]">
+          {venue.facts.map(([figure, note]) => (
+            <li key={`${figure}-${note}`} className="flex items-baseline gap-2">
+              <span className="mono font-bold tabular-nums text-[var(--ink)]">{figure}</span>
+              <span>— {note}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Contracts & Links Inspectors */}
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        {/* Contracts Box */}
+        <div className="rounded border border-[var(--rule)] bg-[var(--surface-2)] p-3.5">
+          <div className="flex items-center justify-between">
+            <p className="mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink)]">
+              Contracts
+            </p>
+            <span className="mono text-[10px] text-[var(--ink-3)]">ON-CHAIN VERIFIED</span>
+          </div>
+          <ul className="mt-2 space-y-2">
             {venue.contracts.length === 0 && (
               <li className="mono text-xs text-[var(--ink-3)]">not published</li>
             )}
             {venue.contracts.map((c) => (
-              <li key={`${c.label}-${c.address}`} className="mono text-xs tabular-nums text-[var(--ink-2)]">
-                {c.label} {c.address.slice(0, 10)}…{c.address.slice(-4)}{' '}
-                {c.verified ? '(verified)' : '(unverified)'}
+              <li
+                key={`${c.label}-${c.address}`}
+                className="mono flex items-center justify-between gap-2 rounded bg-[var(--surface)] p-2 text-xs border border-[var(--rule)]"
+              >
+                <div className="flex items-center gap-1.5 overflow-hidden">
+                  <ShieldCheck
+                    size={13}
+                    className={c.verified ? 'text-[var(--ok)] shrink-0' : 'text-[var(--ink-3)] shrink-0'}
+                  />
+                  <span className="font-semibold text-[var(--ink)] shrink-0">{c.label}:</span>
+                  <span className="truncate text-[var(--ink-2)]" title={c.address}>
+                    {c.address.slice(0, 10)}…{c.address.slice(-4)}
+                  </span>
+                  <span className="text-[10px] text-[var(--ink-3)]">
+                    {c.verified ? '(verified)' : '(unverified)'}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => copyAddress(c.address)}
+                  className="shrink-0 p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"
+                  title="Copy address"
+                >
+                  {copiedContract === c.address ? (
+                    <Check size={12} className="text-[var(--ok)]" />
+                  ) : (
+                    <Copy size={12} />
+                  )}
+                </button>
               </li>
             ))}
           </ul>
         </div>
-        <div className="border border-[var(--rule)] bg-[var(--surface-2)] p-3">
-          <p className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
-            Links
-          </p>
-          <p className="mono mt-1 space-x-3 text-xs">
+
+        {/* Links Box */}
+        <div className="rounded border border-[var(--rule)] bg-[var(--surface-2)] p-3.5">
+          <div className="flex items-center justify-between">
+            <p className="mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink)]">
+              Links
+            </p>
+            <span className="mono text-[10px] text-[var(--ink-3)]">OFFICIAL DOMAINS</span>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2 text-xs">
             {venue.links.site && (
-              <a href={venue.links.site} className="underline-offset-4 hover:underline">
-                Site ↗
+              <a
+                href={venue.links.site}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mono inline-flex items-center gap-1 rounded border border-[var(--rule)] bg-[var(--surface)] px-2.5 py-1 text-[var(--ink)] transition-all hover:border-[var(--dark)]"
+              >
+                <ExternalLink size={12} /> Site ↗
               </a>
             )}
             {venue.links.docs && (
-              <a href={venue.links.docs} className="underline-offset-4 hover:underline">
-                Docs ↗
+              <a
+                href={venue.links.docs}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mono inline-flex items-center gap-1 rounded border border-[var(--rule)] bg-[var(--surface)] px-2.5 py-1 text-[var(--ink)] transition-all hover:border-[var(--dark)]"
+              >
+                <Link2 size={12} /> Docs ↗
               </a>
             )}
             {!venue.links.site && !venue.links.docs && (
-              <span className="text-[var(--ink-3)]">not published</span>
+              <span className="mono text-xs text-[var(--ink-3)]">not published</span>
             )}
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -164,8 +261,8 @@ export default function Entry({
   return (
     <article
       aria-labelledby={buttonId}
-      className="border-b border-[var(--rule)] border-l-[3px] bg-[var(--surface)]"
-      style={{ borderLeftColor: BAND_COLOR[displayBand] }}
+      className="group relative border-b border-[var(--rule)] bg-[var(--surface)] transition-all hover:bg-[var(--tint)]/40"
+      style={{ borderLeft: `4px solid ${BAND_COLOR[displayBand]}` }}
     >
       <button
         id={buttonId}
@@ -173,43 +270,85 @@ export default function Entry({
         aria-expanded={expanded}
         aria-controls={panelId}
         onClick={onToggle}
-        className="flex w-full items-center gap-3 px-4 py-4 text-left transition-colors hover:bg-[var(--surface-2)]"
+        className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors"
       >
-        <span className="mono w-9 shrink-0 text-base font-semibold tabular-nums text-[var(--ink-3)]">
+        {/* Rank Number */}
+        <span className="mono flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[var(--surface-alt)] text-sm font-bold tabular-nums text-[var(--ink-2)] group-hover:bg-[var(--dark)] group-hover:text-white transition-colors">
           {String(rank).padStart(2, '0')}
         </span>
-        <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-baseline gap-x-2">
-            <span className="font-[var(--font-inter)] text-base font-bold text-[var(--ink)]">
+
+        {/* Venue Info */}
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            <span className="font-[var(--font-inter)] text-base font-bold text-[var(--ink)] group-hover:text-[var(--action)] transition-colors">
               {venue.name}
             </span>
-            <span className="mono text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
+            <span className="mono rounded bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
               {venue.chain}
             </span>
-          </span>
-          <span className="prose mt-0.5 block max-w-[66ch] text-sm text-[var(--ink-2)] line-clamp-2">
+            {venue.resident && (
+              <span className="mono rounded bg-[var(--tint)] px-1.5 py-0.5 text-[9px] uppercase font-semibold text-[var(--action)]">
+                Resident
+              </span>
+            )}
+          </div>
+
+          <p className="prose mt-1 block max-w-[70ch] text-xs leading-relaxed text-[var(--ink-2)] line-clamp-1">
             {venue.thesis}
-          </span>
-          <span className="mono mt-1 block text-[11px] uppercase tracking-widest text-[var(--ink-3)]">
+          </p>
+
+          <span className="mono mt-1 block text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
             {profileStrip(venue)}
           </span>
-        </span>
-        <span className="mono shrink-0 text-xl font-semibold tabular-nums text-[var(--ink)]">
-          {displayFineness}
-        </span>
-        <span
-          className="mono shrink-0 border border-l-[3px] px-2 py-0.5 text-[11px] font-bold uppercase tracking-widest"
-          style={{ borderColor: BAND_COLOR[displayBand], color: BAND_COLOR[displayBand] }}
-        >
-          {displayBand}
-        </span>
-        <DeltaMark delta={delta} />
+        </div>
+
+        {/* Mini Purity Bar in Row */}
+        <div className="hidden md:flex flex-col items-end gap-1 shrink-0 w-32">
+          <div className="flex items-center justify-between w-full text-[10px]">
+            <span className="mono text-[var(--ink-3)]">HALLMARK</span>
+            <span className="mono font-semibold" style={{ color: BAND_COLOR[displayBand] }}>
+              {displayFineness}‰
+            </span>
+          </div>
+          <div className="relative h-1.5 w-full rounded-full bg-[var(--surface-alt)] overflow-hidden">
+            <div
+              className="h-full rounded-full"
+              style={{
+                width: `${(displayFineness / 1000) * 100}%`,
+                backgroundColor: BAND_COLOR[displayBand],
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Score & Band Stamp */}
+        <div className="flex items-center gap-3 shrink-0">
+          <span className="mono text-xl font-bold tabular-nums text-[var(--ink)]">
+            {displayFineness}
+          </span>
+          <span
+            className="mono rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
+            style={{
+              borderColor: BAND_COLOR[displayBand],
+              color: BAND_COLOR[displayBand],
+              backgroundColor: 'var(--surface)',
+            }}
+          >
+            {displayBand}
+          </span>
+          <DeltaMark delta={delta} />
+        </div>
+
+        {/* Accordion Chevron */}
         <ChevronDown
           size={16}
           aria-hidden="true"
-          className={`shrink-0 text-[var(--ink-3)] transition-transform ${expanded ? 'rotate-180' : ''}`}
+          className={`shrink-0 text-[var(--ink-3)] transition-transform duration-200 ${
+            expanded ? 'rotate-180 text-[var(--action)]' : ''
+          }`}
         />
       </button>
+
       {reduce ? (
         expanded ? (
           <div id={panelId}>{detail}</div>

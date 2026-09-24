@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion, useSpring, useMotionValue } from 'framer-motion';
+import AmbientCanvas from './AmbientCanvas';
 import HeroChart from './HeroChart';
 import { WordText } from './Stagger';
 import type { Venue } from '../../types';
@@ -91,6 +92,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
         onMouseLeave={resetTilt}
         style={{ perspective: 1000 }}
       >
+        <AmbientCanvas />
         <div aria-hidden="true" className="tera-bg-header">
           <div role="img" aria-label="background header" className="tera-bg-frame">
             <div className="tera-bg-track">
