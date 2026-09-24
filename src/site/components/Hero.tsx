@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion, useSpring, useMotionValue } from 'framer-motion';
 import AmbientCanvas from './AmbientCanvas';
+import Bullion3D from './Bullion3D';
 import HeroChart from './HeroChart';
 import { WordText } from './Stagger';
 import type { Venue } from '../../types';
@@ -142,26 +143,31 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
             <p className="tera-lede">
               <WordText text="A monthly register scoring tokenized venues on what actually backs the token." />
             </p>
-            <motion.div
-              className="tera-editionbar"
-              initial={ready && !reduce ? { opacity: 0, y: 12 } : false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              <div className="tera-editionbar-row">
-                <span className="tera-editionbar-label">SNAPSHOT</span>
-                <span className="tera-editionbar-hash">{snapshotHash.slice(0, 32)}…</span>
-                <button type="button" onClick={copy} className="tera-editionbar-copy">
-                  {copied ? 'Copied' : 'Copy'}
-                </button>
-                <Link href={`/editions/${edition}.json`} className="tera-editionbar-link">
-                  JSON ↗
-                </Link>
+            <div className="flex flex-col sm:flex-row items-stretch gap-3">
+              <div className="hidden sm:block h-28 w-36 shrink-0 overflow-hidden rounded border border-[var(--rule)] bg-[var(--surface)] p-1 shadow-xs">
+                <Bullion3D size={140} />
               </div>
-              <p className="tera-editionbar-progress">
-                {peak >= 750 ? `PEAK ${peak} — A VENUE CLEARED 18 KARAT` : `PEAK ${peak} — NOTHING CLEARS 18 KARAT`}
-              </p>
-            </motion.div>
+              <motion.div
+                className="tera-editionbar flex-1"
+                initial={ready && !reduce ? { opacity: 0, y: 12 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <div className="tera-editionbar-row">
+                  <span className="tera-editionbar-label">SNAPSHOT</span>
+                  <span className="tera-editionbar-hash">{snapshotHash.slice(0, 32)}…</span>
+                  <button type="button" onClick={copy} className="tera-editionbar-copy">
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                  <Link href={`/editions/${edition}.json`} className="tera-editionbar-link">
+                    JSON ↗
+                  </Link>
+                </div>
+                <p className="tera-editionbar-progress">
+                  {peak >= 750 ? `PEAK ${peak} — A VENUE CLEARED 18 KARAT` : `PEAK ${peak} — NOTHING CLEARS 18 KARAT`}
+                </p>
+              </motion.div>
+            </div>
             <div className="tera-cta-row">
               <Link href="#register" className="tera-cta tera-cta-light">
                 EXPLORE THE REGISTER
