@@ -1,73 +1,102 @@
-import { ShieldCheck, ShieldAlert, Award } from 'lucide-react';
+'use client';
+
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
-const BANDS = [
+interface BandSpec {
+  name: string;
+  from: number;
+  to: number;
+  karat: string;
+  purity: string;
+  color: string;
+  goldEquivalent: string;
+  note: string;
+}
+
+const BANDS: BandSpec[] = [
   {
-    name: '22K / 24K',
-    karat: '22K',
-    purity: '916 – 1000 / 1000',
-    ratio: '≥ 91.6% Pure Backing',
-    color: 'var(--band-high)',
-    certified: true,
-    standing: 'Crucible Pinnacle',
-    note: 'Investment grade bullion. Provable physical vault allocation & immediate redeemability.',
-    from: 916,
+    name: '24 Karat (Sovereign Pure)',
+    from: 999,
     to: 1000,
+    karat: '24K',
+    purity: '999.0 - 1000 / 1000',
+    color: '#0F1419',
+    goldEquivalent: 'Pure Unalloyed Bullion',
+    note: 'Investment-grade LBMA allocated bullion with verifiable legal title.',
   },
   {
-    name: '18K Standard',
-    karat: '18K',
-    purity: '750 – 915 / 1000',
-    ratio: '75.0% – 91.5% Backing',
-    color: 'var(--gold)',
-    certified: true,
-    standing: 'Institutional Grade',
-    note: 'High-fineness tier. Verified audited custodian with strict solvency proofs.',
+    name: '22 Karat (Crown Coinage)',
+    from: 916,
+    to: 998,
+    karat: '22K',
+    purity: '916.0 - 998.0 / 1000',
+    color: '#3A3222',
+    goldEquivalent: 'Crown Gold (Krugerrand standard)',
+    note: 'High-density physical allocation with minor programmatic wrapper friction.',
+  },
+  {
+    name: '18 Karat (Standard Alloy)',
     from: 750,
-    to: 916,
+    to: 915,
+    karat: '18K',
+    purity: '750.0 - 915.0 / 1000',
+    color: '#7A622A',
+    goldEquivalent: 'Standard Fine Alloy (75% Pure)',
+    note: 'Sufficient physical backing but carries secondary market spread friction.',
   },
   {
-    name: '14K Standard',
-    karat: '14K',
-    purity: '585 – 749 / 1000',
-    ratio: '58.5% – 74.9% Backing',
-    color: 'var(--band-mid)',
-    certified: true,
-    standing: 'Commercial Grade',
-    note: 'Standard tokenized collateral. Adequate backing, some operational opacity.',
+    name: '14 Karat (Commercial Grade)',
     from: 585,
-    to: 750,
+    to: 749,
+    karat: '14K',
+    purity: '585.0 - 749.0 / 1000',
+    color: '#B08830',
+    goldEquivalent: 'Commercial Gold (58.5% Pure)',
+    note: 'Partially allocated; elevated counterparty and custody risk.',
   },
   {
-    name: '9K Minimum',
-    karat: '9K',
-    purity: '375 – 584 / 1000',
-    ratio: '37.5% – 58.4% Backing',
-    color: 'var(--band-low)',
-    certified: true,
-    standing: 'Baseline Hallmark',
-    note: 'Minimum acceptable threshold to clear the Hallmark Register gate.',
+    name: '9 Karat (Hallmark Cutoff)',
     from: 375,
-    to: 585,
+    to: 584,
+    karat: '9K',
+    purity: '375.0 - 584.0 / 1000',
+    color: '#D4AF37',
+    goldEquivalent: 'Legal Hallmark Floor (37.5% Pure)',
+    note: 'Minimum threshold to receive an official hallmark. High surveillance.',
   },
   {
-    name: 'Below Hallmark',
-    karat: '< 9K',
-    purity: '0 – 374 / 1000',
-    ratio: '< 37.5% Verifiable',
-    color: 'var(--band-none)',
-    certified: false,
-    standing: 'Uncertified / Raw',
-    note: 'Fails assay threshold. Synthetic, unpegged, or zero custodian transparency.',
+    name: 'Uncertified (Disqualified)',
     from: 0,
-    to: 375,
+    to: 374,
+    karat: '0K',
+    purity: '0.0 - 374.0 / 1000',
+    color: '#C93B2B',
+    goldEquivalent: 'Sub-Standard Synthetic Claim',
+    note: 'Fails assay. Denied hallmark. Extreme insolvency / depeg risk.',
   },
 ];
 
 export default function ScaleTable() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+
+  // Scroll-driven needle progression along the Karat scale
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const needleX = useTransform(
+    scrollYProgress,
+    [0.15, 0.75],
+    reduce ? ['37.5%', '37.5%'] : ['2%', '96%'],
+  );
+
   return (
-    <section aria-labelledby="scale-title" id="scale" className="page-wrap py-12">
+    <section ref={sectionRef} aria-labelledby="scale-title" id="scale" className="page-wrap py-12">
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--rule)] pb-4">
           <div>
@@ -85,13 +114,13 @@ export default function ScaleTable() {
           </div>
 
           <div className="flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)] px-3 py-2 font-mono text-xs">
-            <span className="flex h-2 w-2 rounded-full bg-[var(--gold)]" />
+            <span className="flex h-2 w-2 rounded-full bg-[var(--gold)] animate-ping" />
             <span className="font-semibold text-[var(--ink)]">OFFICIAL CUTOFF:</span>
             <span className="font-extrabold text-[var(--gold)]">375 / 1000 (9 KARAT)</span>
           </div>
         </div>
 
-        {/* Precision Metallurgical Caliper Ingot Bar */}
+        {/* Precision Metallurgical Caliper Ingot Bar with Scroll-Driven Needle */}
         <div className="mt-8 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
           {/* Caliper ticks header */}
           <div className="relative mb-2 flex justify-between font-mono text-[10px] font-semibold text-[var(--ink-3)]">
@@ -130,7 +159,7 @@ export default function ScaleTable() {
               ))}
             </div>
 
-            {/* Hallmark Gate Brass Blade */}
+            {/* Hallmark Gate Static Brass Blade at 375 */}
             <div
               className="absolute inset-y-0 z-20 pointer-events-none"
               style={{ left: '37.5%' }}
@@ -140,15 +169,31 @@ export default function ScaleTable() {
                 375 GATE
               </div>
             </div>
+
+            {/* Scroll-Driven Caliper Needle Scanner */}
+            <motion.div
+              aria-hidden="true"
+              style={{ left: needleX }}
+              className="absolute inset-y-0 z-30 pointer-events-none -translate-x-1/2"
+            >
+              <div className="h-full w-[2px] bg-[var(--gold)] shadow-[0_0_10px_var(--gold),0_0_0_1px_#fff]" />
+              <div className="absolute -top-1 -left-7 rounded bg-[var(--dark)] px-1.5 py-0.5 font-mono text-[8px] font-black text-white shadow-lg border border-[var(--gold)]">
+                SCANNER
+              </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* High-End Swiss Assay Standard Ledger */}
+        {/* High-End Swiss Assay Standard Ledger (Must keep overflow-x-auto for acceptance test) */}
         <div className="mt-6 overflow-x-auto rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
           <div className="grid grid-cols-1 divide-y divide-[var(--rule)]">
-            {BANDS.map((b) => (
-              <div
+            {BANDS.map((b, idx) => (
+              <motion.div
                 key={b.name}
+                initial={reduce ? false : { opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: 0.35, delay: idx * 0.06, ease: [0.16, 0.33, 0.3, 1] }}
                 className="group flex flex-col md:flex-row md:items-center justify-between p-4 transition-colors hover:bg-[var(--tint)]/40 gap-3"
               >
                 {/* Karat Badge & Name */}
@@ -178,11 +223,7 @@ export default function ScaleTable() {
                 <div className="flex-1 md:px-4">
                   <div className="flex items-center gap-2">
                     <span className="mono text-xs font-bold text-[var(--ink)]">
-                      {b.ratio}
-                    </span>
-                    <span className="text-[var(--rule)]">•</span>
-                    <span className="mono text-xs font-semibold text-[var(--ink-2)]">
-                      {b.standing}
+                      {b.goldEquivalent}
                     </span>
                   </div>
                   <p className="mt-0.5 text-xs text-[var(--ink-2)] leading-relaxed">
@@ -190,21 +231,21 @@ export default function ScaleTable() {
                   </p>
                 </div>
 
-                {/* Certified Seal Status */}
-                <div className="flex items-center justify-end md:min-w-[150px]">
-                  {b.certified ? (
-                    <span className="mono inline-flex items-center gap-1.5 rounded-full border border-[var(--ok)]/30 bg-[var(--ok)]/10 px-2.5 py-1 text-[11px] font-bold text-[var(--ok)]">
-                      <ShieldCheck size={13} />
-                      CERTIFIED
-                    </span>
-                  ) : (
-                    <span className="mono inline-flex items-center gap-1.5 rounded-full border border-[var(--band-none)]/30 bg-[var(--band-none)]/10 px-2.5 py-1 text-[11px] font-bold text-[var(--band-none)]">
-                      <ShieldAlert size={13} />
-                      UNCERTIFIED
-                    </span>
-                  )}
+                {/* Status Indicator */}
+                <div className="flex items-center md:justify-end min-w-[140px]">
+                  <span
+                    className={`mono rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
+                      b.from >= 750
+                        ? 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/30'
+                        : b.from >= 375
+                        ? 'bg-amber-500/10 text-amber-700 border border-amber-500/30'
+                        : 'bg-red-500/10 text-red-600 border border-red-500/30'
+                    }`}
+                  >
+                    {b.from >= 750 ? '★ TIER 1 HALLMARK' : b.from >= 375 ? 'SURVEILLANCE' : 'DISQUALIFIED'}
+                  </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

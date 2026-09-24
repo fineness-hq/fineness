@@ -1,5 +1,8 @@
-/** Standing limits of the methodology. Static editorial copy. */
-import { BookOpen, AlertCircle, EyeOff, Scale } from 'lucide-react';
+'use client';
+
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { BookOpen, AlertCircle, EyeOff, Scale, ShieldCheck } from 'lucide-react';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
@@ -35,43 +38,57 @@ const LIMITS_DATA = [
 ];
 
 export default function Limits() {
+  const reduce = useReducedMotion();
+
   return (
-    <section aria-labelledby="limits-title" id="limits" className="page-wrap py-12">
+    <section aria-labelledby="limits-title" id="limits" className="page-wrap py-14">
       <Reveal>
-        <div className="border-b border-[var(--rule)] pb-4">
-          <p className="eyebrow">ASSAY CHARTER // METHODOLOGICAL BOUNDARIES</p>
-          <h2
-            id="limits-title"
-            className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"
-          >
-            <WordText text="Standing Methodological Boundaries" />
-          </h2>
-          <p className="prose mt-1 max-w-[66ch] text-sm leading-relaxed text-[var(--ink-2)]">
-            Four foundational axioms governing how data is sampled, weighed, and audited.
-          </p>
+        <div className="border-b border-[var(--rule)] pb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <p className="eyebrow">ASSAY CHARTER // METHODOLOGICAL BOUNDARIES</p>
+            <h2
+              id="limits-title"
+              className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"
+            >
+              <WordText text="Standing Methodological Boundaries" />
+            </h2>
+            <p className="prose mt-1 max-w-[66ch] text-sm leading-relaxed text-[var(--ink-2)]">
+              Four foundational axioms governing how data is sampled, weighed, and audited.
+            </p>
+          </div>
+
+          <div className="mono text-xs font-bold text-[var(--gold)] flex items-center gap-1.5">
+            <ShieldCheck size={15} />
+            <span>EDITORIAL INDEPENDENCE</span>
+          </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {LIMITS_DATA.map(({ canonId, canonLabel, title, desc, icon: Icon }) => (
-            <div
+        {/* Staggered Parallax Canon Grid */}
+        <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          {LIMITS_DATA.map(({ canonId, canonLabel, title, desc, icon: Icon }, idx) => (
+            <motion.div
               key={canonId}
-              className="group relative rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-5 shadow-xs transition-all hover:border-[var(--gold)] hover:shadow-sm"
+              initial={reduce ? false : { opacity: 0, y: 24, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.45, delay: idx * 0.1, ease: [0.16, 0.33, 0.3, 1] }}
+              className="group relative rounded-xl border-2 border-[var(--rule)] bg-[var(--surface)] p-6 shadow-xs transition-all hover:border-[var(--gold)] hover:shadow-md"
             >
-              <div className="flex items-center justify-between pb-2 border-b border-[var(--rule)]/60">
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]/60">
                 <span className="mono text-[11px] font-black text-[var(--gold)] tracking-wider">
                   {canonLabel}
                 </span>
-                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-[var(--ink-2)] group-hover:border-[var(--gold)] group-hover:bg-[var(--gold)] group-hover:text-white transition-all">
-                  <Icon size={12} />
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)] text-[var(--ink-2)] group-hover:border-[var(--gold)] group-hover:bg-[var(--gold)] group-hover:text-white transition-all">
+                  <Icon size={13} />
                 </span>
               </div>
-              <h3 className="mt-3 font-[var(--font-inter)] text-base font-bold text-[var(--ink)]">
+              <h3 className="mt-4 font-[var(--font-inter)] text-base sm:text-lg font-bold text-[var(--ink)]">
                 {title}
               </h3>
-              <p className="prose mt-2 text-xs leading-relaxed text-[var(--ink-2)]">
+              <p className="prose mt-2 text-xs sm:text-sm leading-relaxed text-[var(--ink-2)]">
                 {desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Reveal>
