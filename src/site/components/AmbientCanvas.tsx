@@ -41,10 +41,10 @@ export default function AmbientCanvas() {
     let targetMouseY = -9999;
 
     const colors = [
-      'rgba(26, 68, 255, 0.45)',  // Electric Klein Blue
-      'rgba(212, 160, 23, 0.5)',   // 24K Bullion Gold
-      'rgba(16, 124, 65, 0.4)',    // Forest Emerald
-      'rgba(15, 20, 25, 0.35)',    // Deep Ink Charcoal
+      'rgba(196, 139, 15, 0.55)', // Bullion Gold
+      'rgba(27, 94, 58, 0.45)',   // Forest Emerald
+      'rgba(184, 78, 27, 0.35)',  // Terracotta
+      'rgba(15, 20, 25, 0.35)',   // Deep Ink Charcoal
     ];
 
     const particleCount = Math.min(38, Math.floor((width * height) / 25000));
@@ -140,7 +140,7 @@ export default function AmbientCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(26, 68, 255, ${0.16 * (1 - dist2 / 90)})`;
+            ctx.strokeStyle = `rgba(196, 139, 15, ${0.16 * (1 - dist2 / 90)})`;
             ctx.stroke();
           }
         }

@@ -9,14 +9,14 @@
   --legacy-action: #e65800;
   --band-high: #2f6b4f;
 
-  /* Active Neo-Brutalist Paper Vault Palette (Architectural Bone + Deep Ink + Klein Blue + 24K Gold) */
-  --ground: #f5f4ef;
-  --bg: #f5f4ef;
+  /* Editorial Bullion Register Palette (Chalk Paper + Deep Ink + Rich 24K Gold) */
+  --ground: #f6f5f0;
+  --bg: #f6f5f0;
   --surface: #ffffff;
-  --surface-2: #edebe4;
-  --surface-alt: #e4e1d7;
-  --surface-alt-2: #dbd8cd;
-  --tint: #ebe8de;
+  --surface-2: #eeece5;
+  --surface-alt: #e5e2d7;
+  --surface-alt-2: #dbd7cb;
+  --tint: #ece9df;
   --lavender: #ece9df;
 
   --dark: #0f1419;
@@ -24,50 +24,50 @@
   --dark-overlay: rgba(15, 20, 25, 0.85);
 
   --ink: #0f1419;
-  --ink-2: #454f5b;
-  --ink-2b: #343c45;
-  --ink-2c: #5c6875;
-  --ink-3: #8a96a3;
+  --ink-2: #4a545e;
+  --ink-2b: #373f47;
+  --ink-2c: #5d6874;
+  --ink-3: #87929d;
   --faint: #cfcbd6;
   --faint-2: #c6c2cd;
   --faint-3: #bdb9c4;
 
-  --rule: #d5d1c5;
-  --rule-2: #c5c0b2;
-  --rule-soft: #e2ded3;
-  --rule-alpha: rgba(213, 209, 197, 0.65);
+  --rule: #d8d4c7;
+  --rule-2: #c8c3b5;
+  --rule-soft: #e4e0d4;
+  --rule-alpha: rgba(216, 212, 199, 0.65);
 
-  --olive: #107c41;
-  --gold: #d4a017;
-  --gold-bf: rgba(212, 160, 23, 0.75);
-  --gold-f2: rgba(212, 160, 23, 0.95);
-  --action: #1a44ff;
-  --action-alt: #002fe6;
+  --olive: #1b5e3a;
+  --gold: #c48b0f;
+  --gold-bf: rgba(196, 139, 15, 0.75);
+  --gold-f2: rgba(196, 139, 15, 0.95);
+  --action: #c48b0f;
+  --action-alt: #9f6f08;
 
   /* Brand aliases */
-  --maroon: #1a44ff;
+  --maroon: #c48b0f;
   --maroon-deep: #0f1419;
   --maroon-soft: #ece9df;
 
-  /* Grade bands: 22k Forest Emerald, 18k Bullion Gold, 14k Burnished Bronze, 9k Terracotta, Below Crimson */
-  --band-high: #107c41;
-  --band-mid: #d4a017;
-  --band-low: #cf4900;
-  --band-none: #d92438;
+  /* Grade bands: Solid authentic bullion tones (No cheesy gradients) */
+  --band-high: #1b5e3a;
+  --band-mid: #c48b0f;
+  --band-low: #b84e1b;
+  --band-none: #c92a2a;
 
-  --ok: #107c41;
-  --warn: #d4a017;
+  --ok: #1b5e3a;
+  --warn: #c48b0f;
 
-  /* Preloader inks: Architectural paper shutter with electric Klein blue track */
+  /* Preloader: Warm chalk paper with solid gold accent */
   --pre-ink: #0f1419;
-  --pre-muted: #5c6875;
-  --pre-muted-2: #8a96a3;
-  --pre-muted-3: #a4b0bd;
-  --pre-shutter: #edebe4;
-  --pre-shutter-border: rgba(26, 68, 255, 0.2);
-  --pre-progress: #1a44ff;
-  --pre-track: rgba(26, 68, 255, 0.15);
-  --pre-orbit: rgba(26, 68, 255, 0.25);
+  --pre-muted: #5d6874;
+  --pre-muted-2: #87929d;
+  --pre-muted-3: #a5b0bb;
+  --pre-shutter: #eeece5;
+  --pre-shutter-border: rgba(196, 139, 15, 0.2);
+  --pre-progress: #c48b0f;
+  --pre-track: rgba(196, 139, 15, 0.15);
+  --pre-orbit: rgba(196, 139, 15, 0.25);
 
   /* Motion: Tera reveal + preloader exits. */
   --ease-reveal: cubic-bezier(0.16, 0.33, 0.3, 1.01);

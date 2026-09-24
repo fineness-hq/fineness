@@ -39,8 +39,8 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
       role="region"
       aria-label="Top 5 tokenized asset venues leaderboard"
     >
-      {/* Subtle top indicator bar */}
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[var(--action)] via-[var(--gold)] to-[var(--band-high)]" />
+      {/* Top indicator bar */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-[var(--gold)]" />
 
       {/* Header with status and view mode pills */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4">
@@ -161,16 +161,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                 <motion.div
                   className="h-full rounded-full transition-colors"
                   style={{
-                    background:
-                      v.band === '22k'
-                        ? 'linear-gradient(90deg, #107c41, #159c53)'
-                        : v.band === '18k'
-                        ? 'linear-gradient(90deg, #d4a017, #f0ba2b)'
-                        : v.band === '14k'
-                        ? 'linear-gradient(90deg, #b36b00, #d98200)'
-                        : v.band === '9k'
-                        ? 'linear-gradient(90deg, #cf4900, #e85808)'
-                        : 'linear-gradient(90deg, #d92438, #f03e52)',
+                    backgroundColor: BAND_COLOR[v.band as Band],
                   }}
                   initial={reduce ? false : { width: '0%' }}
                   animate={ready || reduce ? { width: `${(v.fineness / 1000) * 100}%` } : {}}
