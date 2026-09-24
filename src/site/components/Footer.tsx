@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Github, ArrowUpRight, ShieldCheck, FileCode, CheckCircle2 } from 'lucide-react';
 import FinenessMark from './FinenessMark';
+import XIcon from './XIcon';
 
 interface FooterProps {
   edition: string;
@@ -183,11 +184,23 @@ export default function Footer({ edition }: FooterProps) {
                   <ArrowUpRight size={12} className="text-[var(--ink-3)]" />
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors inline-flex items-center gap-1.5"
+                >
+                  <XIcon size={12} />
+                  <span>X Profile</span>
+                  <ArrowUpRight size={12} className="text-[var(--ink-3)]" />
+                </a>
+              </li>
               <li className="text-[var(--ink-3)] text-[11px]">
                 Deterministic SHA-256 Digest
               </li>
               <li className="text-[var(--ink-3)] text-[11px]">
-                Immutable On-Chain Archival
+                Immutable Edition JSON
               </li>
               <li className="text-[var(--ink-3)] text-[11px]">
                 Zero Listing Fees / Grants
