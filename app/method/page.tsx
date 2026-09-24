@@ -278,7 +278,7 @@ export default function MethodPage() {
         </div>
 
         {/* Retain Exact Table for Standard Accessibility and Acceptance Tests */}
-        <div className="mt-8 overflow-x-auto rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
+        <div className="mt-8 overflow-x-auto no-scrollbar rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
           <table className="w-full min-w-[500px] border-collapse text-left font-mono text-xs">
             <thead>
               <tr className="border-b border-[var(--rule)] bg-[var(--surface-alt)]">
@@ -372,7 +372,7 @@ export default function MethodPage() {
         </div>
 
         {/* Retain Exact Table for Standard Accessibility and Acceptance Tests */}
-        <div className="mt-8 overflow-x-auto rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
+        <div className="mt-8 overflow-x-auto no-scrollbar rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
           <table className="w-full min-w-[500px] border-collapse text-left font-mono text-xs">
             <thead>
               <tr className="border-b border-[var(--rule)] bg-[var(--surface-alt)]">

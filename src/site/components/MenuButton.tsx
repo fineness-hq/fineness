@@ -16,11 +16,11 @@ const LINKS: Array<[string, string, string]> = [
   ['FAQ', 'FAQ', '/#faq'],
   ['PROV', 'Sources', '/#sources'],
   ['CANON', 'Method', '/method'],
-  ['JSON', 'Machine JSON', '/editions/2026-11.json'],
+  ['JSON', 'Machine JSON', '/editions/2026-10.json'],
 ];
 
 /** Dark menu button + slide-in overlay panel with numbered links. */
-export default function MenuButton({ latestEdition = '2026-11' }: { latestEdition?: string }) {
+export default function MenuButton({ latestEdition = '2026-10' }: { latestEdition?: string }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const links: Array<[string, string, string]> = LINKS.map((l) =>

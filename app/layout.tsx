@@ -39,6 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      // Expected: the inline js-flag script above adds a `js` class before
+      // hydration. That intentional mismatch must not warn.
+      suppressHydrationWarning
       className={`${inter.variable} ${plexMono.variable}`}
     >
       <head>

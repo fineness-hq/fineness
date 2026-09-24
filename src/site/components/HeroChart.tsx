@@ -49,7 +49,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
     <div className="relative w-full max-w-[560px] select-none flex flex-col items-center justify-center">
       {/* 1. The Grand Bureaucrat Auditor Cat (Seamless on Background Canvas) */}
       <div className="relative w-full">
-        <AuditorCat className="w-full" />
+        <AuditorCat className="w-full" baseCount={venues.length} />
       </div>
 
       {/* 2. Floating Glassmorphic Crucible Leaderboard HUD (Overlapping Left Side) */}

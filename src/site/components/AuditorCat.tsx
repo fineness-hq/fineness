@@ -7,6 +7,8 @@ import { Stamp, Sparkles, Coffee } from 'lucide-react';
 
 interface AuditorCatProps {
   className?: string;
+  /** Venues assayed in this edition — honest base for the counter. */
+  baseCount?: number;
 }
 
 /**
@@ -15,7 +17,7 @@ interface AuditorCatProps {
  * Features:
  * - Grand scale: ~480px tall, zero card wrapping
  * - Real 2-frame physical stamping animation (arm winds up high and slams down)
- * - Impact shockwave & dynamic certificate stamp imprint reveal ("24K VERIFIED")
+ * - Impact shockwave & dynamic certificate stamp imprint reveal ("24K ASSAYED")
  * - Lazy tail swish loop
  * - Steaming espresso cup rising vapor particles
  * - On-chain ticker tape ribbon
@@ -28,12 +30,12 @@ function formatNumber(n: number) {
 
 const STAMP_PHRASES = ['24K ASSAYED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED', '18K CLEARED'];
 
-export default function AuditorCat({ className = '' }: AuditorCatProps) {
+export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCatProps) {
   const reduce = useReducedMotion();
-  const [stampCount, setStampCount] = useState(1482);
+  const [stampCount, setStampCount] = useState(baseCount);
   const [isArmUp, setIsArmUp] = useState(false);
   const [stampActive, setStampActive] = useState(false);
-  const [stampText, setStampText] = useState('24K VERIFIED');
+  const [stampText, setStampText] = useState('24K ASSAYED');
   const [isRapid, setIsRapid] = useState(false);
 
   // Mouse tilt tracking

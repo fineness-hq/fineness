@@ -25,7 +25,7 @@ import {
  * - Integrated with Framer Motion useSpring for 60-120fps liquid momentum.
  * - Interactive horizontal drag supported at any time.
  * - 3D holographic tilt with spring momentum.
- * - 1,064°C Thermal Smelt test with spark flash and permanent hallmark seal.
+ * - Weighing interaction with spark flash and recomputed hallmark readout.
  */
 export default function CrucibleManifesto() {
   const containerRef = useRef<HTMLElement>(null);

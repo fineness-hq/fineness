@@ -144,7 +144,7 @@ export default function AssayFAQ() {
                 <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
                   <span className="font-bold text-amber-300 flex items-center gap-1 text-[11px]">
                     <Sparkles size={11} className="text-amber-400" />
-                    <span>AU 999.9 PASSED</span>
+                    <span>WEIGHED & FROZEN</span>
                   </span>
                   <span className="text-[9px] text-white/80 bg-black/60 px-1.5 py-0.5 rounded border border-white/20">
                     CALM VIGILANCE

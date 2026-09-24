@@ -21,7 +21,10 @@ function loadEditions(): Edition[] {
   } catch {
     // Fall through to bundled editions (client-safe path).
   }
-  return [edition202609 as unknown as Edition, edition202610 as unknown as Edition];
+  return [
+    edition202609 as unknown as Edition,
+    edition202610 as unknown as Edition,
+  ];
 }
 
 export const EDITIONS = loadEditions();

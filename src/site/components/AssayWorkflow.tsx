@@ -321,7 +321,7 @@ export default function AssayWorkflow() {
                                 <span>BAY 01 · CHIEF ASSAYER</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
-                                999.9 SCAN
+                                SNAPSHOT SCAN
                               </span>
                             </div>
                           </div>
@@ -340,7 +340,7 @@ export default function AssayWorkflow() {
                             <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
                               <span className="text-amber-400 font-bold flex items-center gap-1">
                                 <Flame size={11} className="text-amber-400 animate-pulse" />
-                                <span>BAY 02 · 1,064°C SMELT</span>
+                                <span>BAY 02 · WEIGHTED MEAN</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
                                 5-CRITERIA
@@ -365,7 +365,7 @@ export default function AssayWorkflow() {
                                 <span>BAY 03 · HALLMARK SEAL</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
-                                FROZEN 24K
+                                SEALED
                               </span>
                             </div>
                           </div>

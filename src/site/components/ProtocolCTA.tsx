@@ -157,7 +157,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                       className="object-cover"
                     />
                   </div>
-                  <span className="font-bold text-[11px]">24K SEALED</span>
+                  <span className="font-bold text-[11px]">FROZEN</span>
                 </div>
               </div>
             </div>

@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X } from 'lucide-react';
 
 const MASCOT_QUOTES = [
-  'Assaying 999.9 gold purity...',
+  'Weighing backing evidence, not promises...',
   'Zero listing bribes accepted.',
   'Calm, unhurried vigilance.',
   'Frozen edition published.',
   'Missing data? Null, never zero.',
-  '1,064°C smelt test cleared.',
+  'Same inputs, same output. Always.',
 ];
 
 export default function FloatingMascot() {
@@ -59,7 +59,7 @@ export default function FloatingMascot() {
               onClick={nextQuote}
               className="mt-2 w-full rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] py-1 text-[10px] font-bold text-[var(--gold)] hover:border-[var(--gold)] transition-colors cursor-pointer"
             >
-              {stamped ? '★ PASSED 999.9 ★' : 'TAP TO ASSAY ↗'}
+              {stamped ? '★ WEIGHED ★' : 'TAP FOR WISDOM ↗'}
             </button>
             {/* Bubble arrow */}
             <div className="absolute -bottom-2 right-6 h-3 w-3 rotate-45 border-b-2 border-r-2 border-[var(--gold)] bg-[var(--surface)]" />

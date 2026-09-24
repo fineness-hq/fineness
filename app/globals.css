@@ -620,6 +620,27 @@ html.js [data-xslide='hidden'] {
   color: #ffffff;
 }
 
+.tera-gh {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 0.8px solid var(--rule);
+  border-right: none;
+  color: var(--ink);
+  background: var(--surface);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.tera-gh:hover {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: #ffffff;
+}
+
 .tera-menu-btn {
   gap: 14px;
   background: var(--dark);
@@ -1168,6 +1189,17 @@ html.js [data-xslide='hidden'] {
   height: 12px;
   border-top: 2px solid var(--action);
   border-left: 2px solid var(--action);
+}
+
+/* Hide scrollbars visually while keeping scroll behavior.
+   Applied to table containers so 390px layouts scroll by touch
+   without showing a scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 a:focus-visible,

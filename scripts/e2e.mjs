@@ -97,7 +97,7 @@ async function main() {
     // 1. Home renders full register content (no-JS SSR).
     const home = await get('/');
     check('GET / 200', home.status === 200, `got ${home.status}`);
-    for (const s of ['Long.xyz', '720', '715', 'not published', '375', 'Fineness']) {
+    for (const s of ['Pons', '745', '720', 'not published', '375', 'Fineness']) {
       check(`GET / contains ${s}`, home.text.includes(s));
     }
     check('GET / contains hallmark line', /hallmark/i.test(home.text));
