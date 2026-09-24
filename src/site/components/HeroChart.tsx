@@ -7,7 +7,7 @@ import type { Band } from '../../scoring/fineness';
 import type { Venue } from '../../types';
 import { BAND_COLOR } from './Entry';
 import { usd } from '../lib/format';
-import CrucibleBull from './CrucibleBull';
+import AuditorCat from './AuditorCat';
 
 interface HeroChartProps {
   venues: Venue[];
@@ -20,7 +20,7 @@ type MainTab = 'guardian' | 'table';
 /**
  * Web3 Crucible Board:
  * Features:
- * - 3D Crucible Bull Mascot Guardian with levitation & interactive cursor tilt
+ * - Animated Bureaucrat Auditor Cat with real stamping loop & interactive rapid audit
  * - Realtime top venue podium and multi-metric audit leaderboard table
  * - Instant smooth-scroll anchor jumps to register entries
  */
@@ -42,7 +42,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
     <div
       className="tera-board relative overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-4 sm:p-5 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
       role="region"
-      aria-label="Crucible mascot guardian and top tokenized asset venues leaderboard"
+      aria-label="Crucible auditor cat mascot and top tokenized asset venues leaderboard"
     >
       {/* Top indicator bar */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-[var(--gold)]" />
@@ -55,7 +55,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--gold)]" />
           </span>
           <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
-            CRUCIBLE // {tab === 'guardian' ? 'GUARDIAN 3D' : 'LEADERBOARD'}
+            CRUCIBLE // {tab === 'guardian' ? 'CHIEF AUDITOR' : 'LEADERBOARD'}
           </span>
         </div>
 
@@ -71,7 +71,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
             }`}
           >
             <Sparkles size={11} className={tab === 'guardian' ? 'text-[var(--gold)]' : ''} />
-            GUARDIAN
+            AUDITOR CAT
           </button>
           <button
             type="button"
@@ -91,7 +91,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
       {/* Tab Content: 3D Mascot Guardian */}
       {tab === 'guardian' && (
         <div className="mt-3 flex flex-col gap-3">
-          <CrucibleBull />
+          <AuditorCat />
 
           {/* Quick Podium Ticker */}
           <div className="rounded border border-[var(--rule)] bg-[var(--surface-2)] p-2.5">
