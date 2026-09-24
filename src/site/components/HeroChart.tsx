@@ -37,7 +37,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
   }
 
   return (
-    <div className="relative w-full select-none flex flex-col items-center justify-center">
+    <div className="relative w-full max-w-[500px] select-none flex flex-col items-center justify-center">
       {/* 1. The Grand Bureaucrat Auditor Cat (Seamless on Background Canvas) */}
       <div className="relative w-full">
         <AuditorCat className="w-full" />
@@ -45,8 +45,8 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
 
       {/* 2. Floating Glassmorphic Crucible Leaderboard HUD (Overlapping Left Side) */}
       <motion.div
-        className="w-full sm:w-[310px] md:w-[330px] sm:absolute sm:-left-3 sm:bottom-8 z-30 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/94 p-3 shadow-2xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
-        initial={reduce ? false : { opacity: 0, x: -20, y: 10 }}
+        className="w-full sm:w-[280px] md:w-[295px] sm:absolute sm:left-0 sm:bottom-0 z-20 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-3 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
+        initial={reduce ? false : { opacity: 0, x: -16, y: 10 }}
         animate={ready || reduce ? { opacity: 1, x: 0, y: 0 } : {}}
         transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 0.33, 0.3, 1.01] }}
         style={{ perspective: 800 }}

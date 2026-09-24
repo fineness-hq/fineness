@@ -22,6 +22,10 @@ interface AuditorCatProps {
  * - Interactive click-to-stamp & rapid audit mode
  * - 3D cursor perspective tilt tracking
  */
+function formatNumber(n: number) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 export default function AuditorCat({ className = '' }: AuditorCatProps) {
   const reduce = useReducedMotion();
   const [stampCount, setStampCount] = useState(1482);
@@ -126,24 +130,26 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
     >
       {/* Floating Status Bar (Direct on background) */}
       <div className="w-full flex items-center justify-between px-1 mb-1 font-mono text-[11px]">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--action)] opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--action)]" />
           </span>
           <span className="font-bold tracking-wider text-[var(--ink)]">
-            CHIEF AUDITOR // CRUCIBLE
+            CHIEF AUDITOR
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 rounded-full border border-[var(--rule)] bg-[var(--surface)]/90 backdrop-blur-xs px-2.5 py-0.5 shadow-xs text-[var(--gold)]">
           <Coffee className="h-3 w-3" />
-          <span className="font-semibold tabular-nums">{stampCount.toLocaleString()} AUDITED</span>
+          <span suppressHydrationWarning className="font-semibold tabular-nums">
+            {formatNumber(stampCount)} AUDITED
+          </span>
         </div>
       </div>
 
       {/* 3D Cat Stage — Seamlessly Sitting on Background Canvas */}
-      <div className="relative flex h-[350px] sm:h-[410px] md:h-[450px] w-full items-center justify-end overflow-visible">
+      <div className="relative flex h-[300px] sm:h-[350px] md:h-[390px] w-full items-center justify-end overflow-visible">
         {/* Parallax Container */}
         <motion.div
           className="relative z-10 flex h-full w-full items-center justify-end cursor-pointer"
@@ -160,7 +166,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
           {/* Lazy Tail Swish in Background */}
           {!reduce && (
             <motion.div
-              className="absolute right-[12%] bottom-[28%] z-0 h-24 w-12 rounded-full bg-[#1b1e22]"
+              className="absolute right-[12%] bottom-[28%] z-0 h-20 w-10 rounded-full bg-[#1b1e22]"
               animate={{
                 rotate: [-14, 16, -14],
                 originX: 0.85,
@@ -180,10 +186,10 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
               {[0, 1, 2].map((i) => (
                 <motion.span
                   key={i}
-                  className="absolute block h-4 w-2 rounded-full bg-[var(--ink-3)]/30 blur-[1px]"
+                  className="absolute block h-3.5 w-1.5 rounded-full bg-[var(--ink-3)]/30 blur-[1px]"
                   animate={{
-                    y: [0, -22, -36],
-                    x: [0, (i - 1) * 5, (i - 1) * 10],
+                    y: [0, -20, -32],
+                    x: [0, (i - 1) * 4, (i - 1) * 8],
                     opacity: [0, 0.7, 0],
                     scale: [0.8, 1.3, 1.8],
                   }}
@@ -199,7 +205,7 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
           )}
 
           {/* Grand Stamping Cat Character (Arm Up vs Arm Down Slam) */}
-          <div className="relative h-[310px] sm:h-[370px] md:h-[420px] w-[310px] sm:w-[370px] md:w-[420px]">
+          <div className="relative h-[280px] sm:h-[330px] md:h-[370px] w-[280px] sm:w-[330px] md:w-[370px]">
             {/* Frame 1: Arm Raised High in the Air holding Stamp */}
             <motion.div
               className="absolute inset-0"
@@ -216,8 +222,8 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
                 alt="Auditor Cat arm raised high ready to stamp"
                 fill
                 priority
-                sizes="(max-width: 640px) 320px, 440px"
-                className="object-contain drop-shadow-[0_16px_32px_rgba(15,20,25,0.12)]"
+                sizes="(max-width: 640px) 280px, 370px"
+                className="object-contain drop-shadow-[0_14px_28px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
 
@@ -227,8 +233,8 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
               initial={false}
               animate={{
                 opacity: isArmUp ? 0 : 1,
-                y: isArmUp ? 0 : [ -5, 3, 0 ],
-                scale: isArmUp ? 1 : [ 1.025, 0.975, 1 ],
+                y: isArmUp ? 0 : [-5, 3, 0],
+                scale: isArmUp ? 1 : [1.025, 0.975, 1],
               }}
               transition={{ duration: 0.14 }}
             >
@@ -237,15 +243,15 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
                 alt="Auditor Cat arm stamping certificate down"
                 fill
                 priority
-                sizes="(max-width: 640px) 320px, 440px"
-                className="object-contain drop-shadow-[0_16px_32px_rgba(15,20,25,0.12)]"
+                sizes="(max-width: 640px) 280px, 370px"
+                className="object-contain drop-shadow-[0_14px_28px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
 
             {/* Impact Shockwave Ring on the Desk Certificate */}
             {!reduce && stampActive && (
               <motion.div
-                className="absolute left-[44%] bottom-[23%] z-20 pointer-events-none h-14 w-20 rounded-full border-2 border-[var(--band-high)]"
+                className="absolute left-[44%] bottom-[23%] z-20 pointer-events-none h-12 w-18 rounded-full border-2 border-[var(--band-high)]"
                 initial={{ scale: 0.5, opacity: 1 }}
                 animate={{ scale: 2.2, opacity: 0 }}
                 transition={{ duration: 0.38, ease: 'easeOut' }}
@@ -254,11 +260,11 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
 
             {/* Live Certified Stamp Imprint */}
             <motion.div
-              className="absolute left-[40%] bottom-[21%] z-30 pointer-events-none rotate-[-6deg] rounded border border-[var(--band-high)] bg-[var(--surface)]/95 px-2 py-0.5 shadow-md"
+              className="absolute left-[38%] bottom-[21%] z-30 pointer-events-none rotate-[-6deg] rounded border border-[var(--band-high)] bg-[var(--surface)]/95 px-2 py-0.5 shadow-md"
               animate={
                 stampActive
                   ? {
-                      scale: [1.4, 1],
+                      scale: [1.35, 1],
                       opacity: 1,
                     }
                   : {
@@ -277,35 +283,14 @@ export default function AuditorCat({ className = '' }: AuditorCatProps) {
         </motion.div>
       </div>
 
-      {/* Floating Ticker Tape Ribbon (Direct on Background) */}
-      <div className="relative w-full overflow-hidden rounded border border-[var(--rule)] bg-[var(--surface)]/80 backdrop-blur-xs py-1.5 px-3 font-mono text-[10px] text-[var(--ink-2)] mt-1 shadow-xs">
-        <motion.div
-          className="flex whitespace-nowrap gap-5 font-medium"
-          animate={{ x: [0, -380] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-        >
-          <span>PAXG • PURITY 712‰ • STAMPED [PASS]</span>
-          <span className="text-[var(--gold)]">★</span>
-          <span>XAUT • PURITY 512‰ • 24K BACKED</span>
-          <span className="text-[var(--gold)]">★</span>
-          <span>USDG • AUDITED • PHYSICAL GOLD VAULT</span>
-          <span className="text-[var(--gold)]">★</span>
-          <span>TETHER GOLD • 450‰ • CRUCIBLE VERIFIED</span>
-          <span className="text-[var(--gold)]">★</span>
-          <span>PAXG • PURITY 712‰ • STAMPED [PASS]</span>
-          <span className="text-[var(--gold)]">★</span>
-          <span>XAUT • PURITY 512‰ • 24K BACKED</span>
-        </motion.div>
-      </div>
-
-      {/* Subtle Hint */}
-      <div className="w-full flex items-center justify-between text-[9px] font-mono text-[var(--ink-3)] mt-1 px-1">
+      {/* Interactive Stamp Hint */}
+      <div className="w-full flex items-center justify-end text-[9px] font-mono text-[var(--ink-3)] mt-1 px-1">
         <span className="flex items-center gap-1">
           <Sparkles className="h-3 w-3 text-[var(--gold)]" />
           <span>CLICK CAT TO SPEED UP AUDIT</span>
-        </span>
-        <span className="text-[var(--gold)] font-bold">
-          {isRapid ? '⚡ RAPID STAMPING' : '60FPS ACTIVE LOOP'}
+          <span className="text-[var(--gold)] font-bold ml-1">
+            {isRapid ? '⚡ RAPID' : '• ACTIVE'}
+          </span>
         </span>
       </div>
     </div>
