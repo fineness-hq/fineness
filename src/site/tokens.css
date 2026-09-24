@@ -1,5 +1,5 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* Mono stack: self-hosted variable font (see layout.tsx). */
   --font-geist-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
@@ -9,65 +9,65 @@
   --legacy-action: #e65800;
   --band-high: #2f6b4f;
 
-  /* Active Cyber-Bullion Dark Palette (Obsidian Noir + 24K Liquid Gold + Cyber Emerald) */
-  --ground: #0b0e11;
-  --bg: #0b0e11;
-  --surface: #12171c;
-  --surface-2: #181f26;
-  --surface-alt: #1c242e;
-  --surface-alt-2: #242e3a;
-  --tint: #16202a;
-  --lavender: #1a2430;
+  /* Active Neo-Brutalist Paper Vault Palette (Architectural Bone + Deep Ink + Klein Blue + 24K Gold) */
+  --ground: #f5f4ef;
+  --bg: #f5f4ef;
+  --surface: #ffffff;
+  --surface-2: #edebe4;
+  --surface-alt: #e4e1d7;
+  --surface-alt-2: #dbd8cd;
+  --tint: #ebe8de;
+  --lavender: #ece9df;
 
-  --dark: #07090b;
-  --dark-2: #050608;
-  --dark-overlay: rgba(7, 9, 11, 0.88);
+  --dark: #0f1419;
+  --dark-2: #080b0e;
+  --dark-overlay: rgba(15, 20, 25, 0.85);
 
-  --ink: #f0f4f8;
-  --ink-2: #9ba8b7;
-  --ink-2b: #b0bcc9;
-  --ink-2c: #8493a3;
-  --ink-3: #5c6b7a;
-  --faint: #2d3846;
-  --faint-2: #26303c;
-  --faint-3: #1f2732;
+  --ink: #0f1419;
+  --ink-2: #454f5b;
+  --ink-2b: #343c45;
+  --ink-2c: #5c6875;
+  --ink-3: #8a96a3;
+  --faint: #cfcbd6;
+  --faint-2: #c6c2cd;
+  --faint-3: #bdb9c4;
 
-  --rule: #232c37;
-  --rule-2: #2d3846;
-  --rule-soft: #1a222c;
-  --rule-alpha: rgba(35, 44, 55, 0.6);
+  --rule: #d5d1c5;
+  --rule-2: #c5c0b2;
+  --rule-soft: #e2ded3;
+  --rule-alpha: rgba(213, 209, 197, 0.65);
 
-  --olive: #00e676;
-  --gold: #ffd000;
-  --gold-bf: rgba(255, 208, 0, 0.75);
-  --gold-f2: rgba(255, 208, 0, 0.95);
-  --action: #ffd000;
-  --action-alt: #ffb700;
+  --olive: #107c41;
+  --gold: #d4a017;
+  --gold-bf: rgba(212, 160, 23, 0.75);
+  --gold-f2: rgba(212, 160, 23, 0.95);
+  --action: #1a44ff;
+  --action-alt: #002fe6;
 
   /* Brand aliases */
-  --maroon: #ffd000;
-  --maroon-deep: #0b0e11;
-  --maroon-soft: #16202a;
+  --maroon: #1a44ff;
+  --maroon-deep: #0f1419;
+  --maroon-soft: #ece9df;
 
-  /* Grade bands: 22k Emerald, 18k Pure Gold, 14k Burnished Bronze, 9k Amber, Below Crimson */
-  --band-high: #00e676;
-  --band-mid: #ffd000;
-  --band-low: #ff9100;
-  --band-none: #ff3d57;
+  /* Grade bands: 22k Forest Emerald, 18k Bullion Gold, 14k Burnished Bronze, 9k Terracotta, Below Crimson */
+  --band-high: #107c41;
+  --band-mid: #d4a017;
+  --band-low: #cf4900;
+  --band-none: #d92438;
 
-  --ok: #00e676;
-  --warn: #ffd000;
+  --ok: #107c41;
+  --warn: #d4a017;
 
-  /* Preloader inks: Dark vault shutter with glowing gold track */
-  --pre-ink: #f0f4f8;
-  --pre-muted: #9ba8b7;
-  --pre-muted-2: #728090;
-  --pre-muted-3: #5c6b7a;
-  --pre-shutter: #07090b;
-  --pre-shutter-border: rgba(255, 208, 0, 0.2);
-  --pre-progress: #ffd000;
-  --pre-track: rgba(255, 208, 0, 0.15);
-  --pre-orbit: rgba(255, 208, 0, 0.25);
+  /* Preloader inks: Architectural paper shutter with electric Klein blue track */
+  --pre-ink: #0f1419;
+  --pre-muted: #5c6875;
+  --pre-muted-2: #8a96a3;
+  --pre-muted-3: #a4b0bd;
+  --pre-shutter: #edebe4;
+  --pre-shutter-border: rgba(26, 68, 255, 0.2);
+  --pre-progress: #1a44ff;
+  --pre-track: rgba(26, 68, 255, 0.15);
+  --pre-orbit: rgba(26, 68, 255, 0.25);
 
   /* Motion: Tera reveal + preloader exits. */
   --ease-reveal: cubic-bezier(0.16, 0.33, 0.3, 1.01);

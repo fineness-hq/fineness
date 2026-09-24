@@ -41,10 +41,10 @@ export default function AmbientCanvas() {
     let targetMouseY = -9999;
 
     const colors = [
-      'rgba(255, 208, 0, 0.55)', // 24K Liquid Gold
-      'rgba(0, 230, 118, 0.45)',  // Cyber Emerald
-      'rgba(255, 145, 0, 0.35)',  // Amber
-      'rgba(0, 229, 255, 0.35)',  // Cyber Cyan
+      'rgba(26, 68, 255, 0.45)',  // Electric Klein Blue
+      'rgba(212, 160, 23, 0.5)',   // 24K Bullion Gold
+      'rgba(16, 124, 65, 0.4)',    // Forest Emerald
+      'rgba(15, 20, 25, 0.35)',    // Deep Ink Charcoal
     ];
 
     const particleCount = Math.min(38, Math.floor((width * height) / 25000));
@@ -88,7 +88,7 @@ export default function AmbientCanvas() {
 
       // Draw faint coordinate grid
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(35, 44, 55, 0.45)'; // dark grid line
+      ctx.strokeStyle = 'rgba(213, 209, 197, 0.6)'; // architectural bone grid
       const gridSize = 72;
 
       for (let x = 0; x < width; x += gridSize) {
@@ -140,7 +140,7 @@ export default function AmbientCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 208, 0, ${0.2 * (1 - dist2 / 90)})`;
+            ctx.strokeStyle = `rgba(26, 68, 255, ${0.16 * (1 - dist2 / 90)})`;
             ctx.stroke();
           }
         }
