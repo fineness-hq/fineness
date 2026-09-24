@@ -8,14 +8,19 @@ const LINKS: Array<[string, string, string]> = [
   ['AU', 'Home', '/'],
   ['REG', 'Register', '/#register'],
   ['SCALE', 'Scale', '/#scale'],
+  ['CRUC', 'Manifesto', '/#crucible-disclosure'],
+  ['FLOW', 'Workflow', '/#refinery-pipeline'],
+  ['BENTO', 'Bento', '/#utility-suite'],
   ['ASSAY', 'Comparison', '/#comparison'],
-  ['CANON', 'Method', '/method'],
-  ['JSON', 'Machine JSON', '/editions/2026-10.json'],
+  ['REGUL', 'Regulated', '/#regulated'],
+  ['FAQ', 'FAQ', '/#faq'],
   ['PROV', 'Sources', '/#sources'],
+  ['CANON', 'Method', '/method'],
+  ['JSON', 'Machine JSON', '/editions/2026-11.json'],
 ];
 
 /** Dark menu button + slide-in overlay panel with numbered links. */
-export default function MenuButton({ latestEdition = '2026-10' }: { latestEdition?: string }) {
+export default function MenuButton({ latestEdition = '2026-11' }: { latestEdition?: string }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const links: Array<[string, string, string]> = LINKS.map((l) =>
@@ -74,7 +79,6 @@ export default function MenuButton({ latestEdition = '2026-10' }: { latestEditio
             <Link href={`/editions/${latestEdition}.json`} onClick={close} tabIndex={open ? 0 : -1} className="tera-panel-json">
               EDITION JSON ↗
             </Link>
-            <span className="tera-panel-lang">LANGUAGE&nbsp;&nbsp;EN&nbsp;&nbsp;▾</span>
           </div>
         </nav>
       </div>

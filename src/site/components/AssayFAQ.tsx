@@ -38,7 +38,7 @@ export default function AssayFAQ() {
   }
 
   return (
-    <section aria-labelledby="faq-title" className="page-wrap py-14 border-b border-[var(--rule)]">
+    <section id="faq" aria-labelledby="faq-title" className="page-wrap py-14 border-b border-[var(--rule)]">
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--rule)] pb-4">
           <div>

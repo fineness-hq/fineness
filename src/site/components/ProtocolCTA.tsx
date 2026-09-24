@@ -1,9 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Terminal, Code, ArrowUpRight, ShieldCheck, Copy, Check } from 'lucide-react';
+import {
+  Terminal,
+  Code,
+  ArrowUpRight,
+  ShieldCheck,
+  Copy,
+  Check,
+  Radio,
+  FileCode,
+  Sparkles,
+} from 'lucide-react';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
@@ -11,107 +21,273 @@ interface ProtocolCTAProps {
   edition: string;
 }
 
+type TabKey = 'curl' | 'ts' | 'json';
+
 /**
  * ProtocolCTA:
- * Web3 developer & institutional portal for integrating Fineness feeds.
- * Enhanced with scroll-driven scale-in and illuminated terminal box.
+ * Institutional Web3 Developer & Machine Terminal Portal.
+ * Redesigned into a luxury, interactive developer console with real tabs,
+ * traffic lights, syntax-colored snippets, and live response preview.
  */
 export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
   const reduce = useReducedMotion();
-  const [copied, setCopied] = React.useState(false);
+  const [activeTab, setActiveTab] = useState<TabKey>('curl');
+  const [copied, setCopied] = useState(false);
 
-  const curlCommand = `curl -s <host>/editions/${edition}.json | jq '.venues[] | {name, fineness, band}'`;
+  const snippets: Record<TabKey, string> = {
+    curl: `curl -s https://fineness.io/editions/${edition}.json \\
+  | jq '.venues[] | select(.fineness >= 750) | {name, fineness, band}'`,
+    ts: `import type { Edition } from '@fineness/types';
 
-  function copyCurl() {
-    navigator.clipboard?.writeText(curlCommand);
+const res = await fetch('https://fineness.io/editions/${edition}.json');
+const edition: Edition = await res.json();
+
+// Parameterize Aave / Morpho liquidation gate
+const admitted = edition.venues.filter(v => v.fineness >= 375);`,
+    json: `{
+  "edition": "${edition}",
+  "snapshotHash": "sha256:d8388ed9157e4b9...",
+  "venues": [
+    { "id": "long-xyz", "name": "Long.xyz", "fineness": 999, "band": "24k" },
+    { "id": "pons", "name": "Pons", "fineness": 812, "band": "18k" },
+    { "id": "stonkfun", "name": "stonk.fun", "fineness": 342, "band": "none" }
+  ]
+}`,
+  };
+
+  function copyActiveSnippet() {
+    navigator.clipboard?.writeText(snippets[activeTab]);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
 
   return (
-    <section aria-labelledby="cta-title" className="page-wrap py-16">
+    <section aria-labelledby="cta-title" className="page-wrap py-20">
       <Reveal>
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 28, scale: 0.96 }}
+          initial={reduce ? false : { opacity: 0, y: 32, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-40px' }}
+          viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: [0.16, 0.33, 0.3, 1] }}
-          className="relative overflow-hidden rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-8 sm:p-12 shadow-xl"
+          className="relative overflow-hidden rounded-3xl border-2 border-[var(--rule)] bg-[var(--surface)] p-8 sm:p-12 md:p-14 shadow-2xl"
         >
           {/* Top Gold Bullion Stripe */}
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
 
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-xs font-bold text-[var(--gold)]">
-                <Terminal size={13} />
-                <span>OPEN MACHINE-READABLE REGISTER</span>
+          {/* Ambient Corner Glow */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[var(--gold)] opacity-10 blur-3xl"
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Column: Heading & Value Proposition (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-xs font-bold text-[var(--gold)] shadow-2xs">
+                  <Terminal size={13} className="text-[var(--gold)]" />
+                  <span>OPEN MACHINE-READABLE ENDPOINTS</span>
+                </div>
+
+                <h2
+                  id="cta-title"
+                  className="mt-4 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)] leading-tight"
+                >
+                  <WordText text="Take the frozen register with you, as JSON" />
+                </h2>
+
+                <p className="mt-4 text-xs sm:text-sm md:text-base leading-relaxed text-[var(--ink-2)]">
+                  Every frozen edition ships beside a verifiable machine-readable JSON dossier containing the exact data rendered on-screen: venues, scores, bands, ranks, raw metrics, and audit source registries.
+                </p>
+
+                <div className="mt-5 space-y-2 font-mono text-xs text-[var(--ink-2)]">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
+                    <span>Deterministic SHA-256 snapshot digest</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
+                    <span>Permanent unbribable archival permalinks</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
+                    <span>Zero rate-limits, zero API keys required</span>
+                  </div>
+                </div>
               </div>
 
-              <h2
-                id="cta-title"
-                className="mt-4 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)]"
-              >
-                <WordText text="Take the frozen register with you, as JSON" />
-              </h2>
-
-              <p className="mt-3 text-sm sm:text-base leading-relaxed text-[var(--ink-2)]">
-                Every frozen edition ships beside a machine-readable JSON file with the same data the page renders: venues, scores, bands, ranks, metrics and sources.
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href={`/editions/${edition}.json`}
-                  className="mono inline-flex items-center gap-2 rounded-lg bg-[var(--dark)] px-5 py-3 text-xs font-bold text-white shadow-md transition-all hover:bg-[var(--gold)] hover:text-black hover:shadow-lg cursor-pointer"
+                  className="mono inline-flex items-center gap-2 rounded-xl bg-[var(--dark)] px-5 py-3 text-xs font-bold text-white shadow-md transition-all hover:bg-[var(--gold)] hover:text-black hover:shadow-xl cursor-pointer"
                 >
-                  <Code size={14} />
-                  <span>EDITION {edition}.JSON</span>
+                  <Code size={15} />
+                  <span>FETCH EDITION {edition}.JSON</span>
                   <ArrowUpRight size={14} />
                 </Link>
 
                 <Link
                   href="/method"
-                  className="mono inline-flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-5 py-3 text-xs font-bold text-[var(--ink)] shadow-xs transition-all hover:border-[var(--dark)]"
+                  className="mono inline-flex items-center gap-2 rounded-xl border border-[var(--rule)] bg-[var(--surface)] px-5 py-3 text-xs font-bold text-[var(--ink)] shadow-xs transition-all hover:border-[var(--dark)]"
                 >
-                  <ShieldCheck size={14} className="text-[var(--gold)]" />
-                  <span>METHODOLOGY</span>
+                  <ShieldCheck size={15} className="text-[var(--gold)]" />
+                  <span>METHODOLOGY SPEC</span>
                 </Link>
               </div>
             </div>
 
-            {/* Quick API Snippet box with Copy Button */}
-            <div className="w-full lg:w-96 rounded-xl border-2 border-[var(--rule)] bg-[var(--dark)] text-white p-4 font-mono text-xs shadow-2xl shrink-0">
-              <div className="flex items-center justify-between pb-2 border-b border-white/10 text-[10px]">
-                <span className="text-white/60 flex items-center gap-1">
-                  <Terminal size={11} className="text-[var(--gold)]" />
-                  <span>TERMINAL CURL</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={copyCurl}
-                  className="inline-flex items-center gap-1 text-[var(--gold)] hover:text-white transition-colors cursor-pointer"
-                >
-                  {copied ? (
-                    <>
-                      <Check size={10} className="text-emerald-400" />
-                      <span className="text-emerald-400 font-bold">COPIED</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={10} />
-                      <span>COPY</span>
-                    </>
-                  )}
-                </button>
-              </div>
-              <pre className="mt-3 overflow-x-auto text-[11px] leading-relaxed text-amber-200">
-                <code>{curlCommand}</code>
-              </pre>
-              <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[9px] text-white/50">
-                <span>FORMAT: APPLICATION/JSON</span>
-                <span className="text-emerald-400 font-bold">HTTP 200 OK</span>
+            {/* Right Column: High-End Developer Interactive Terminal Console (7 cols) */}
+            <div className="lg:col-span-7 w-full">
+              <div className="rounded-2xl border-2 border-[#1E252E] bg-[#0A0D12] text-slate-100 shadow-2xl overflow-hidden font-mono text-xs">
+                
+                {/* Terminal Window Title Bar (Mac-Style Traffic Lights + Tabs) */}
+                <div className="flex items-center justify-between px-4 py-3 bg-[#11161D] border-b border-white/10 select-none">
+                  
+                  {/* Traffic Light Dots */}
+                  <div className="flex items-center gap-2">
+                    <span className="h-3 w-3 rounded-full bg-[#EF4444] shadow-xs" />
+                    <span className="h-3 w-3 rounded-full bg-[#F59E0B] shadow-xs" />
+                    <span className="h-3 w-3 rounded-full bg-[#10B981] shadow-xs" />
+                    <span className="ml-2 text-[11px] text-white/40 hidden sm:inline">
+                      fineness-terminal — bash
+                    </span>
+                  </div>
+
+                  {/* Snippet Tabs */}
+                  <div className="flex items-center bg-[#0A0D12] rounded-lg p-0.5 border border-white/10 text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('curl')}
+                      className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+                        activeTab === 'curl'
+                          ? 'bg-[var(--gold)] text-black font-black shadow-xs'
+                          : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      cURL
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('ts')}
+                      className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+                        activeTab === 'ts'
+                          ? 'bg-[var(--gold)] text-black font-black shadow-xs'
+                          : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      TypeScript
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('json')}
+                      className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+                        activeTab === 'json'
+                          ? 'bg-[var(--gold)] text-black font-black shadow-xs'
+                          : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      Payload
+                    </button>
+                  </div>
+
+                  {/* Copy Button */}
+                  <button
+                    type="button"
+                    onClick={copyActiveSnippet}
+                    aria-label="Copy snippet to clipboard"
+                    className="flex items-center gap-1.5 text-xs text-[var(--gold)] hover:text-white transition-colors cursor-pointer"
+                  >
+                    {copied ? (
+                      <>
+                        <Check size={13} className="text-emerald-400" />
+                        <span className="text-emerald-400 font-bold text-[10px]">COPIED</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={13} />
+                        <span className="text-[10px] hidden sm:inline">COPY</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Terminal Code Body */}
+                <div className="p-5 overflow-x-auto min-h-[170px] max-h-[260px] flex items-start bg-[#0A0D12]">
+                  <pre className="text-xs sm:text-[13px] leading-relaxed text-slate-200 w-full">
+                    {activeTab === 'curl' && (
+                      <code>
+                        <span className="text-emerald-400">$ </span>
+                        <span className="text-amber-300 font-bold">curl</span>
+                        <span className="text-slate-400"> -s </span>
+                        <span className="text-cyan-300">https://fineness.io/editions/{edition}.json</span>
+                        <span className="text-slate-400"> \</span>
+                        {'\n'}  <span className="text-purple-400">| </span>
+                        <span className="text-amber-300 font-bold">jq</span>
+                        <span className="text-emerald-300"> &apos;.venues[] | select(.fineness &gt;= 750) | &#123;name, fineness, band&#125;&apos;</span>
+                      </code>
+                    )}
+
+                    {activeTab === 'ts' && (
+                      <code>
+                        <span className="text-purple-400">import type </span>
+                        <span className="text-amber-200">&#123; Edition &#125; </span>
+                        <span className="text-purple-400">from </span>
+                        <span className="text-emerald-300">&apos;@fineness/types&apos;</span>;
+                        {'\n\n'}
+                        <span className="text-purple-400">const </span>
+                        <span className="text-cyan-300">res </span>
+                        <span className="text-slate-400">= </span>
+                        <span className="text-purple-400">await </span>
+                        <span className="text-amber-300">fetch</span>
+                        <span className="text-slate-400">(</span>
+                        <span className="text-emerald-300">&apos;https://fineness.io/editions/{edition}.json&apos;</span>
+                        <span className="text-slate-400">)</span>;
+                        {'\n'}
+                        <span className="text-purple-400">const </span>
+                        <span className="text-cyan-300">data</span>
+                        <span className="text-slate-400">: </span>
+                        <span className="text-amber-200">Edition </span>
+                        <span className="text-slate-400">= </span>
+                        <span className="text-purple-400">await </span>
+                        <span className="text-cyan-300">res</span>.<span className="text-amber-300">json</span>();
+                      </code>
+                    )}
+
+                    {activeTab === 'json' && (
+                      <code>
+                        <span className="text-slate-400">&#123;</span>
+                        {'\n'}  <span className="text-cyan-300">&quot;edition&quot;</span>: <span className="text-emerald-300">&quot;{edition}&quot;</span>,
+                        {'\n'}  <span className="text-cyan-300">&quot;snapshotHash&quot;</span>: <span className="text-emerald-300">&quot;sha256:d8388ed9157...&quot;</span>,
+                        {'\n'}  <span className="text-cyan-300">&quot;venues&quot;</span>: [
+                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Long.xyz&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">999</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-[var(--gold)] font-bold">&quot;24k&quot;</span> &#125;,
+                        {'\n'}    &#123; <span className="text-cyan-300">&quot;name&quot;</span>: <span className="text-emerald-300">&quot;Pons&quot;</span>, <span className="text-cyan-300">&quot;fineness&quot;</span>: <span className="text-amber-300 font-bold">812</span>, <span className="text-cyan-300">&quot;band&quot;</span>: <span className="text-amber-400">&quot;18k&quot;</span> &#125;
+                        {'\n'}  ]
+                        {'\n'}<span className="text-slate-400">&#125;</span>
+                      </code>
+                    )}
+                  </pre>
+                </div>
+
+                {/* Terminal Status Bar Footer */}
+                <div className="px-4 py-2.5 bg-[#11161D] border-t border-white/10 flex flex-wrap items-center justify-between text-[10px] text-white/50">
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      HTTP 200 OK
+                    </span>
+                    <span>CONTENT-TYPE: APPLICATION/JSON</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <span>CORS: *</span>
+                    <span className="text-[var(--gold)] font-bold">PUBLIC PUBLIC ENCLAVE</span>
+                  </div>
+                </div>
+
               </div>
             </div>
+
           </div>
         </motion.div>
       </Reveal>
