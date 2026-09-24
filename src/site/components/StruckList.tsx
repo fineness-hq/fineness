@@ -68,7 +68,7 @@ export default function StruckList({ venues }: StruckListProps) {
                   </div>
                 </div>
                 <span className="mono text-xs font-bold tabular-nums text-[var(--band-none)]">
-                  TERMINAL FINENESS {v.fineness}‰
+                  TERMINAL FINENESS {v.fineness} / 1000
                 </span>
               </div>
             ))}

@@ -58,7 +58,7 @@ export default function LogoRow({ items }: LogoRowProps) {
                   color: '#ffffff',
                 }}
               >
-                {v.fineness}‰
+                {v.fineness} <span className="text-[8px] font-normal opacity-85">/1000</span>
               </span>
               <span className="text-[9px] font-bold text-[var(--ink-3)]">
                 [{b.toUpperCase()}]

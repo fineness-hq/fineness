@@ -6,7 +6,7 @@ const BANDS = [
   {
     name: '22K / 24K',
     karat: '22K',
-    purity: '916‰ – 1000‰',
+    purity: '916 – 1000 / 1000',
     ratio: '≥ 91.6% Pure Backing',
     color: 'var(--band-high)',
     certified: true,
@@ -18,7 +18,7 @@ const BANDS = [
   {
     name: '18K Standard',
     karat: '18K',
-    purity: '750‰ – 915‰',
+    purity: '750 – 915 / 1000',
     ratio: '75.0% – 91.5% Backing',
     color: 'var(--gold)',
     certified: true,
@@ -30,7 +30,7 @@ const BANDS = [
   {
     name: '14K Standard',
     karat: '14K',
-    purity: '585‰ – 749‰',
+    purity: '585 – 749 / 1000',
     ratio: '58.5% – 74.9% Backing',
     color: 'var(--band-mid)',
     certified: true,
@@ -42,7 +42,7 @@ const BANDS = [
   {
     name: '9K Minimum',
     karat: '9K',
-    purity: '375‰ – 584‰',
+    purity: '375 – 584 / 1000',
     ratio: '37.5% – 58.4% Backing',
     color: 'var(--band-low)',
     certified: true,
@@ -54,7 +54,7 @@ const BANDS = [
   {
     name: 'Below Hallmark',
     karat: '< 9K',
-    purity: '0‰ – 374‰',
+    purity: '0 – 374 / 1000',
     ratio: '< 37.5% Verifiable',
     color: 'var(--band-none)',
     certified: false,
@@ -79,15 +79,15 @@ export default function ScaleTable() {
               <WordText text="The Hallmark Karat Scale" />
             </h2>
             <p className="prose mt-1 max-w-[68ch] text-sm leading-relaxed text-[var(--ink-2)]">
-              Fineness is calibrated from 0‰ to 1000‰. The official assay cutoff is strictly 375‰ (9K).
-              Venues below 375‰ remain uncertified and are denied institutional hallmark status.
+              Fineness is calibrated on a standard 0 to 1000 basis. The official assay cutoff is strictly 375 / 1000 (9K).
+              Venues below 375 / 1000 remain uncertified and are denied institutional hallmark status.
             </p>
           </div>
 
           <div className="flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)] px-3 py-2 font-mono text-xs">
             <span className="flex h-2 w-2 rounded-full bg-[var(--gold)]" />
             <span className="font-semibold text-[var(--ink)]">OFFICIAL CUTOFF:</span>
-            <span className="font-extrabold text-[var(--gold)]">375‰ (9 KARAT)</span>
+            <span className="font-extrabold text-[var(--gold)]">375 / 1000 (9 KARAT)</span>
           </div>
         </div>
 
@@ -95,12 +95,12 @@ export default function ScaleTable() {
         <div className="mt-8 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
           {/* Caliper ticks header */}
           <div className="relative mb-2 flex justify-between font-mono text-[10px] font-semibold text-[var(--ink-3)]">
-            <span>0‰ (RAW)</span>
-            <span className="text-[var(--gold)] font-bold">375‰ (HALLMARK GATE)</span>
-            <span>585‰ (14K)</span>
-            <span>750‰ (18K)</span>
-            <span>916‰ (22K)</span>
-            <span>1000‰ (PURE)</span>
+            <span>0 (RAW)</span>
+            <span className="text-[var(--gold)] font-bold">375 / 1000 (GATE)</span>
+            <span>585</span>
+            <span>750</span>
+            <span>916</span>
+            <span>1000 (PURE)</span>
           </div>
 
           <div
@@ -124,7 +124,7 @@ export default function ScaleTable() {
                     {b.karat}
                   </span>
                   <span className="mono text-[9px] font-semibold text-white/80 tabular-nums">
-                    {b.from}‰
+                    {b.from} / 1000
                   </span>
                 </div>
               ))}

@@ -122,7 +122,7 @@ export default function Entry({
             {displayBand} STANDING
           </span>
           <span className="rounded bg-[var(--dark)] px-2.5 py-1 font-bold text-white shadow-xs">
-            {displayFineness}‰ PURITY
+            {displayFineness} / 1000 PURITY
           </span>
         </div>
       </div>
@@ -343,7 +343,7 @@ export default function Entry({
           <div className="flex items-center justify-between w-full text-[10px] font-mono">
             <span className="text-[var(--ink-3)] font-semibold">PURITY GAUGE</span>
             <span className="font-extrabold" style={{ color: BAND_COLOR[displayBand] }}>
-              {displayFineness}‰
+              {displayFineness} <span className="text-[9px] font-normal opacity-75">/ 1000</span>
             </span>
           </div>
           <div className="relative h-2 w-full rounded-full bg-[var(--surface-alt)] overflow-hidden border border-[var(--rule)]/60">
@@ -363,7 +363,7 @@ export default function Entry({
         <div className="flex items-center gap-2.5 shrink-0 font-mono">
           <div className="flex flex-col items-end">
             <span className="text-lg font-black tabular-nums text-[var(--ink)] leading-none">
-              {displayFineness}<span className="text-xs font-bold text-[var(--gold)]">‰</span>
+              {displayFineness}<span className="text-[10px] font-bold text-[var(--gold)] ml-0.5">/1000</span>
             </span>
             <DeltaMark delta={delta} />
           </div>

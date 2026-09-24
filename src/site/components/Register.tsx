@@ -156,7 +156,7 @@ export default function Register({
                   : 'border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--ink)] hover:border-[var(--gold)]'
               }`}
             >
-              CERTIFIED (≥375‰)
+              CERTIFIED (≥375 / 1000)
             </button>
             <button
               type="button"

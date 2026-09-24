@@ -145,7 +145,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
                   <td className="mono px-4 py-3 text-right text-sm font-bold tabular-nums text-[var(--ink)]">
                     <div className="inline-flex items-center gap-2">
                       <span className="text-base font-black">
-                        {v.fineness}<span className="text-xs font-semibold text-[var(--gold)]">‰</span>
+                        {v.fineness}<span className="text-[10px] font-bold text-[var(--gold)] ml-0.5">/1000</span>
                       </span>
                       <span
                         className="rounded border px-1.5 py-0.5 text-[9px] font-extrabold uppercase"

@@ -145,7 +145,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                         className="mono text-[11px] font-bold tabular-nums"
                         style={{ color: BAND_COLOR[v.band as Band] }}
                       >
-                        {v.fineness}
+                        {v.fineness}<span className="text-[9px] font-normal opacity-75">/1000</span>
                       </span>
                     )}
                     {mode === 'backing' && (

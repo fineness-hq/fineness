@@ -28,7 +28,7 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
 
   const stats = [
     { label: 'Venues Listed', value: venues.length, unit: 'ADMITTED', icon: Activity },
-    { label: 'Median Fineness', value: median, unit: '‰ PURITY', icon: Award },
+    { label: 'Median Fineness', value: median, unit: '/ 1000 PURITY', icon: Award },
     { label: 'Below Hallmark', value: below, unit: '< 375 CUT', icon: ShieldAlert },
     { label: 'Data As Of', value: dataAsOf, unit: 'UTC FROZEN', icon: Calendar },
   ];
