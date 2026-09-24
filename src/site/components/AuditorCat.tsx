@@ -3,16 +3,10 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useReducedMotion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Stamp, Sparkles, Coffee, ArrowUpRight } from 'lucide-react';
-import type { Venue } from '../../types';
-import type { Band } from '../../scoring/fineness';
-import { BAND_COLOR } from './Entry';
+import { Stamp, Sparkles, Coffee } from 'lucide-react';
 
 interface AuditorCatProps {
   className?: string;
-  venues?: Venue[];
-  onJump?: (id: string) => void;
-  onSwitchToTable?: () => void;
 }
 
 /**
@@ -25,16 +19,10 @@ interface AuditorCatProps {
  * - Lazy tail swish loop
  * - Steaming espresso cup rising vapor particles
  * - On-chain ticker tape ribbon
- * - Top-3 purity venue pills with live Karat scores
  * - Interactive click-to-stamp & rapid audit mode
  * - 3D cursor perspective tilt tracking
  */
-export default function AuditorCat({
-  className = '',
-  venues = [],
-  onJump,
-  onSwitchToTable,
-}: AuditorCatProps) {
+export default function AuditorCat({ className = '' }: AuditorCatProps) {
   const reduce = useReducedMotion();
   const [stampCount, setStampCount] = useState(1482);
   const [isArmUp, setIsArmUp] = useState(false);
@@ -52,9 +40,6 @@ export default function AuditorCat({
 
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [-9, 9]);
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [7, -7]);
-
-  // Top 3 venues
-  const top3 = venues.slice(0, 3);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (reduce) return;
@@ -130,7 +115,7 @@ export default function AuditorCat({
 
   return (
     <div
-      className={`relative w-full max-w-[540px] select-none flex flex-col items-center justify-center ${className}`}
+      className={`relative w-full select-none flex flex-col items-end ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleManualStamp}
@@ -139,8 +124,8 @@ export default function AuditorCat({
       aria-label="The Bureaucrat Auditor Cat — Real Stamping Mascot"
       title="Click cat to speed up audit stamping!"
     >
-      {/* Floating Status Bar (No Card Wrapper!) */}
-      <div className="w-full flex items-center justify-between px-1 mb-2 font-mono text-[11px]">
+      {/* Floating Status Bar (Direct on background) */}
+      <div className="w-full flex items-center justify-between px-1 mb-1 font-mono text-[11px]">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--action)] opacity-75" />
@@ -151,32 +136,17 @@ export default function AuditorCat({
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-full border border-[var(--rule)] bg-[var(--surface)] px-2.5 py-0.5 shadow-xs text-[var(--gold)]">
-            <Coffee className="h-3 w-3" />
-            <span className="font-semibold tabular-nums">{stampCount.toLocaleString()} AUDITED</span>
-          </div>
-
-          {onSwitchToTable && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onSwitchToTable();
-              }}
-              className="mono rounded border border-[var(--rule)] bg-[var(--surface)] px-2 py-0.5 text-[10px] font-semibold text-[var(--ink-2)] transition-colors hover:border-[var(--dark)] hover:text-[var(--ink)]"
-            >
-              TABLE VIEW →
-            </button>
-          )}
+        <div className="flex items-center gap-1.5 rounded-full border border-[var(--rule)] bg-[var(--surface)]/90 backdrop-blur-xs px-2.5 py-0.5 shadow-xs text-[var(--gold)]">
+          <Coffee className="h-3 w-3" />
+          <span className="font-semibold tabular-nums">{stampCount.toLocaleString()} AUDITED</span>
         </div>
       </div>
 
-      {/* 3D Cat Stage — Seamlessly Sitting on the Background */}
-      <div className="relative flex h-[340px] sm:h-[390px] md:h-[430px] w-full items-center justify-center overflow-visible">
+      {/* 3D Cat Stage — Seamlessly Sitting on Background Canvas */}
+      <div className="relative flex h-[350px] sm:h-[410px] md:h-[450px] w-full items-center justify-end overflow-visible">
         {/* Parallax Container */}
         <motion.div
-          className="relative z-10 flex h-full w-full items-center justify-center cursor-pointer"
+          className="relative z-10 flex h-full w-full items-center justify-end cursor-pointer"
           style={
             reduce
               ? undefined
@@ -190,7 +160,7 @@ export default function AuditorCat({
           {/* Lazy Tail Swish in Background */}
           {!reduce && (
             <motion.div
-              className="absolute right-[22%] bottom-[28%] z-0 h-24 w-12 rounded-full bg-[#1b1e22]"
+              className="absolute right-[12%] bottom-[28%] z-0 h-24 w-12 rounded-full bg-[#1b1e22]"
               animate={{
                 rotate: [-14, 16, -14],
                 originX: 0.85,
@@ -206,7 +176,7 @@ export default function AuditorCat({
 
           {/* Steaming Espresso Vapor Particles */}
           {!reduce && (
-            <div className="pointer-events-none absolute left-[26%] bottom-[40%] z-20" aria-hidden="true">
+            <div className="pointer-events-none absolute right-[54%] bottom-[40%] z-20" aria-hidden="true">
               {[0, 1, 2].map((i) => (
                 <motion.span
                   key={i}
@@ -229,7 +199,7 @@ export default function AuditorCat({
           )}
 
           {/* Grand Stamping Cat Character (Arm Up vs Arm Down Slam) */}
-          <div className="relative h-[310px] sm:h-[360px] md:h-[400px] w-[310px] sm:w-[360px] md:w-[400px]">
+          <div className="relative h-[310px] sm:h-[370px] md:h-[420px] w-[310px] sm:w-[370px] md:w-[420px]">
             {/* Frame 1: Arm Raised High in the Air holding Stamp */}
             <motion.div
               className="absolute inset-0"
@@ -246,7 +216,7 @@ export default function AuditorCat({
                 alt="Auditor Cat arm raised high ready to stamp"
                 fill
                 priority
-                sizes="(max-width: 640px) 320px, 420px"
+                sizes="(max-width: 640px) 320px, 440px"
                 className="object-contain drop-shadow-[0_16px_32px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
@@ -267,7 +237,7 @@ export default function AuditorCat({
                 alt="Auditor Cat arm stamping certificate down"
                 fill
                 priority
-                sizes="(max-width: 640px) 320px, 420px"
+                sizes="(max-width: 640px) 320px, 440px"
                 className="object-contain drop-shadow-[0_16px_32px_rgba(15,20,25,0.12)]"
               />
             </motion.div>
@@ -328,44 +298,11 @@ export default function AuditorCat({
         </motion.div>
       </div>
 
-      {/* Floating Top-3 Purity Pills (Seamless under desk) */}
-      {top3.length > 0 && (
-        <div className="w-full grid grid-cols-3 gap-2 mt-2">
-          {top3.map((v, i) => (
-            <button
-              key={v.id}
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onJump?.(v.id);
-              }}
-              className="group flex flex-col rounded border border-[var(--rule)] bg-[var(--surface)]/90 backdrop-blur-xs p-2 text-left transition-all hover:border-[var(--dark)] hover:shadow-xs hover:bg-[var(--surface)]"
-            >
-              <div className="flex items-center justify-between text-[10px] font-mono">
-                <span className="font-bold text-[var(--ink-3)]">0{i + 1}</span>
-                <span
-                  className="font-bold"
-                  style={{ color: BAND_COLOR[v.band as Band] }}
-                >
-                  {v.fineness}‰
-                </span>
-              </div>
-              <div className="flex items-center justify-between mt-0.5">
-                <span className="truncate text-xs font-semibold text-[var(--ink)] group-hover:text-[var(--action)]">
-                  {v.name}
-                </span>
-                <ArrowUpRight size={11} className="text-[var(--ink-3)] opacity-0 transition-opacity group-hover:opacity-100" />
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Hint row */}
-      <div className="w-full flex items-center justify-between text-[9px] font-mono text-[var(--ink-3)] mt-2 px-1">
+      {/* Subtle Hint */}
+      <div className="w-full flex items-center justify-between text-[9px] font-mono text-[var(--ink-3)] mt-1 px-1">
         <span className="flex items-center gap-1">
           <Sparkles className="h-3 w-3 text-[var(--gold)]" />
-          <span>CLICK CAT TO RAPID STAMP</span>
+          <span>CLICK CAT TO SPEED UP AUDIT</span>
         </span>
         <span className="text-[var(--gold)] font-bold">
           {isRapid ? '⚡ RAPID STAMPING' : '60FPS ACTIVE LOOP'}
