@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { Github } from 'lucide-react';
 import MenuButton from './MenuButton';
+import XIcon from './XIcon';
 import { XSlide } from './Stagger';
 import FinenessMark from './FinenessMark';
 
@@ -25,6 +27,26 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
             <Link href="/#register" className="tera-open">
               OPEN REGISTER&nbsp;&nbsp;↗
             </Link>
+            <a
+              href="https://github.com/fineness-hq/fineness"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tera-gh"
+              aria-label="Fineness GitHub repository"
+              title="GitHub"
+            >
+              <Github size={16} aria-hidden="true" />
+            </a>
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tera-gh"
+              aria-label="Fineness on X"
+              title="X"
+            >
+              <XIcon size={14} />
+            </a>
             <MenuButton latestEdition={latestEdition ?? edition} />
           </nav>
         </div>

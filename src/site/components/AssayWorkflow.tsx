@@ -309,7 +309,7 @@ export default function AssayWorkflow() {
                           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
                             <Image
                               src="/images/cat-scanner-8bit.jpg"
-                              alt="8-bit Auditor Cat Scanning Gold Bullion"
+                              alt="Chief Auditor Cat Scanning Gold Bullion"
                               fill
                               sizes="(max-width: 768px) 100vw, 300px"
                               className="object-cover object-center opacity-85 hover:opacity-100 transition-opacity"
@@ -318,7 +318,7 @@ export default function AssayWorkflow() {
                             <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
                               <span className="text-[var(--gold)] font-bold flex items-center gap-1">
                                 <ScanLine size={11} className="text-[var(--gold)] animate-pulse" />
-                                <span>BAY 01 · 8-BIT AUDITOR</span>
+                                <span>BAY 01 · CHIEF AUDITOR</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
                                 999.9 SCAN
@@ -328,27 +328,46 @@ export default function AssayWorkflow() {
                         )}
 
                         {idx === 1 && (
-                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,100,20,0.2),transparent_70%)]" />
-                            <Flame size={22} className="text-amber-500 animate-bounce mb-1 z-10" />
-                            <span className="text-xs font-bold text-amber-400 z-10">
-                              WEIGHTED MEAN × 100
-                            </span>
-                            <span className="text-[9px] text-white/60 z-10 mt-0.5">
-                              ROUNDED ONCE · TIES A–Z
-                            </span>
+                          <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
+                            <Image
+                              src="/images/cat-smelter-8bit.jpg"
+                              alt="Cat Assayer Smelting Gold Bullion"
+                              fill
+                              sizes="(max-width: 768px) 100vw, 300px"
+                              className="object-cover object-center opacity-90 hover:opacity-100 transition-opacity"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+                            <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
+                              <span className="text-amber-400 font-bold flex items-center gap-1">
+                                <Flame size={11} className="text-amber-400 animate-pulse" />
+                                <span>BAY 02 · 1,064°C SMELT</span>
+                              </span>
+                              <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
+                                5-CRITERIA
+                              </span>
+                            </div>
                           </div>
                         )}
 
                         {idx === 2 && (
-                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(196,139,15,0.25),transparent_70%)]" />
-                            <div className="h-10 w-10 rounded-full border-2 border-[var(--gold)] flex items-center justify-center text-[var(--gold)] mb-1 z-10 shadow-[0_0_15px_rgba(196,139,15,0.4)]">
-                              <Stamp size={18} />
+                          <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
+                            <Image
+                              src="/images/cat-stamper-8bit.jpg"
+                              alt="Cat Officer Stamping Frozen Hallmark Edition"
+                              fill
+                              sizes="(max-width: 768px) 100vw, 300px"
+                              className="object-cover object-center opacity-90 hover:opacity-100 transition-opacity"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+                            <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
+                              <span className="text-[var(--gold)] font-bold flex items-center gap-1">
+                                <Stamp size={11} className="text-[var(--gold)]" />
+                                <span>BAY 03 · HALLMARK SEAL</span>
+                              </span>
+                              <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
+                                FROZEN 24K
+                              </span>
                             </div>
-                            <span className="text-xs font-black tracking-widest text-[var(--gold)] z-10">
-                              EDITION FROZEN
-                            </span>
                           </div>
                         )}
                       </div>

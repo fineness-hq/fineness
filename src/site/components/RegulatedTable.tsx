@@ -43,7 +43,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
           </div>
         </div>
 
-        <div className="mt-6 overflow-x-auto rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
+        <div className="mt-6 overflow-x-auto no-scrollbar rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
           <table className="w-full min-w-[700px] border-collapse text-left">
             <thead>
               <tr className="border-b border-[var(--rule)] bg-[var(--surface-alt)] font-mono text-xs uppercase tracking-wider text-[var(--ink-2)]">

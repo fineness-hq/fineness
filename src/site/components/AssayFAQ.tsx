@@ -61,9 +61,9 @@ export default function AssayFAQ() {
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* FAQ Accordion List (7 cols) */}
-          <div className="lg:col-span-7 divide-y divide-[var(--rule)] rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs overflow-hidden">
+          <div className="lg:col-span-7 divide-y divide-[var(--rule)] rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs overflow-hidden flex flex-col justify-between">
             {FAQ_ITEMS.map((item, idx) => {
               const isOpen = openIdx === idx;
               return (
@@ -117,50 +117,50 @@ export default function AssayFAQ() {
           </div>
 
           {/* Chief Assayer Mascot Card (5 cols) */}
-          <div className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-6 shadow-xl relative overflow-hidden flex flex-col justify-between">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_top_right,rgba(196,139,15,0.15),transparent_70%)] pointer-events-none" />
+          <div className="lg:col-span-5 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-5 shadow-xs relative overflow-hidden flex flex-col justify-between h-full">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_top_right,rgba(196,139,15,0.12),transparent_70%)] pointer-events-none" />
             
-            <div>
+            <div className="flex flex-col">
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)] font-mono text-[11px]">
                 <span className="font-bold text-[var(--gold)] flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full bg-[var(--gold)] animate-ping" />
                   CHIEF MASCOT
                 </span>
-                <span className="text-[10px] text-[var(--ink-3)] uppercase tracking-wider">
-                  8-BIT RETRO EDITION
+                <span className="text-[10px] text-[var(--ink-3)] uppercase tracking-wider font-semibold">
+                  SWISS ASSAY DESK
                 </span>
               </div>
 
-              {/* 8-bit Inspector Image */}
-              <div className="relative mt-4 w-full aspect-square rounded-xl overflow-hidden border border-[var(--rule)] bg-[#0C1014] shadow-inner group">
+              {/* Inspector Banner Image */}
+              <div className="relative mt-3.5 h-44 sm:h-48 w-full rounded-lg overflow-hidden border border-[var(--rule)] bg-[#0C1014] shadow-inner group">
                 <Image
                   src="/images/cat-inspector-8bit.jpg"
-                  alt="8-bit Swiss Gold Auditor Cat Inspecting Bullion with Loupe"
+                  alt="Chief Swiss Gold Auditor Cat Inspecting Bullion with Loupe"
                   fill
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
-                  <span className="font-bold text-amber-300 flex items-center gap-1">
-                    <Sparkles size={12} className="text-amber-400" />
+                <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
+                  <span className="font-bold text-amber-300 flex items-center gap-1 text-[11px]">
+                    <Sparkles size={11} className="text-amber-400" />
                     <span>AU 999.9 PASSED</span>
                   </span>
-                  <span className="text-[10px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20">
+                  <span className="text-[9px] text-white/80 bg-black/60 px-1.5 py-0.5 rounded border border-white/20">
                     CALM VIGILANCE
                   </span>
                 </div>
               </div>
 
-              <h3 className="mt-4 font-[var(--font-inter)] text-base sm:text-lg font-black text-[var(--ink)] leading-snug">
+              <h3 className="mt-3.5 font-[var(--font-inter)] text-base font-black text-[var(--ink)] leading-snug">
                 Calm, Unhurried Vigilance
               </h3>
-              <p className="mt-1.5 text-xs text-[var(--ink-2)] leading-relaxed">
+              <p className="mt-1 text-xs text-[var(--ink-2)] leading-relaxed">
                 Immune to crypto hype and narrative churn. Parked at his assay desk with an espresso, inspecting every bar and stamping frozen editions.
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[11px]">
+            <div className="mt-4 pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[11px]">
               <span className="text-[var(--ink-3)]">STATUS</span>
               <span className="font-bold text-emerald-500 flex items-center gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />

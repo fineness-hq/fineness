@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Lock,
   TrendingUp,
   ShieldCheck,
   Sliders,
-  Sparkles,
   Crosshair,
   Compass,
 } from 'lucide-react';
@@ -230,10 +230,16 @@ export default function WhyFinenessBento() {
               </p>
             </div>
 
-            {/* Wax Seal Visual */}
+            {/* Assayer Cat Seal Visual */}
             <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 flex items-center gap-4 font-mono">
-              <div className="h-12 w-12 rounded-full border-2 border-[var(--gold)] flex items-center justify-center shrink-0 text-[var(--gold)] bg-[var(--tint)] shadow-inner">
-                <Sparkles size={20} className="animate-spin text-[var(--gold)]" />
+              <div className="relative h-14 w-14 rounded-xl border-2 border-[var(--gold)] overflow-hidden shrink-0 shadow-md">
+                <Image
+                  src="/images/cat-inspector-8bit.jpg"
+                  alt="Assayer Cat Integrity Seal"
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
               </div>
               <div>
                 <span className="text-[10px] text-[var(--ink-3)] uppercase block font-bold">
@@ -242,7 +248,7 @@ export default function WhyFinenessBento() {
                 <span className="text-base font-black text-[var(--ink)] block">
                   $0.00 ZERO TOLERANCE
                 </span>
-                <span className="text-[10px] text-emerald-600 block mt-0.5">
+                <span className="text-[10px] text-emerald-500 font-bold block mt-0.5">
                   100% UNBRIBABLE EDITORIAL CODE
                 </span>
               </div>

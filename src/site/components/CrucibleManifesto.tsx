@@ -154,16 +154,17 @@ export default function CrucibleManifesto() {
         {/* Atmospheric Swiss Vault Backdrop */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 opacity-15 mix-blend-luminosity overflow-hidden"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         >
           <Image
             src="/images/swiss-vault-bg.jpg"
             alt="Swiss Gold Bullion Vault"
             fill
             sizes="100vw"
-            className="object-cover object-center filter contrast-125"
+            className="object-cover object-center filter brightness-60 contrast-125 opacity-35"
             priority={false}
           />
+          <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_30%,var(--surface-alt)_85%]" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-alt)] via-transparent to-[var(--surface-alt)]" />
         </div>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
@@ -69,6 +70,22 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
           {/* Top Gold Bullion Stripe */}
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
 
+          {/* Atmospheric Swiss Vault Backdrop */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          >
+            <Image
+              src="/images/swiss-vault-bg.jpg"
+              alt="Swiss Gold Bullion Vault"
+              fill
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              className="object-cover object-center filter brightness-50 contrast-125 opacity-25"
+              priority={false}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/90 to-[var(--surface)]/75" />
+          </div>
+
           {/* Ambient Corner Glow */}
           <div
             aria-hidden="true"
@@ -129,6 +146,19 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                   <ShieldCheck size={15} className="text-[var(--gold)]" />
                   <span>METHODOLOGY SPEC</span>
                 </Link>
+
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--gold)]/30 bg-[var(--tint)] font-mono text-xs text-[var(--gold)] shadow-xs">
+                  <div className="relative h-6 w-6 rounded-md overflow-hidden shrink-0 border border-[var(--gold)]/50">
+                    <Image
+                      src="/images/cat-stamper-8bit.jpg"
+                      alt="Chief Stamper Cat"
+                      fill
+                      sizes="24px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="font-bold text-[11px]">24K SEALED</span>
+                </div>
               </div>
             </div>
 
@@ -208,7 +238,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                 </div>
 
                 {/* Terminal Code Body */}
-                <div className="p-5 overflow-x-auto min-h-[170px] max-h-[260px] flex items-start bg-[#0A0D12]">
+                <div className="p-5 overflow-x-auto no-scrollbar min-h-[170px] max-h-[260px] flex items-start bg-[#0A0D12]">
                   <pre className="text-xs sm:text-[13px] leading-relaxed text-slate-200 w-full">
                     {activeTab === 'curl' && (
                       <code>

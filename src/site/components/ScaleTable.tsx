@@ -181,7 +181,7 @@ export default function ScaleTable() {
         </div>
 
         {/* High-End Swiss Assay Standard Ledger (Must keep overflow-x-auto for acceptance test) */}
-        <div className="mt-6 overflow-x-auto rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
+        <div className="mt-6 overflow-x-auto no-scrollbar rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
           <div className="grid grid-cols-1 divide-y divide-[var(--rule)]">
             {BANDS.map((b, idx) => (
               <motion.div

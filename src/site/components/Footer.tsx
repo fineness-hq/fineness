@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { Github } from 'lucide-react';
 import { StaggerItem, StaggerList, XSlide } from './Stagger';
+import XIcon from './XIcon';
 
 interface FooterProps {
   edition: string;
@@ -65,6 +67,28 @@ export default function Footer({ edition }: FooterProps) {
                     </Link>
                   </StaggerItem>
                 ))}
+                <StaggerItem>
+                  <a
+                    href="https://github.com/fineness-hq/fineness"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="site-link mono inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-[var(--ink-2)]"
+                  >
+                    <Github size={12} aria-hidden="true" />
+                    GitHub
+                  </a>
+                </StaggerItem>
+                <StaggerItem>
+                  <a
+                    href="https://x.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="site-link mono inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-[var(--ink-2)]"
+                  >
+                    <XIcon size={11} />
+                    X
+                  </a>
+                </StaggerItem>
               </StaggerList>
             </nav>
           </div>

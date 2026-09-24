@@ -20,6 +20,7 @@ import AssayWorkflow from './components/AssayWorkflow';
 import WhyFinenessBento from './components/WhyFinenessBento';
 import AssayFAQ from './components/AssayFAQ';
 import ProtocolCTA from './components/ProtocolCTA';
+import FloatingMascot from './components/FloatingMascot';
 
 interface EditionViewProps {
   edition: Edition;
@@ -82,6 +83,7 @@ export default function EditionView({
       <NextEdition currentEdition={edition.edition} />
       <Sources sources={sources} disclosures={edition.disclosures} />
       <Footer edition={edition.edition} />
+      <FloatingMascot />
     </>
   );
 }
