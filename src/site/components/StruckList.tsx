@@ -14,7 +14,7 @@ export default function StruckList({ venues }: StruckListProps) {
     <section aria-labelledby="struck-title" id="struck" className="page-wrap py-12">
       <Reveal>
         <div className="border-b border-[var(--rule)] pb-4">
-          <p className="eyebrow">05 / REVOCATIONS & STRIKES</p>
+          <p className="eyebrow">REVOCATIONS // ZERO TOLERANCE DISCLOSURE</p>
           <h2
             id="struck-title"
             className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"

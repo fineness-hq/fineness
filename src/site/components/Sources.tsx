@@ -13,7 +13,7 @@ export default function Sources({ sources, disclosures = [] }: SourcesProps) {
   return (
     <section aria-labelledby="sources-title" id="sources" className="page-wrap py-10">
       <Reveal>
-      <p className="eyebrow">08 / sources</p>
+      <p className="eyebrow">PROVENANCE // PRIMARY EVIDENCE ARCHIVE</p>
       <h2
         id="sources-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"

@@ -1,14 +1,14 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { Flame, ShieldAlert, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Flame, ShieldAlert, ShieldCheck, FileX, Award, CheckCircle2, XCircle } from 'lucide-react';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
 /**
  * CrucibleManifesto:
- * Explains the foundational reason why Fineness exists.
- * Contrasts opaque paper promises against independent cryptographic assay.
+ * Explains the foundational thesis: separating unallocated paper promises from sovereign physical bullion.
+ * Zero generic 01/02 numbering; tactile contrast between degraded paper claim and gold bullion hallmark.
  */
 export default function CrucibleManifesto() {
   const reduce = useReducedMotion();
@@ -34,29 +34,33 @@ export default function CrucibleManifesto() {
           </p>
         </div>
 
-        {/* Contrast Comparison Grid */}
+        {/* Tactile Split: Paper Derivative vs Certified Bullion */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {/* Card 1: The Opaque Reality */}
+          
+          {/* Side A: The Paper Trap */}
           <motion.div
-            className="relative rounded-2xl border border-[var(--rule)] bg-[var(--surface)] p-6 sm:p-8 shadow-xs overflow-hidden"
+            className="relative rounded-xl border border-red-500/30 bg-[var(--surface)] p-6 sm:p-8 shadow-xs overflow-hidden"
             initial={reduce ? false : { opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5, ease: [0.16, 0.33, 0.3, 1] }}
           >
-            <div className="absolute top-0 inset-x-0 h-1 bg-[var(--band-none)]" />
+            <div className="absolute top-0 inset-x-0 h-1 bg-red-500" />
             
             <div className="flex items-center justify-between pb-4 border-b border-[var(--rule)]">
-              <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--band-none)]">
-                THE STATUS QUO // 0 - 374 / 1000
-              </span>
-              <span className="mono inline-flex items-center gap-1 rounded bg-red-500/10 px-2 py-0.5 text-[10px] font-black text-[var(--band-none)]">
+              <div className="flex items-center gap-2">
+                <FileX size={16} className="text-red-600" />
+                <span className="mono text-xs font-bold uppercase tracking-wider text-red-600">
+                  UNALLOCATED PAPER CLAIM
+                </span>
+              </div>
+              <span className="mono inline-flex items-center gap-1 rounded bg-red-500/10 border border-red-500/20 px-2 py-0.5 text-[10px] font-black text-red-600">
                 <ShieldAlert size={11} />
-                UNVERIFIED
+                HIGH COUNTERPARTY RISK
               </span>
             </div>
 
-            <h3 className="mt-4 font-[var(--font-inter)] text-xl font-bold text-[var(--ink)]">
+            <h3 className="mt-5 font-[var(--font-inter)] text-xl font-bold text-[var(--ink)]">
               The Paper Commodity Trap
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
@@ -65,27 +69,32 @@ export default function CrucibleManifesto() {
 
             <ul className="mt-6 space-y-3 font-mono text-xs text-[var(--ink-2)]">
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--band-none)] font-bold">✕</span>
+                <XCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
                 <span>Self-reported spreadsheets without third-party proof-of-reserves</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--band-none)] font-bold">✕</span>
+                <XCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
                 <span>Non-redeemable synthetic derivatives disguised as physical gold</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--band-none)] font-bold">✕</span>
+                <XCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
                 <span>Unallocated pooled bullion commingled with corporate debt</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--band-none)] font-bold">✕</span>
+                <XCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
                 <span>Zero contractual recourse if the issuer shuts down public interfaces</span>
               </li>
             </ul>
+
+            <div className="mt-8 pt-4 border-t border-[var(--rule)] flex items-center justify-between mono text-[10px] text-red-600 font-bold">
+              <span>SCORE THRESHOLD: &lt; 375 / 1000</span>
+              <span className="uppercase tracking-wider">STRUCK FROM REGISTER</span>
+            </div>
           </motion.div>
 
-          {/* Card 2: The Fineness Standard */}
+          {/* Side B: Sovereign Bullion Hallmark */}
           <motion.div
-            className="relative rounded-2xl border-2 border-[var(--gold)]/60 bg-[var(--surface)] p-6 sm:p-8 shadow-md overflow-hidden"
+            className="relative rounded-xl border-2 border-[var(--gold)]/70 bg-[var(--surface)] p-6 sm:p-8 shadow-md overflow-hidden"
             initial={reduce ? false : { opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
@@ -94,41 +103,50 @@ export default function CrucibleManifesto() {
             <div className="absolute top-0 inset-x-0 h-1.5 bg-[var(--gold)]" />
 
             <div className="flex items-center justify-between pb-4 border-b border-[var(--rule)]">
-              <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
-                THE FINENESS STANDARD // ≥ 750 / 1000
-              </span>
+              <div className="flex items-center gap-2">
+                <Award size={16} className="text-[var(--gold)]" />
+                <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
+                  INDEPENDENT ASSAY STANDARD
+                </span>
+              </div>
               <span className="mono inline-flex items-center gap-1 rounded bg-[var(--tint)] border border-[var(--gold)]/40 px-2 py-0.5 text-[10px] font-black text-[var(--gold)]">
                 <ShieldCheck size={11} />
-                HALLMARK CERTIFIED
+                24K SOVEREIGN GRADE
               </span>
             </div>
 
-            <h3 className="mt-4 font-[var(--font-inter)] text-xl font-bold text-[var(--ink)]">
+            <h3 className="mt-5 font-[var(--font-inter)] text-xl font-bold text-[var(--ink)]">
               The Cryptographic Gold Standard
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-              Every venue is audited under five weighted criteria with 100% reproducible math, public contracts, and verifiable custodian vaults.
+              Legitimate bullion tokens provide bar-by-bar serial number registries, regulated custodian trust accounts, and segregated physical redemption rights.
             </p>
 
-            <ul className="mt-6 space-y-3 font-mono text-xs text-[var(--ink)]">
+            <ul className="mt-6 space-y-3 font-mono text-xs text-[var(--ink-2)]">
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--ok)] font-bold">✓</span>
-                <span>Direct legal title to physical allocated bullion in insured vaults</span>
+                <CheckCircle2 size={14} className="text-[var(--gold)] shrink-0 mt-0.5" />
+                <span>Individually numbered London Good Delivery 400oz gold bars</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--ok)] font-bold">✓</span>
-                <span>Cryptographic proof-of-reserves audited by regulated assay offices</span>
+                <CheckCircle2 size={14} className="text-[var(--gold)] shrink-0 mt-0.5" />
+                <span>Monthly attestation letters from top-tier independent audit firms</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--ok)] font-bold">✓</span>
-                <span>Guaranteed physical 1:1 delivery for sovereign bar redemption</span>
+                <CheckCircle2 size={14} className="text-[var(--gold)] shrink-0 mt-0.5" />
+                <span>Segregated bankruptcy-remote vaulting (Zurich, London, NY)</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-[var(--ok)] font-bold">✓</span>
-                <span>Permanent immutable ledger snapshot signed with SHA-256 hash</span>
+                <CheckCircle2 size={14} className="text-[var(--gold)] shrink-0 mt-0.5" />
+                <span>On-chain physical redemption contractually guaranteed in law</span>
               </li>
             </ul>
+
+            <div className="mt-8 pt-4 border-t border-[var(--rule)] flex items-center justify-between mono text-[10px] text-[var(--gold)] font-bold">
+              <span>SCORE THRESHOLD: ≥ 750 / 1000</span>
+              <span className="uppercase tracking-wider">HALLMARK STRUCK (18K - 24K)</span>
+            </div>
           </motion.div>
+
         </div>
       </Reveal>
     </section>

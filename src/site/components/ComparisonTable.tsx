@@ -45,7 +45,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 border-b border-[var(--rule)] pb-4">
           <div>
-            <p className="eyebrow">03 / CRITERIA MATRIX</p>
+            <p className="eyebrow">ASSAY BREAKDOWN // 5 CRITERIA PILLARS</p>
             <h2
               id="compare-title"
               className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"

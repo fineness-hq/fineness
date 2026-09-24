@@ -95,7 +95,7 @@ export default function Register({
     <section aria-labelledby="register-title" id="register" className="page-wrap py-12">
       <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="eyebrow">02 / register</p>
+          <p className="eyebrow">AUDITED REGISTER // SOVEREIGN VENUES</p>
           <h2
             id="register-title"
             className="mt-2 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"

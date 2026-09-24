@@ -5,13 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { StaggerItem, StaggerList } from './Stagger';
 
 const LINKS: Array<[string, string, string]> = [
-  ['01', 'Home', '/'],
-  ['02', 'Register', '/#register'],
-  ['03', 'Scale', '/#scale'],
-  ['04', 'Comparison', '/#comparison'],
-  ['05', 'Method', '/method'],
-  ['06', 'Machine JSON', '/editions/2026-10.json'],
-  ['07', 'Sources', '/#sources'],
+  ['AU', 'Home', '/'],
+  ['REG', 'Register', '/#register'],
+  ['SCALE', 'Scale', '/#scale'],
+  ['ASSAY', 'Comparison', '/#comparison'],
+  ['CANON', 'Method', '/method'],
+  ['JSON', 'Machine JSON', '/editions/2026-10.json'],
+  ['PROV', 'Sources', '/#sources'],
 ];
 
 /** Dark menu button + slide-in overlay panel with numbered links. */

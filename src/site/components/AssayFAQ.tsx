@@ -73,7 +73,7 @@ export default function AssayFAQ() {
                 >
                   <span className="flex items-center gap-3">
                     <span className="mono text-xs font-black text-[var(--gold)]">
-                      0{idx + 1}
+                      Q //
                     </span>
                     <span>{item.q}</span>
                   </span>

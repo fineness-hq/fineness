@@ -24,7 +24,7 @@ export default function Footer({ edition }: FooterProps) {
     <footer className="line-grid border-t border-[var(--rule)] bg-[var(--surface)]">
       <div className="page-wrap grid gap-10 py-12 md:grid-cols-[1fr_1fr]">
         <div>
-          <p className="eyebrow">09 / Contact</p>
+          <p className="eyebrow">COMMUNICATIONS // ASSAY OFFICE</p>
           <p className="mt-3 font-[var(--font-inter)] text-[42px] font-bold leading-none tracking-tight text-[var(--ink)]">
             <XSlide inView>Fineness</XSlide>
           </p>

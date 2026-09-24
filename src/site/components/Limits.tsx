@@ -5,25 +5,29 @@ import { WordText } from './Stagger';
 
 const LIMITS_DATA = [
   {
-    idx: '01',
+    canonId: 'judgement',
+    canonLabel: 'CANON: EMPIRICAL JUDGEMENT',
     title: 'Judgement Over Measurement',
     desc: 'Scores are qualitative judgements on public information at the cut date, not automated measurements or real-time oracle feeds.',
     icon: Scale,
   },
   {
-    idx: '02',
+    canonId: 'silence',
+    canonLabel: 'CANON: DISCLOSURE INTEGRITY',
     title: 'Non-Publication Integrity',
     desc: 'A missing metric renders as not published (—), never defaulted to zero. Absence of disclosure is distinct from proven insolvency.',
     icon: EyeOff,
   },
   {
-    idx: '03',
+    canonId: 'reality',
+    canonLabel: 'CANON: MARKET BASELINE',
     title: 'Verifiable Volume Reality',
     desc: 'Four of ten venues publish no verifiable volume. That is the baseline market condition across tokenized physical commodity protocols.',
     icon: AlertCircle,
   },
   {
-    idx: '04',
+    canonId: 'pairing',
+    canonLabel: 'CANON: STRUCTURAL THESIS',
     title: 'Pairing Asset Hypothesis',
     desc: 'Pairing assets carry the thesis: the physical backing often manifests solely through the pairing structure rather than the native wrapper.',
     icon: BookOpen,
@@ -35,7 +39,7 @@ export default function Limits() {
     <section aria-labelledby="limits-title" id="limits" className="page-wrap py-12">
       <Reveal>
         <div className="border-b border-[var(--rule)] pb-4">
-          <p className="eyebrow">06 / METHODOLOGY LIMITS</p>
+          <p className="eyebrow">ASSAY CHARTER // METHODOLOGICAL BOUNDARIES</p>
           <h2
             id="limits-title"
             className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"
@@ -48,16 +52,16 @@ export default function Limits() {
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {LIMITS_DATA.map(({ idx, title, desc, icon: Icon }) => (
+          {LIMITS_DATA.map(({ canonId, canonLabel, title, desc, icon: Icon }) => (
             <div
-              key={idx}
+              key={canonId}
               className="group relative rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-5 shadow-xs transition-all hover:border-[var(--gold)] hover:shadow-sm"
             >
-              <div className="flex items-center justify-between">
-                <span className="mono text-xs font-black text-[var(--gold)]">
-                  AXIOM // {idx}
+              <div className="flex items-center justify-between pb-2 border-b border-[var(--rule)]/60">
+                <span className="mono text-[11px] font-black text-[var(--gold)] tracking-wider">
+                  {canonLabel}
                 </span>
-                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-[var(--ink-2)] group-hover:border-[var(--gold)] group-hover:bg-[var(--dark)] group-hover:text-white transition-all">
+                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-[var(--ink-2)] group-hover:border-[var(--gold)] group-hover:bg-[var(--gold)] group-hover:text-white transition-all">
                   <Icon size={12} />
                 </span>
               </div>

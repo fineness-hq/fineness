@@ -71,7 +71,7 @@ export default function ScaleTable() {
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--rule)] pb-4">
           <div>
-            <p className="eyebrow">01 / METALLURGICAL SCALE</p>
+            <p className="eyebrow">STANDARDS // METALLURGICAL SCALE</p>
             <h2
               id="scale-title"
               className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"

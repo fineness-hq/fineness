@@ -24,7 +24,7 @@ export default function RegulatedTable({ venues }: RegulatedTableProps) {
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 border-b border-[var(--rule)] pb-4">
           <div>
-            <p className="eyebrow">04 / CUSTODY & REGULATORY</p>
+            <p className="eyebrow">JURISDICTION & AUDIT // CUSTODY MAPPING</p>
             <h2
               id="regulated-title"
               className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"

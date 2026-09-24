@@ -113,7 +113,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
         <div className="page-wrap tera-hero-grid">
           <div className="tera-hero-left">
             <p className="tera-badge">
-              <span className="tera-badge-num">01</span>
+              <span className="tera-badge-num">AU</span>
               <span className="tera-badge-label">EDITION {edition}</span>
               <span className="tera-badge-asof">DATA AS OF {dataAsOf}</span>
             </p>
@@ -255,26 +255,29 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
         <div className="page-wrap relative grid gap-x-8 sm:grid-cols-3">
           {[
             {
-              n: '01',
+              hallmark: 'PROVENANCE',
+              symbol: '✦',
               icon: Fingerprint,
               title: 'EVERY FIGURE CARRIES A SOURCE',
               desc: 'Each metric resolves to a named provenance entry.',
             },
             {
-              n: '02',
+              hallmark: 'CALIBRATION',
+              symbol: '⚖',
               icon: Scale,
               title: 'FIVE WEIGHTED CRITERIA',
               desc: 'House 30 / 25 / 20 / 15 / 10, reweighted live.',
             },
             {
-              n: '03',
+              hallmark: 'SOVEREIGNTY',
+              symbol: '☤',
               icon: Share2,
               title: 'REWEIGH AND SHARE YOUR OWN ORDER',
               desc: 'Your weights encode into a shareable link.',
             },
           ].map((p, i) => (
             <motion.div
-              key={p.n}
+              key={p.hallmark}
               className="group relative flex items-start gap-4 border-t border-[var(--rule)] py-6 transition-colors first:border-t-0 sm:border-l sm:border-t-0 sm:pl-6 sm:first:border-l-0 sm:first:pl-0"
               initial={reduce ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -283,16 +286,21 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
             >
               <span
                 aria-hidden="true"
-                className="font-[var(--font-inter)] text-4xl font-extrabold tabular-nums text-[var(--rule-2)] transition-colors duration-300 group-hover:text-[var(--gold)]"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--rule)] bg-[var(--surface)] font-mono text-base font-black text-[var(--gold)] shadow-2xs transition-colors duration-300 group-hover:border-[var(--gold)] group-hover:bg-[var(--gold)] group-hover:text-white"
               >
-                {p.n}
+                {p.symbol}
               </span>
               <div>
-                <p.icon
-                  size={16}
-                  aria-hidden="true"
-                  className="mb-2 text-[var(--gold)] transition-transform duration-300 group-hover:scale-125"
-                />
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <p.icon
+                    size={13}
+                    aria-hidden="true"
+                    className="text-[var(--gold)] transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <span className="mono text-[9px] font-bold tracking-widest text-[var(--ink-3)] uppercase">
+                    {p.hallmark}
+                  </span>
+                </div>
                 <p className="font-[var(--font-inter)] text-sm font-bold tracking-tight text-[var(--ink)]">
                   {p.title}
                 </p>
