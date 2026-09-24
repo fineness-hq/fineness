@@ -1,19 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Vault,
   Scale,
   Award,
   ShieldCheck,
   CheckCircle2,
-  FileCheck2,
-  Database,
-  Flame,
+  Scan,
+  Activity,
+  Sparkles,
   ArrowRight,
-  Layers,
-  Fingerprint,
-  Link as LinkIcon,
+  Database,
+  Cpu,
+  Stamp,
 } from 'lucide-react';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
@@ -34,9 +35,9 @@ const REFINERY_STATIONS: Station[] = [
     id: 'ingest',
     badge: 'STAGE I: INGESTION',
     title: 'The Vault & Chain Ingestion',
-    subtitle: 'Freezing public blockchain state and physical depository proofs',
-    desc: 'At the monthly snapshot cut, our automated daemons sample raw smart contract bytecode, decentralized oracle feeds, and custodian vault registries simultaneously.',
-    icon: Vault,
+    subtitle: 'Autonomous monthly depository proof sampling',
+    desc: 'At the monthly snapshot cut, automated daemons sample live smart contract bytecode, decentralized oracle feeds, and custodian vault registries simultaneously.',
+    icon: Database,
     primaryDetails: [
       { label: 'BLOCK TIMESTAMP', value: 'ETH #21,049,281', note: 'Frozen snapshot cut' },
       { label: 'VAULT AUDIT LOCATIONS', value: 'Zurich, London, New York', note: 'Segregated depositories' },
@@ -74,7 +75,7 @@ const REFINERY_STATIONS: Station[] = [
     title: 'The Sovereign Karat Hallmark',
     subtitle: 'Striking the permanent seal of purity into open machine-readable JSON',
     desc: 'The official Fineness hallmark (0 to 1000) is engraved onto the public register. An immutable SHA-256 hash seals the entire edition dataset into public IPFS and web endpoints.',
-    icon: Award,
+    icon: Stamp,
     primaryDetails: [
       { label: 'KARAT PURITY GRADE', value: '24 Karat (999.9 Fine)', note: 'Surpasses 750 / 1000 threshold' },
       { label: 'HALLMARK GATE', value: 'Passed 375 / 1000 Cutoff', note: 'Certified institutional asset' },
@@ -89,13 +90,43 @@ const REFINERY_STATIONS: Station[] = [
   },
 ];
 
+const CYCLE_DURATION_MS = 4500;
+
 /**
  * AssayWorkflow:
- * Bespoke Swiss Bullion Refinery Conduit.
- * Replaces the dark code terminal with an elegant, tactile, luxury metallurgical assay bench.
+ * Autonomous looping Swiss Bullion Refinery Bench.
+ * Features:
+ * - Continuous looping station progression with smooth animated progress indicators.
+ * - Continuous oscillating balance caliper and laser sweep animations.
+ * - Looping telemetry pulse indicator.
+ * - Zero cumbersome manual controls; smooth automated visual flow.
  */
 export default function AssayWorkflow() {
   const [activeStationIdx, setActiveStationIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const reduce = useReducedMotion();
+
+  // Continuous auto-cycling stage timer
+  useEffect(() => {
+    const interval = 50;
+    const duration = CYCLE_DURATION_MS;
+    let elapsed = 0;
+
+    const timer = setInterval(() => {
+      elapsed += interval;
+      const pct = Math.min((elapsed / duration) * 100, 100);
+      setProgress(pct);
+
+      if (elapsed >= duration) {
+        clearInterval(timer);
+        setProgress(0);
+        setActiveStationIdx((prev) => (prev + 1) % REFINERY_STATIONS.length);
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [activeStationIdx]);
+
   const station = REFINERY_STATIONS[activeStationIdx];
   const Icon = station.icon;
 
@@ -105,7 +136,7 @@ export default function AssayWorkflow() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--rule)] pb-6 mb-10">
           <div>
-            <p className="eyebrow">CRUCIBLE REFINERY // AUDIT PIPELINE</p>
+            <p className="eyebrow">CRUCIBLE REFINERY // CONTINUOUS PIPELINE</p>
             <h2
               id="workflow-title"
               className="mt-1 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)]"
@@ -113,32 +144,43 @@ export default function AssayWorkflow() {
               <WordText text="How the Crucible Machine Audits" />
             </h2>
             <p className="prose mt-2 max-w-[66ch] text-sm leading-relaxed text-[var(--ink-2)]">
-              From raw contract bytecode and depository vault certificates to an immutable 24-Karat hallmark: an unhurried, deterministic assay.
+              An autonomous, continuous three-station pipeline stress-testing on-chain reserves from raw bytecode to an immutable 24K hallmark.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-xs text-[var(--gold)] font-bold">
-            <ShieldCheck size={16} />
-            <span>SWISS ASSAY PROTOCOL</span>
+          {/* Looping Status Pill */}
+          <div className="flex items-center gap-2.5 font-mono text-xs">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-ping" />
+            <span className="font-bold text-emerald-600">AUTONOMOUS FORGE CYCLING</span>
           </div>
         </div>
 
-        {/* 3-Station Interactive Stepper Strip */}
+        {/* 3-Station Looping Navigation Track */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-1.5 rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] shadow-xs">
           {REFINERY_STATIONS.map((st, idx) => {
             const isCurrent = activeStationIdx === idx;
             const StIcon = st.icon;
             return (
-              <button
+              <div
                 key={st.id}
-                type="button"
-                onClick={() => setActiveStationIdx(idx)}
-                className={`flex items-center gap-3 p-4 rounded-lg text-left transition-all cursor-pointer ${
+                onClick={() => {
+                  setActiveStationIdx(idx);
+                  setProgress(0);
+                }}
+                className={`relative flex items-center gap-3 p-4 rounded-lg text-left transition-all cursor-pointer overflow-hidden ${
                   isCurrent
                     ? 'border-2 border-[var(--gold)] bg-[var(--surface)] shadow-md text-[var(--ink)]'
                     : 'border border-transparent text-[var(--ink-2)] hover:bg-[var(--surface)]/80 hover:text-[var(--ink)]'
                 }`}
               >
+                {/* Looping Progress Line for Active Station */}
+                {isCurrent && (
+                  <div
+                    className="absolute top-0 inset-x-0 h-1 bg-[var(--gold)] transition-all duration-75"
+                    style={{ width: `${progress}%` }}
+                  />
+                )}
+
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-black transition-colors ${
                     isCurrent
@@ -156,12 +198,12 @@ export default function AssayWorkflow() {
                     {st.title}
                   </span>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
 
-        {/* Active Station Refinery Bench Showcase */}
+        {/* Active Station Showcase with Looping Ambient Motion */}
         <div className="mt-8 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-6 sm:p-10 shadow-lg overflow-hidden">
           <div className="grid gap-8 lg:grid-cols-12 items-start">
             
@@ -189,7 +231,7 @@ export default function AssayWorkflow() {
                 {station.primaryDetails.map((detail) => (
                   <div
                     key={detail.label}
-                    className="p-3 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]/60"
+                    className="p-3.5 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]/60"
                   >
                     <span className="text-[10px] text-[var(--ink-3)] block uppercase tracking-wider font-bold">
                       {detail.label}
@@ -213,9 +255,18 @@ export default function AssayWorkflow() {
               </div>
             </div>
 
-            {/* Right Column: Physical Bullion Ingot Hallmark Presentation (5 Cols) */}
-            <div className="lg:col-span-5 w-full flex flex-col justify-between rounded-xl border-2 border-[var(--gold)]/60 bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] p-6 sm:p-7 shadow-md">
-              <div className="flex items-center justify-between pb-3 border-b border-[var(--gold)]/30 font-mono text-xs">
+            {/* Right Column: Physical Bullion Ingot Display with Looping Laser Scan (5 Cols) */}
+            <div className="lg:col-span-5 relative w-full flex flex-col justify-between rounded-xl border-2 border-[var(--gold)]/60 bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] p-6 sm:p-7 shadow-md overflow-hidden">
+              
+              {/* Continuous Looping Laser Scanner on Ingot */}
+              <motion.div
+                aria-hidden="true"
+                animate={reduce ? {} : { y: ['-10%', '340%', '-10%'] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-80 shadow-[0_0_8px_var(--gold)] z-20"
+              />
+
+              <div className="relative z-10 flex items-center justify-between pb-3 border-b border-[var(--gold)]/30 font-mono text-xs">
                 <span className="text-[var(--gold)] font-bold tracking-wider text-[10px] uppercase flex items-center gap-1.5">
                   <Award size={14} />
                   <span>{station.deliverable.tag}</span>
@@ -226,9 +277,12 @@ export default function AssayWorkflow() {
               </div>
 
               {/* Physical Bullion Stamp Ingot Representation */}
-              <div className="my-6 rounded-xl border border-[var(--gold)]/40 bg-[var(--surface)] p-5 shadow-xs space-y-4">
+              <div className="relative z-10 my-6 rounded-xl border border-[var(--gold)]/40 bg-[var(--surface)] p-5 shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="mono text-2xl font-black text-[var(--gold)]">AU 999.9</span>
+                  <span className="mono text-2xl font-black text-[var(--gold)] flex items-center gap-2">
+                    <span>AU 999.9</span>
+                    <Sparkles size={16} className="text-[var(--gold)] animate-spin" />
+                  </span>
                   <span className="mono text-[10px] font-bold text-[var(--ink-3)]">SWISS ASSAY</span>
                 </div>
 
@@ -253,19 +307,15 @@ export default function AssayWorkflow() {
                 </div>
               </div>
 
-              {/* Navigation Action to Next Stage */}
-              <div className="pt-3 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-xs">
+              {/* Looping Step Indicator */}
+              <div className="relative z-10 pt-3 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-xs">
                 <span className="text-[var(--ink-3)] text-[10px]">
-                  STEP {activeStationIdx + 1} OF {REFINERY_STATIONS.length}
+                  STEP {activeStationIdx + 1} OF {REFINERY_STATIONS.length} (AUTO-CYCLING)
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveStationIdx((activeStationIdx + 1) % REFINERY_STATIONS.length)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--gold)] hover:text-[var(--ink)] transition-colors cursor-pointer"
-                >
-                  <span>NEXT REFINERY STAGE</span>
-                  <ArrowRight size={13} />
-                </button>
+                <span className="text-xs font-bold text-[var(--gold)] flex items-center gap-1">
+                  <span>CONTINUOUS ASSAY</span>
+                  <ArrowRight size={13} className="animate-pulse" />
+                </span>
               </div>
             </div>
 
