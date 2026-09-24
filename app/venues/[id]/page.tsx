@@ -8,7 +8,9 @@ import Masthead from '../../../src/site/components/Masthead';
 import { EDITIONS, LATEST_EDITION } from '../../../src/site/editions';
 
 export function generateStaticParams() {
-  return EDITIONS[0].venues.map((v) => ({ id: v.id }));
+  // Union across every edition so later admissions get pages too.
+  const ids = new Set(EDITIONS.flatMap((e) => e.venues.map((v) => v.id)));
+  return [...ids].map((id) => ({ id }));
 }
 
 export const dynamicParams = false;
@@ -23,7 +25,7 @@ export async function generateMetadata({ params }: VenuePageProps): Promise<Meta
   return {
     title: venue ? `Fineness — ${venue.name} (${venue.fineness}/1000)` : 'Fineness — Venue Dossier',
     description: venue
-      ? `${venue.name} metallurgical assay dossier across editions. ${venue.thesis}`
+      ? `${venue.name} fineness dossier across editions. ${venue.thesis}`
       : 'Venue history across Fineness editions.',
   };
 }

@@ -24,8 +24,8 @@ const FAQ_ITEMS = [
     a: 'Never. Fineness operates strictly as an independent editorial assay desk. We accept zero token sponsorships, listing fees, or marketing bribes. All math is deterministic, public, and open-source.',
   },
   {
-    q: 'Why is The Bureaucrat Auditor Cat our chief mascot?',
-    a: 'The Auditor Cat represents calm, unhurried institutional vigilance. Immune to crypto hype and memecoin euphoria, he sits at his desk with his espresso, physically slamming his brass stamp only when real-world bullion passes rigorous metallurgical assay.',
+    q: 'Why is the Assayer Cat our chief mascot?',
+    a: 'The Assayer Cat is calm, unhurried vigilance: immune to hype, parked at his desk with an espresso, stamping every frozen edition as it publishes.',
   },
 ];
 

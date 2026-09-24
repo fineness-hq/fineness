@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -27,6 +28,12 @@ export const metadata: Metadata = {
   title: "Fineness — Tokenized Asset Venue Register",
   description:
     "Monthly ranked register scoring tokenized asset venues on a 0-1000 fineness scale. Editorial judgement on public information, not audits or ratings.",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +42,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${inter.variable} ${plexMono.variable}`}
     >
+      <head>
+        {/* Progressive-enhancement flag: scroll/hydro reveals only run with JS.
+            Without it every word, row and lockup renders visible by default. */}
+        <Script id="js-flag" strategy="beforeInteractive">
+          {`document.documentElement.classList.add('js')`}
+        </Script>
+      </head>
       <body>
         <Preloader edition={LATEST_EDITION.edition} />
         {children}

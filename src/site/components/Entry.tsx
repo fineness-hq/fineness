@@ -102,7 +102,7 @@ export default function Entry({
           </span>
           <div>
             <h3 className="mono text-xs font-black uppercase tracking-wider text-[var(--ink)]">
-              OFFICIAL AUDIT DOSSIER // {venue.name}
+              OFFICIAL VENUE DOSSIER // {venue.name}
             </h3>
             <p className="mono text-[10px] text-[var(--ink-3)]">
               CRUCIBLE REPRODUCIBLE ASSAY LEDGER

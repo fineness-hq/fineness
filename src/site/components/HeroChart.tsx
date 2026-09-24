@@ -55,8 +55,8 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
       {/* 2. Floating Glassmorphic Crucible Leaderboard HUD (Overlapping Left Side) */}
       <motion.div
         className="w-full sm:w-[200px] md:w-[215px] sm:absolute sm:-left-16 md:-left-24 sm:top-8 z-20 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-2 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
-        initial={reduce ? false : { opacity: 0, x: -16, y: 10 }}
-        animate={ready || reduce ? { opacity: 1, x: 0, y: 0 } : {}}
+        initial={ready && !reduce ? { opacity: 0, x: -16, y: 10 } : false}
+        animate={ready || reduce ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, x: 0, y: 0 }}
         transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 0.33, 0.3, 1.01] }}
         style={{ perspective: 800 }}
       >
@@ -177,7 +177,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
                     style={{
                       backgroundColor: BAND_COLOR[v.band as Band],
                     }}
-                    initial={reduce ? false : { width: '0%' }}
+                    initial={ready && !reduce ? { width: '0%' } : false}
                     animate={ready || reduce ? { width: `${(v.fineness / 1000) * 100}%` } : {}}
                     transition={{ duration: 0.8, delay: 0.15 + i * 0.06, ease: [0.16, 0.33, 0.3, 1.01] }}
                   />
@@ -193,7 +193,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
             <BarChart2 size={10} className="text-[var(--action)]" />
             375 CUT
           </span>
-          <span className="font-semibold text-[var(--gold)]">AUDIT ↓</span>
+          <span className="font-semibold text-[var(--gold)]">OPEN ENTRY ↓</span>
         </div>
       </motion.div>
     </div>

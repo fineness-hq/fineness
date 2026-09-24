@@ -26,7 +26,7 @@ const PRESETS: Record<string, { label: string; desc: string; values: RawSliders 
     values: { asset: 3, traction: 10, transparency: 4, compliance: 2, durability: 2 },
   },
   safety: {
-    label: 'Auditor Safety',
+    label: 'Compliance First',
     desc: 'Heaviest on legal compliance & docs',
     values: { asset: 4, traction: 2, transparency: 10, compliance: 10, durability: 4 },
   },

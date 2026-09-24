@@ -53,7 +53,7 @@ export default function Limits() {
               <WordText text="Standing Methodological Boundaries" />
             </h2>
             <p className="prose mt-1 max-w-[66ch] text-sm leading-relaxed text-[var(--ink-2)]">
-              Four foundational axioms governing how data is sampled, weighed, and audited.
+              Four foundational axioms governing how data is sampled, weighed, and scored.
             </p>
           </div>
 

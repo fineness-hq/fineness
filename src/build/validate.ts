@@ -5,6 +5,10 @@ function fail(venue: string, reason: string): never {
   throw new Error(`invalid venue ${venue}: ${reason}`);
 }
 
+const PAIRING_TYPES = ["none", "tokenized-equity", "inventory-index", "collectible", "synthetic"];
+const VERIFIABILITY = ["on-chain", "public-inventory", "attestation", "none"];
+const STATUSES = ["active", "prelaunch", "paused", "struck"];
+
 /** Throw on bad scores, incomplete rationale, unknown sourceId, or bad metrics. */
 export function validateEdition(
   edition: Edition,
@@ -14,6 +18,30 @@ export function validateEdition(
     throw new Error("edition has no venues");
   }
   for (const v of edition.venues) {
+    if (!PAIRING_TYPES.includes(v.pairing?.assetType)) {
+      fail(v.id, `pairing.assetType must be one of ${PAIRING_TYPES.join("|")}`);
+    }
+    if (!VERIFIABILITY.includes(v.pairing?.verifiability)) {
+      fail(v.id, `pairing.verifiability must be one of ${VERIFIABILITY.join("|")}`);
+    }
+    if (typeof v.pairing?.redeemable !== "boolean") {
+      fail(v.id, "pairing.redeemable must be a boolean");
+    }
+    if (!STATUSES.includes(v.status)) {
+      fail(v.id, `status must be one of ${STATUSES.join("|")}`);
+    }
+    if (!/^\d{4}-\d{2}$/.test(v.admittedEdition ?? "")) {
+      fail(v.id, "admittedEdition must be YYYY-MM");
+    }
+    if (!Array.isArray(v.contracts)) fail(v.id, "contracts must be an array");
+    for (const c of v.contracts ?? []) {
+      if (typeof c.label !== "string" || typeof c.address !== "string" || typeof c.verified !== "boolean") {
+        fail(v.id, "each contract needs {label, address, verified}");
+      }
+    }
+    if (!Array.isArray(v.facts) || v.facts.some((f) => !Array.isArray(f) || f.length !== 2)) {
+      fail(v.id, "facts must be [figure, note] pairs");
+    }
     for (const c of CRITERIA) {
       const s = v.scores?.[c];
       if (!Number.isInteger(s) || s < 0 || s > 10) {

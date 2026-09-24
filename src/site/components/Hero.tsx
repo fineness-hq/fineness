@@ -138,11 +138,8 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
                     {content}
                   </motion.span>
                 ) : (
-                  <span
-                    key={line}
-                    className="hero-line block"
-                    style={ready ? undefined : { opacity: 0 }}
-                  >
+                  // No-JS / pre-ready fallback: always visible, no motion.
+                  <span key={line} className="hero-line block">
                     {content}
                   </span>
                 );

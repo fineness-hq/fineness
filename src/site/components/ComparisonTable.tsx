@@ -166,7 +166,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
 
         <div className="mt-3 flex items-center justify-between text-xs font-mono text-[var(--ink-3)]">
           <span>DAILY VOLUME LEADER: {dash(venues[0]?.metrics.dailyVolumeUsd ?? null)} ({venues[0]?.name ?? '—'})</span>
-          <span className="text-[var(--gold)] font-bold">CLICK VENUE FOR DEEP AUDIT ↗</span>
+          <span className="text-[var(--gold)] font-bold">CLICK VENUE FOR FULL BREAKDOWN ↗</span>
         </div>
       </Reveal>
     </section>

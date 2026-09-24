@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import MenuButton from './MenuButton';
 import { XSlide } from './Stagger';
+import FinenessMark from './FinenessMark';
 
 interface MastheadProps {
   edition: string;
@@ -15,11 +16,7 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
         <div className="page-wrap tera-header-in">
           <Link href="/" className="tera-brand" aria-label="Fineness home">
             <XSlide className="tera-brand-slide">
-              <span className="tera-mark" aria-hidden="true">
-                <span className="tera-mark-a" />
-                <span className="tera-mark-b" />
-                <span className="tera-mark-c" />
-              </span>
+              <FinenessMark size={22} color="var(--gold)" />
               <span className="tera-brand-word">FINENESS</span>
               <span className="tera-brand-ed">{edition}</span>
             </XSlide>
