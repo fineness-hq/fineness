@@ -502,12 +502,16 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   }
 }
 
-/* Fixed header. */
+/* Fixed header with dark glass backdrop. */
 .tera-header {
   position: fixed;
   inset-inline: 0;
   top: 0;
   z-index: 50;
+  background: rgba(11, 14, 17, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
 }
 
 .tera-header-in {
@@ -540,8 +544,9 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   width: 26px;
   height: 26px;
   flex-shrink: 0;
-  background: linear-gradient(135deg, #768143 0%, #b8a371 55%, #7a4a2b 100%);
+  background: linear-gradient(135deg, #00e676 0%, #ffd000 55%, #ff9100 100%);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  box-shadow: 0 0 12px rgba(255, 208, 0, 0.4);
 }
 
 .tera-brand-word {
@@ -549,7 +554,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: var(--dark);
+  color: var(--ink);
   line-height: 1;
 }
 
@@ -557,7 +562,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--gold);
 }
 
 .tera-header-right {
@@ -584,29 +589,38 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 
 .tera-lang {
   font-family: var(--font-inter), system-ui, sans-serif;
-  border: 0.8px solid #aab29e;
+  border: 0.8px solid var(--rule);
   color: var(--ink-2);
+  background: var(--surface);
   border-right: none;
 }
 
 .tera-open {
-  border: 0.8px solid #aab29e;
-  color: var(--dark);
+  border: 0.8px solid var(--rule);
+  color: var(--gold);
+  background: var(--surface);
   text-decoration: none;
   border-right: none;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .tera-open:hover {
-  background: #fff;
+  background: var(--surface-2);
+  border-color: var(--gold);
+  color: #fff;
 }
 
 .tera-menu-btn {
   gap: 14px;
-  background: var(--dark);
-  color: #f2f0ee;
-  border: 0.8px solid var(--dark);
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 0.8px solid var(--rule);
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tera-menu-btn:hover {
+  border-color: var(--gold);
 }
 
 .tera-burger {
@@ -619,7 +633,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   display: block;
   width: 22px;
   height: 2px;
-  background: #f2f0ee;
+  background: var(--ink);
   transition: transform 0.26s ease, top 0.26s ease;
 }
 
@@ -789,28 +803,28 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 }
 
 .tera-badge-num {
-  background: var(--olive);
-  color: #f2f0ee;
+  background: var(--gold);
+  color: #07090b;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 700;
   display: flex;
   align-items: center;
   padding-inline: 10px;
 }
 
 .tera-badge-label {
-  border: 0.8px solid var(--rule-2);
+  border: 0.8px solid var(--rule);
   border-left: none;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: var(--dark);
+  color: var(--ink);
   display: flex;
   align-items: center;
   padding-inline: 16px;
   height: 40px;
-  background: var(--ground);
+  background: var(--surface);
 }
 
 .tera-badge-asof {
@@ -826,17 +840,17 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 .tera-h1 {
   margin: 0;
   font-family: var(--font-inter), system-ui, sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(36px, 3.8vw, 60px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   line-height: 1.04;
-  color: var(--dark);
+  color: var(--ink);
 }
 
 /* Edition bar: snapshot hash + copy + JSON + progress. */
 .tera-editionbar {
   border: 1px solid var(--rule);
-  background: var(--ground);
+  background: var(--surface);
   padding: 10px 14px 12px;
   max-width: 460px;
 }
@@ -854,14 +868,15 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 }
 
 .tera-editionbar-label {
-  color: var(--olive);
+  color: var(--gold);
   font-size: 10px;
   letter-spacing: 0.8px;
   flex-shrink: 0;
+  font-weight: 700;
 }
 
 .tera-editionbar-hash {
-  color: var(--dark);
+  color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -872,7 +887,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   border: none;
   padding: 0;
   font: inherit;
-  color: var(--dark);
+  color: var(--gold);
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
@@ -880,17 +895,17 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 }
 
 .tera-editionbar-copy:hover {
-  color: var(--action);
+  color: #fff;
 }
 
 .tera-editionbar-link {
-  color: var(--dark);
+  color: var(--gold);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .tera-editionbar-link:hover {
-  color: var(--action);
+  color: #fff;
 }
 
 .tera-editionbar-asof {
@@ -900,12 +915,14 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
 
 .tera-editionbar-progress {
   margin: 12px 0 0;
-  background: #7d8941;
-  color: #fffdf7;
+  background: var(--surface-2);
+  color: var(--gold);
+  border: 1px solid var(--rule);
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: 0.8px;
   padding: 7px 9px;
+  font-weight: 600;
 }
 
 /* Diagram. */
@@ -1026,7 +1043,7 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
-  color: #000;
+  color: var(--ink);
   max-width: 52ch;
   margin: 0;
   text-transform: uppercase;
@@ -1054,27 +1071,32 @@ tbody[data-rows='show'] tr:nth-child(n+11) { transition-delay: 0.8s; }
   font-size: 14px;
   letter-spacing: 0.1em;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .tera-cta-light {
-  background: #fff;
-  color: var(--dark);
-  border: 1px solid var(--rule);
+  background: var(--gold);
+  color: #07090b;
+  border: 1px solid var(--gold);
+  font-weight: 700;
 }
 
 .tera-cta-light:hover {
-  background: var(--surface-alt);
+  background: #ffdc33;
+  color: #000;
+  box-shadow: 0 0 16px rgba(255, 208, 0, 0.4);
 }
 
 .tera-cta-dark {
-  background: var(--dark);
-  color: #f2f0ee;
-  border: 1px solid var(--dark);
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--rule);
 }
 
 .tera-cta-dark:hover {
-  background: var(--dark-2);
+  background: var(--surface-alt);
+  border-color: var(--gold);
+  color: #fff;
 }
 
 .tera-trio-strip {
