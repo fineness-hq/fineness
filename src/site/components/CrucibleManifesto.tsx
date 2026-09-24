@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, MouseEvent } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useReducedMotion } from 'framer-motion';
 import {
   Flame,
@@ -150,6 +151,22 @@ export default function CrucibleManifesto() {
       {/* Sticky Viewport - Perfectly Centered in 100vh with no cutoff */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center items-center px-4 sm:px-6 py-6">
         
+        {/* Atmospheric Swiss Vault Backdrop */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0 opacity-15 mix-blend-luminosity overflow-hidden"
+        >
+          <Image
+            src="/images/swiss-vault-bg.jpg"
+            alt="Swiss Gold Bullion Vault"
+            fill
+            sizes="100vw"
+            className="object-cover object-center filter contrast-125"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-alt)] via-transparent to-[var(--surface-alt)]" />
+        </div>
+
         {/* Subtle Ambient Radial Glow */}
         <div
           aria-hidden="true"

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Scale,
@@ -305,17 +306,23 @@ export default function AssayWorkflow() {
                         
                         {/* Looping Visual per station */}
                         {idx === 0 && (
-                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(196,139,15,0.15),transparent_70%)] animate-pulse" />
-                            <div className="flex items-center gap-2 text-[var(--gold)] text-xs font-bold z-10">
-                              <ScanLine size={16} className="animate-spin text-[var(--gold)]" />
-                              <span>DAEMON HARVESTING</span>
-                            </div>
-                            <span className="text-[9px] text-white/50 mt-1 z-10 font-mono">
-                              PULLING FIGURES
-                            </span>
-                            <div className="w-3/4 h-1 bg-white/10 rounded-full mt-2 overflow-hidden z-10">
-                              <div className="h-full bg-[var(--gold)] w-3/4 animate-pulse" />
+                          <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
+                            <Image
+                              src="/images/cat-scanner-8bit.jpg"
+                              alt="8-bit Auditor Cat Scanning Gold Bullion"
+                              fill
+                              sizes="(max-width: 768px) 100vw, 300px"
+                              className="object-cover object-center opacity-85 hover:opacity-100 transition-opacity"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+                            <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
+                              <span className="text-[var(--gold)] font-bold flex items-center gap-1">
+                                <ScanLine size={11} className="text-[var(--gold)] animate-pulse" />
+                                <span>BAY 01 · 8-BIT AUDITOR</span>
+                              </span>
+                              <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
+                                999.9 SCAN
+                              </span>
                             </div>
                           </div>
                         )}
