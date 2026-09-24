@@ -1,24 +1,24 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useReducedMotion } from 'framer-motion';
 import {
-  Vault,
   Scale,
-  Award,
   ShieldCheck,
-  CheckCircle2,
-  Scan,
   Sparkles,
-  ArrowRight,
   Database,
   Cpu,
   Stamp,
   Radio,
+  Layers,
+  ArrowRight,
+  Flame,
+  CheckCircle2,
+  ScanLine,
 } from 'lucide-react';
 
 interface Station {
   id: string;
+  stationNumber: string;
   badge: string;
   title: string;
   subtitle: string;
@@ -26,15 +26,17 @@ interface Station {
   icon: typeof Database;
   primaryDetails: Array<{ label: string; value: string; note: string }>;
   deliverable: { title: string; tag: string; stamp: string };
+  specMetric: { label: string; value: string };
 }
 
 const REFINERY_STATIONS: Station[] = [
   {
     id: 'ingest',
-    badge: 'STAGE I: INGESTION',
+    stationNumber: 'BAY 01',
+    badge: 'STAGE I // INGESTION',
     title: 'The Vault & Chain Ingestion',
     subtitle: 'Autonomous monthly depository proof sampling',
-    desc: 'At the monthly snapshot cut, automated daemons sample live smart contract bytecode, decentralized oracle feeds, and custodian vault registries simultaneously.',
+    desc: 'At each snapshot cut, automated daemons harvest smart contract bytecode, decentralized oracle feeds, and custodian vault registries simultaneously.',
     icon: Database,
     primaryDetails: [
       { label: 'BLOCK TIMESTAMP', value: 'ETH #21,049,281', note: 'Frozen snapshot cut' },
@@ -47,13 +49,15 @@ const REFINERY_STATIONS: Station[] = [
       tag: 'IMMUTABLE PROOFS',
       stamp: 'INGESTED 100%',
     },
+    specMetric: { label: 'INGESTION LATENCY', value: '14.2ms' },
   },
   {
     id: 'smelt',
-    badge: 'STAGE II: SMELTING',
+    stationNumber: 'BAY 02',
+    badge: 'STAGE II // SMELTING',
     title: 'The 5-Pillar Metallurgical Crucible',
     subtitle: 'Balancing physical backing against structural counterparty opacity',
-    desc: 'Raw parameters pass through the Crucible engine. Five mathematical criteria weigh the token across tangible reserves, market volume, reserve disclosure, custody, and contract durability.',
+    desc: 'Raw parameters pass through the Crucible engine. Five mathematical criteria weigh the token across tangible reserves, market volume, disclosure, custody, and contract durability.',
     icon: Scale,
     primaryDetails: [
       { label: 'ASSET BACKING (30%)', value: '1:1 Physical Allocated', note: 'Gold bars legally titled to holders' },
@@ -66,10 +70,12 @@ const REFINERY_STATIONS: Station[] = [
       tag: 'DETERMINISTIC MATH',
       stamp: 'SCORE: 999 / 1000',
     },
+    specMetric: { label: 'CRUCIBLE THERMALS', value: '1,064°C' },
   },
   {
     id: 'hallmark',
-    badge: 'STAGE III: HALLMARK',
+    stationNumber: 'BAY 03',
+    badge: 'STAGE III // HALLMARK',
     title: 'The Sovereign Karat Hallmark',
     subtitle: 'Striking the permanent seal of purity into open machine-readable JSON',
     desc: 'The official Fineness hallmark (0 to 1000) is engraved onto the public register. An immutable SHA-256 hash seals the entire edition dataset into public IPFS and web endpoints.',
@@ -85,49 +91,62 @@ const REFINERY_STATIONS: Station[] = [
       tag: 'CERTIFIED PURE',
       stamp: 'STAMP STRUCK ★',
     },
+    specMetric: { label: 'HALLMARK FIDELITY', value: '24 KARAT' },
   },
 ];
 
 /**
  * AssayWorkflow:
- * Scroll-driven pinned Swiss Bullion Refinery Forge.
+ * Pinned Horizontal Conveyor Rail (Smelting Assembly Line).
  * Features:
- * - 220svh pinned scroll container.
- * - Sticky viewport where scroll position directly scrubs through the 3 refinery stages.
- * - Live golden conduit progress bar tracking scroll progress.
- * - Seamless stage transitions driven by scrolling down the page.
+ * - Pinned 240vh section.
+ * - Viewport locks at `top-0 h-screen` and centers cleanly with no vertical cutoff.
+ * - Vertical scrolling drives the horizontal conveyor rail from Bay 01 to Bay 03.
+ * - Molten gold conduit connecting each station with animated pulses.
+ * - Interactive station jump buttons with live track position indicator.
  */
 export default function AssayWorkflow() {
   const containerRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const [activeStage, setActiveStage] = useState(0);
-  const [scrollPct, setScrollPct] = useState(0);
-  const reduce = useReducedMotion();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [maxTranslate, setMaxTranslate] = useState(0);
+  const [activeStationIndex, setActiveStationIndex] = useState(0);
 
-  // Scroll-driven stage progression
+  // Measure track scrollable width
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (!trackRef.current) return;
+      const trackWidth = trackRef.current.scrollWidth;
+      const windowWidth = window.innerWidth;
+      const availableScroll = Math.max(0, trackWidth - windowWidth + 120);
+      setMaxTranslate(availableScroll);
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Scroll listener for horizontal translation
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current || !stageRef.current) return;
+      if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
-      const stageHeight = stageRef.current.offsetHeight;
-      const totalScrollable = rect.height - stageHeight;
+      const totalScrollable = rect.height - vh;
       if (totalScrollable <= 0) return;
 
       const p = Math.max(0, Math.min(1, -rect.top / totalScrollable));
-      setScrollPct(Math.round(p * 100));
+      setScrollProgress(p);
 
-      // Derive stage from scroll progress:
-      // 0.0 - 0.33 -> Stage 0
-      // 0.33 - 0.66 -> Stage 1
-      // 0.66 - 1.0  -> Stage 2
-      let s = 0;
-      if (p >= 0.66) {
-        s = 2;
-      } else if (p >= 0.33) {
-        s = 1;
+      // Active station indicator
+      if (p < 0.33) {
+        setActiveStationIndex(0);
+      } else if (p < 0.66) {
+        setActiveStationIndex(1);
+      } else {
+        setActiveStationIndex(2);
       }
-      setActiveStage(s);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -135,215 +154,238 @@ export default function AssayWorkflow() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const station = REFINERY_STATIONS[activeStage];
-  const Icon = station.icon;
+  const currentTranslateX = scrollProgress * maxTranslate;
 
-  function scrollToStage(idx: number) {
+  // Jump to specific station
+  const jumpToStation = (index: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const stageHeight = stageRef.current ? stageRef.current.offsetHeight : window.innerHeight;
-    const totalScrollable = containerRef.current.offsetHeight - stageHeight;
-    const targetScroll = window.scrollY + rect.top + (idx / 2) * totalScrollable;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-  }
+    const vh = window.innerHeight;
+    const totalScrollable = containerRef.current.offsetHeight - vh;
+    const targetProgress = index === 0 ? 0 : index === 1 ? 0.5 : 1.0;
+    const targetY = window.scrollY + rect.top + targetProgress * totalScrollable;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
 
   return (
     <section
       ref={containerRef}
       id="refinery-pipeline"
-      aria-labelledby="workflow-title"
-      className="relative w-full border-b border-[var(--rule)] bg-[var(--surface-alt)]"
-      style={{ height: '220svh', minHeight: '1600px' }}
+      aria-label="Crucible Continuous Refinery Pipeline"
+      className="relative w-full bg-[var(--surface-alt)] border-b border-[var(--rule)]"
+      style={{ height: '240vh' }}
     >
-      {/* Sticky Stage Viewport */}
-      <div
-        ref={stageRef}
-        className="sticky top-16 md:top-20 h-[calc(100svh-64px)] md:h-[calc(100svh-80px)] min-h-[580px] flex flex-col justify-center items-center overflow-hidden px-[max(4vw,20px)] py-6"
-      >
-        <div className="w-full max-w-5xl mx-auto">
-          
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[var(--rule)] pb-4 mb-6">
-            <div>
-              <p className="eyebrow">CRUCIBLE REFINERY // SCROLL-DRIVEN PIPELINE</p>
-              <h2
-                id="workflow-title"
-                className="mt-1 font-[var(--font-inter)] text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[var(--ink)]"
-              >
-                How the Crucible Machine Audits
-              </h2>
-              <p className="prose mt-1 max-w-[66ch] text-xs sm:text-sm leading-relaxed text-[var(--ink-2)]">
-                Scroll down to advance through the three-station metallurgical refinery: from raw contract telemetry to permanent 24K hallmark.
+      {/* Sticky Viewport - Perfectly Centered in 100vh */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 px-4 sm:px-8 select-none">
+        
+        {/* Top Header & Telemetry Bar */}
+        <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--rule)] pb-4 z-20">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[var(--gold)] animate-ping" />
+              <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
+                CRUCIBLE REFINERY // HORIZONTAL CONVEYOR RAIL
               </p>
             </div>
-
-            {/* Scroll-Linked Telemetry Badge */}
-            <div className="flex items-center gap-3 font-mono text-xs">
-              <div className="flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 text-[var(--gold)] font-bold shadow-2xs">
-                <Radio size={12} className="animate-pulse" />
-                <span>FORGE SCROLL: {scrollPct}%</span>
-              </div>
-            </div>
+            <h2 className="mt-1 font-[var(--font-inter)] text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-[var(--ink)]">
+              How the Crucible Machine Audits
+            </h2>
+            <p className="text-xs sm:text-sm text-[var(--ink-2)] mt-0.5 max-w-[65ch]">
+              Scroll down to propel the physical ingot along the three metallurgical inspection bays.
+            </p>
           </div>
 
-          {/* 3-Station Stepper Navigation with Scroll-Driven Progress Track */}
-          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3 p-1.5 rounded-xl border border-[var(--rule)] bg-[var(--surface)] shadow-xs">
-            {/* Liquid Gold Scroll Progress Bar under the tabs */}
-            <div
-              className="absolute bottom-0 left-0 h-1 bg-[var(--gold)] rounded-b-xl transition-all duration-100 ease-out"
-              style={{ width: `${scrollPct}%` }}
-            />
-
-            {REFINERY_STATIONS.map((st, idx) => {
-              const isCurrent = activeStage === idx;
-              const StIcon = st.icon;
-              return (
+          {/* Bay Stepper Selector & Position Indicator */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center bg-[var(--surface)] border border-[var(--rule)] rounded-lg p-1 shadow-xs">
+              {REFINERY_STATIONS.map((st, idx) => (
                 <button
                   key={st.id}
-                  type="button"
-                  onClick={() => scrollToStage(idx)}
-                  className={`flex items-center gap-3 p-3.5 rounded-lg text-left transition-all cursor-pointer ${
-                    isCurrent
-                      ? 'border-2 border-[var(--gold)] bg-[var(--tint)]/60 shadow-xs text-[var(--ink)]'
-                      : 'border border-transparent text-[var(--ink-2)] hover:bg-[var(--surface-alt)] hover:text-[var(--ink)]'
+                  onClick={() => jumpToStation(idx)}
+                  className={`px-3 py-1.5 rounded-md font-mono text-[11px] font-bold transition-all cursor-pointer ${
+                    activeStationIndex === idx
+                      ? 'bg-[var(--gold)] text-white shadow-xs'
+                      : 'text-[var(--ink-2)] hover:text-[var(--ink)] hover:bg-[var(--surface-alt)]'
                   }`}
                 >
-                  <div
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-black transition-colors ${
-                      isCurrent
-                        ? 'bg-[var(--gold)] text-white shadow-xs'
-                        : 'border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)]'
-                    }`}
-                  >
-                    <StIcon size={16} />
-                  </div>
-                  <div>
-                    <span className="mono text-[9px] font-black uppercase tracking-wider text-[var(--gold)] block">
-                      {st.badge}
-                    </span>
-                    <span className="font-[var(--font-inter)] text-xs sm:text-sm font-bold block mt-0.5 text-[var(--ink)]">
-                      {st.title}
-                    </span>
-                  </div>
+                  {st.stationNumber}
                 </button>
+              ))}
+            </div>
+
+            <div className="hidden sm:flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--gold)] font-bold">
+              <Radio size={13} className="animate-pulse" />
+              <span>RAIL: {Math.round(scrollProgress * 100)}%</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Horizontal Sliding Conveyor Belt Area */}
+        <div className="relative w-full flex-1 flex items-center my-auto overflow-hidden">
+          
+          {/* Molten Gold Overhead Rail Wire */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-[var(--rule)] via-[var(--gold)]/40 to-[var(--rule)] pointer-events-none z-0" />
+
+          {/* The Moving Track */}
+          <div
+            ref={trackRef}
+            className="flex items-center gap-6 sm:gap-8 px-4 sm:px-12 transition-transform duration-100 ease-out will-change-transform z-10"
+            style={{
+              transform: `translateX(-${currentTranslateX}px)`,
+            }}
+          >
+            {REFINERY_STATIONS.map((station, idx) => {
+              const StIcon = station.icon;
+              const isActive = activeStationIndex === idx;
+
+              return (
+                <div
+                  key={station.id}
+                  className={`shrink-0 w-[85vw] max-w-[580px] sm:max-w-[680px] md:max-w-[760px] rounded-2xl border-2 transition-all duration-300 p-6 sm:p-8 bg-[var(--surface)] shadow-xl ${
+                    isActive
+                      ? 'border-[var(--gold)] shadow-[0_12px_40px_-15px_rgba(196,139,15,0.25)]'
+                      : 'border-[var(--rule)] opacity-85 hover:opacity-100'
+                  }`}
+                >
+                  {/* Bay Header */}
+                  <div className="flex items-center justify-between border-b border-[var(--rule)] pb-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-mono text-sm font-black transition-colors ${
+                          isActive
+                            ? 'bg-[var(--gold)] text-white shadow-xs'
+                            : 'bg-[var(--surface-alt)] border border-[var(--rule)] text-[var(--ink-2)]'
+                        }`}
+                      >
+                        <StIcon size={20} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="mono text-[10px] font-black uppercase tracking-wider text-[var(--gold)]">
+                            {station.badge}
+                          </span>
+                          <span className="text-[10px] text-[var(--ink-3)] font-mono">• {station.stationNumber}</span>
+                        </div>
+                        <h3 className="font-[var(--font-inter)] text-lg sm:text-xl font-black text-[var(--ink)] leading-snug">
+                          {station.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div className="hidden sm:block text-right font-mono">
+                      <span className="text-[10px] uppercase text-[var(--ink-3)] block">TELEMETRY SPEC</span>
+                      <span className="text-xs font-bold text-[var(--gold)]">{station.specMetric.value}</span>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+                    
+                    {/* Left: Description & 4 Parameter Metrics */}
+                    <div className="md:col-span-7 flex flex-col justify-between space-y-4">
+                      <p className="text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
+                        {station.desc}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[var(--rule)]">
+                        {station.primaryDetails.map((item, dIdx) => (
+                          <div key={dIdx} className="p-2.5 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]">
+                            <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[var(--ink-3)] block truncate">
+                              {item.label}
+                            </span>
+                            <span className="text-xs font-mono font-bold text-[var(--ink)] block mt-0.5 truncate">
+                              {item.value}
+                            </span>
+                            <span className="text-[9px] text-[var(--ink-2)] block mt-0.5 truncate">
+                              {item.note}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right: Live Interactive Industrial Bay Chamber */}
+                    <div className="md:col-span-5 flex flex-col justify-between rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] p-4 relative overflow-hidden">
+                      
+                      {/* Animated Chamber Visual */}
+                      <div className="relative h-32 rounded-lg border border-[var(--rule)] bg-[#0C1014] overflow-hidden flex items-center justify-center p-3 text-center">
+                        
+                        {/* Looping Visual per station */}
+                        {idx === 0 && (
+                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(196,139,15,0.15),transparent_70%)] animate-pulse" />
+                            <div className="flex items-center gap-2 text-[var(--gold)] text-xs font-bold z-10">
+                              <ScanLine size={16} className="animate-spin text-[var(--gold)]" />
+                              <span>DAEMON HARVESTING</span>
+                            </div>
+                            <span className="text-[9px] text-white/50 mt-1 z-10 font-mono">
+                              24/24 VAULT BLOCKS SYNCED
+                            </span>
+                            <div className="w-3/4 h-1 bg-white/10 rounded-full mt-2 overflow-hidden z-10">
+                              <div className="h-full bg-[var(--gold)] w-3/4 animate-pulse" />
+                            </div>
+                          </div>
+                        )}
+
+                        {idx === 1 && (
+                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,100,20,0.2),transparent_70%)]" />
+                            <Flame size={22} className="text-amber-500 animate-bounce mb-1 z-10" />
+                            <span className="text-xs font-bold text-amber-400 z-10">
+                              SMELTING AT 1,064°C
+                            </span>
+                            <span className="text-[9px] text-white/60 z-10 mt-0.5">
+                              5-PILLAR WEIGHT CALIBRATION ACTIVE
+                            </span>
+                          </div>
+                        )}
+
+                        {idx === 2 && (
+                          <div className="relative w-full h-full flex flex-col items-center justify-center font-mono">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(196,139,15,0.25),transparent_70%)]" />
+                            <div className="h-10 w-10 rounded-full border-2 border-[var(--gold)] flex items-center justify-center text-[var(--gold)] mb-1 z-10 shadow-[0_0_15px_rgba(196,139,15,0.4)]">
+                              <Stamp size={18} />
+                            </div>
+                            <span className="text-xs font-black tracking-widest text-[var(--gold)] z-10">
+                              24K HALLMARK STRUCK
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Deliverable Badge */}
+                      <div className="mt-3 pt-3 border-t border-[var(--rule)] flex items-center justify-between">
+                        <div>
+                          <span className="text-[9px] font-mono text-[var(--ink-3)] block uppercase">DELIVERABLE</span>
+                          <span className="text-[11px] font-mono font-bold text-[var(--ink)] block truncate">
+                            {station.deliverable.title}
+                          </span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-black border border-[var(--gold)]/40 bg-[var(--tint)] text-[var(--gold)]">
+                          {station.deliverable.stamp}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
+        </div>
 
-          {/* Active Station Display Card */}
-          <div className="mt-6 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-6 sm:p-8 shadow-xl overflow-hidden transition-all duration-300">
-            <div className="grid gap-6 lg:grid-cols-12 items-start">
-              
-              {/* Left Column: Descriptive Dossier (7 Cols) */}
-              <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                <div>
-                  <div className="flex items-center gap-2 pb-2 border-b border-[var(--rule)] text-[10px] sm:text-[11px] font-mono text-[var(--ink-3)]">
-                    <span className="font-bold uppercase tracking-wider text-[var(--gold)]">
-                      {station.badge}
-                    </span>
-                    <span>•</span>
-                    <span>{station.subtitle}</span>
-                  </div>
-
-                  <h3 className="mt-3 font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)] leading-snug">
-                    {station.title}
-                  </h3>
-                  <p className="mt-1.5 text-xs text-[var(--ink-2)] leading-relaxed max-w-xl">
-                    {station.desc}
-                  </p>
-                </div>
-
-                {/* Technical Evidence Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-3 border-t border-[var(--rule)] font-mono text-xs">
-                  {station.primaryDetails.map((detail) => (
-                    <div
-                      key={detail.label}
-                      className="p-3 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]/60"
-                    >
-                      <span className="text-[9px] text-[var(--ink-3)] block uppercase tracking-wider font-bold">
-                        {detail.label}
-                      </span>
-                      <strong className="text-xs text-[var(--ink)] block mt-0.5 font-extrabold">
-                        {detail.value}
-                      </strong>
-                      <span className="text-[9px] text-[var(--ink-2)] block mt-0.5">
-                        {detail.note}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-2 flex items-center justify-between text-xs font-mono text-[var(--ink-3)]">
-                  <span className="flex items-center gap-1.5 text-emerald-600 font-bold text-[11px]">
-                    <CheckCircle2 size={12} />
-                    <span>DETERMINISTIC VERIFICATION</span>
-                  </span>
-                  <span className="text-[10px]">SCROLL TO ADVANCE STAGE</span>
-                </div>
-              </div>
-
-              {/* Right Column: Physical Bullion Ingot Presentation (5 Cols) */}
-              <div className="lg:col-span-5 relative w-full flex flex-col justify-between rounded-xl border-2 border-[var(--gold)]/60 bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] p-5 sm:p-6 shadow-md overflow-hidden">
-                
-                {/* Continuous Laser Scanning Line */}
-                <motion.div
-                  aria-hidden="true"
-                  animate={reduce ? {} : { y: ['-10%', '340%', '-10%'] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-80 shadow-[0_0_8px_var(--gold)] z-20"
-                />
-
-                <div className="relative z-10 flex items-center justify-between pb-2 border-b border-[var(--gold)]/30 font-mono text-xs">
-                  <span className="text-[var(--gold)] font-bold tracking-wider text-[10px] uppercase flex items-center gap-1.5">
-                    <Award size={13} />
-                    <span>{station.deliverable.tag}</span>
-                  </span>
-                  <span className="rounded bg-[var(--tint)] border border-[var(--gold)]/50 px-2 py-0.5 text-[9px] font-black text-[var(--gold)]">
-                    {station.deliverable.stamp}
-                  </span>
-                </div>
-
-                {/* Bullion Ingot Visual */}
-                <div className="relative z-10 my-4 rounded-xl border border-[var(--gold)]/40 bg-[var(--surface)] p-4 shadow-xs space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="mono text-xl sm:text-2xl font-black text-[var(--gold)] flex items-center gap-2">
-                      <span>AU 999.9</span>
-                      <Sparkles size={14} className="text-[var(--gold)] animate-spin" />
-                    </span>
-                    <span className="mono text-[9px] font-bold text-[var(--ink-3)]">SWISS ASSAY</span>
-                  </div>
-
-                  <div className="space-y-1 font-mono text-xs">
-                    <div className="flex justify-between text-[10px]">
-                      <span className="text-[var(--ink-3)]">ASSET CLASS:</span>
-                      <span className="font-bold text-[var(--ink)]">ALLOCATED GOLD</span>
-                    </div>
-                    <div className="flex justify-between text-[10px]">
-                      <span className="text-[var(--ink-3)]">RESERVE AUDIT:</span>
-                      <span className="font-bold text-emerald-600">100% COLLATERALIZED</span>
-                    </div>
-                    <div className="flex justify-between text-[10px]">
-                      <span className="text-[var(--ink-3)]">CRUCIBLE GATE:</span>
-                      <span className="font-bold text-[var(--gold)]">PASSED (≥ 375 / 1000)</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Looping Step Indicator */}
-                <div className="relative z-10 pt-2 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-[10px]">
-                  <span className="text-[var(--ink-3)]">
-                    STAGE {activeStage + 1} OF 3
-                  </span>
-                  <span className="font-bold text-[var(--gold)] flex items-center gap-1">
-                    <span>SCROLL DOWN</span>
-                    <ArrowRight size={11} className="animate-pulse" />
-                  </span>
-                </div>
-              </div>
-
-            </div>
+        {/* Bottom Rail Track Indicators */}
+        <div className="w-full max-w-7xl mx-auto pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[11px] text-[var(--ink-3)] z-20">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-[var(--gold)]">CONVEYOR TRACK:</span>
+            <span>SWISS HALLMARK ASSEMBLY</span>
           </div>
 
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline">STATUS: SYNCHRONIZED</span>
+            <span className="text-[var(--ink)] font-bold">
+              BAY {activeStationIndex + 1} OF 3
+            </span>
+          </div>
         </div>
       </div>
     </section>
