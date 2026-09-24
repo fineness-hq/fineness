@@ -20,7 +20,7 @@ export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
   const reduce = useReducedMotion();
   const [copied, setCopied] = React.useState(false);
 
-  const curlCommand = `curl -s https://fineness.gold/editions/${edition}.json | jq '.venues[] | {name, fineness, band}'`;
+  const curlCommand = `curl -s <host>/editions/${edition}.json | jq '.venues[] | {name, fineness, band}'`;
 
   function copyCurl() {
     navigator.clipboard?.writeText(curlCommand);
@@ -45,18 +45,18 @@ export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-xs font-bold text-[var(--gold)]">
                 <Terminal size={13} />
-                <span>OPEN DEVELOPER & AUDITOR APIS</span>
+                <span>OPEN MACHINE-READABLE REGISTER</span>
               </div>
 
               <h2
                 id="cta-title"
                 className="mt-4 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)]"
               >
-                <WordText text="Integrate Sovereign Gold Intelligence Into Your Protocol" />
+                <WordText text="Take the frozen register with you, as JSON" />
               </h2>
 
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-[var(--ink-2)]">
-                All crucible calculations, Karat band cutoffs, and custody vectors are available as open JSON endpoints. Query live edition data or verify smart contract reserve proofs directly.
+                Every frozen edition ships beside a machine-readable JSON file with the same data the page renders: venues, scores, bands, ranks, metrics and sources.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -71,20 +71,11 @@ export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
 
                 <Link
                   href="/method"
-                  className="mono inline-flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-5 py-3 text-xs font-bold text-[var(--ink)] shadow-xs transition-all hover:border-[var(--gold)] cursor-pointer"
+                  className="mono inline-flex items-center gap-2 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-5 py-3 text-xs font-bold text-[var(--ink)] shadow-xs transition-all hover:border-[var(--dark)]"
                 >
                   <ShieldCheck size={14} className="text-[var(--gold)]" />
-                  <span>FULL ASSAY METHODOLOGY</span>
+                  <span>METHODOLOGY</span>
                 </Link>
-
-                <a
-                  href="https://github.com/fineness-hq/fineness"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mono inline-flex items-center gap-1.5 px-3 py-3 text-xs font-bold text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
-                >
-                  <span>GITHUB SOURCE ↗</span>
-                </a>
               </div>
             </div>
 

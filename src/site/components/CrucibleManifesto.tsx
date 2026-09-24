@@ -21,7 +21,7 @@ import {
  * Scroll-Driven Pinned Behavior:
  * - 190svh container with sticky top-0 h-screen centered viewport.
  * - Scrolling down smoothly glides the golden caliper blade from left to right (20% to 85%),
- *   peeling the Synthetic Paper IOU layer to reveal the physical 24K Swiss Bullion beneath.
+ *   peeling the thin-backing layer to reveal the documented-backing layer beneath.
  * - Integrated with Framer Motion useSpring for 60-120fps liquid momentum.
  * - Interactive horizontal drag supported at any time.
  * - 3D holographic tilt with spring momentum.
@@ -161,17 +161,17 @@ export default function CrucibleManifesto() {
         <div className="relative z-10 text-center max-w-2xl mx-auto mb-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-[11px] font-bold text-[var(--gold)] mb-3 shadow-2xs">
             <Flame size={12} className="text-[var(--gold)] animate-pulse" />
-            <span>THE TOUCHSTONE X-RAY ASSAY</span>
+            <span>THE BACKING GAP, ILLUSTRATED</span>
           </div>
 
           <h2
             id="manifesto-title"
             className="font-[var(--font-inter)] text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[var(--ink)] leading-tight"
           >
-            Peel the Wrapper. Inspect the Vault.
+            From wrapper to backing.
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed max-w-lg mx-auto">
-            Scroll down or drag the golden caliper to peel the synthetic paper wrapper and verify physical 24K Swiss bullion.
+            Drag the caliper from thin backing to documented backing — the gap the register scores. An illustration, not a venue.
           </p>
         </div>
 
@@ -182,16 +182,16 @@ export default function CrucibleManifesto() {
           <div className="w-full flex items-center justify-between pb-2 font-mono text-xs text-[var(--ink-3)]">
             <span className="flex items-center gap-1.5 text-red-600 font-bold">
               <FileX size={14} />
-              <span>SYNTHETIC PAPER IOU ({100 - displaySliderPct}%)</span>
+              <span>THIN BACKING ({100 - displaySliderPct}%)</span>
             </span>
 
             <span className="text-[11px] text-[var(--ink-3)] hidden sm:inline">
-              ← SCROLL TO PEEL OR DRAG CALIPER BLADE →
+              ← SCROLL OR DRAG TO TRAVEL THE GAP →
             </span>
 
             <span className="flex items-center gap-1.5 text-[var(--gold)] font-bold">
               <Award size={14} />
-              <span>24K SOVEREIGN BULLION ({displaySliderPct}%)</span>
+              <span>DOCUMENTED BACKING ({displaySliderPct}%)</span>
             </span>
           </div>
 
@@ -225,48 +225,48 @@ export default function CrucibleManifesto() {
                     </span>
                     <div>
                       <span className="mono text-xs font-black uppercase tracking-wider text-red-600">
-                        SYNTHETIC PAPER COMMODITY
+                        THINLY BACKED VENUE
                       </span>
-                      <div className="mono text-[9px] text-[var(--ink-3)]">UNALLOCATED POOL • REHYPOTHECATED</div>
+                      <div className="mono text-[9px] text-[var(--ink-3)]">WEAK EVIDENCE • THIN FLOW</div>
                     </div>
                   </div>
                   <span className="mono text-[10px] font-black text-red-600 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded">
-                    0 - 374 / 1000 DISQUALIFIED
+                    0 – 374 / 1000 · LISTED ONLY
                   </span>
                 </div>
 
                 <div className="mt-5 max-w-md">
                   <h3 className="font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)]">
-                    The Fragile Illusion of Paper Parity
+                    When the backing file is empty
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                    Unallocated tokens commingle physical reserves with company debt. If the issuer defaults, token holders hold zero legal claim to specific London Good Delivery bars.
+                    No named custodian, no verifiable inventory, no volume series. The score lands below the hallmark — listed, not certified.
                   </p>
 
                   <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink-2)]">
                     <div className="flex items-center gap-2">
                       <XCircle size={13} className="text-red-500 shrink-0" />
-                      <span>Spreadsheets without cryptographic proof-of-reserves</span>
+                      <span>No custodian named in the docs</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <XCircle size={13} className="text-red-500 shrink-0" />
-                      <span>Commingled corporate debt covenants & unsegregated title</span>
+                      <span>No verifiable volume series</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <XCircle size={13} className="text-red-500 shrink-0" />
-                      <span>Zero legal right to physical bullion delivery</span>
+                      <span>Redemption terms undisclosed</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[10px]">
-                <span className="text-[var(--ink-3)]">LEGAL STANDING:</span>
-                <span className="font-bold text-red-600">UNSECURED GENERAL CREDITOR</span>
+                <span className="text-[var(--ink-3)]">EVIDENCE FILE:</span>
+                <span className="font-bold text-red-600">EMPTY</span>
               </div>
             </div>
 
-            {/* Layer 2 (Clipped Overlay): The Pure 24K Sovereign Bullion */}
+            {/* Layer 2 (Clipped Overlay): documented backing */}
             <motion.div
               className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] overflow-hidden will-change-transform"
               style={{
@@ -284,35 +284,35 @@ export default function CrucibleManifesto() {
                     </span>
                     <div>
                       <span className="mono text-xs font-black uppercase tracking-wider text-[var(--gold)]">
-                        24K SOVEREIGN BULLION
+                        DOCUMENTED BACKING
                       </span>
-                      <div className="mono text-[9px] text-[var(--ink-3)]">ALLOCATED LBMA 400oz BAR</div>
+                      <div className="mono text-[9px] text-[var(--ink-3)]">NAMED CUSTODIAN • VERIFIABLE</div>
                     </div>
                   </div>
                   <span className="mono text-[10px] font-black text-[var(--gold)] bg-[var(--tint)] border border-[var(--gold)]/50 px-2.5 py-0.5 rounded shadow-2xs">
-                    ≥ 750 / 1000 HALLMARKED
+                    HIGH FINENESS · CERTIFIED
                   </span>
                 </div>
 
                 <div className="mt-5 max-w-md ml-auto text-right">
                   <h3 className="font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)]">
-                    Independently Assayed 24-Karat Gold
+                    When the backing file is full
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                    Every token is bound to a specific, serial-numbered LBMA 400oz bar safely held in Zurich Freeport with bankruptcy-remote legal title and 1:1 redemption.
+                    Named custodian, verifiable inventory, published volume. That evidence is what high fineness scores are made of.
                   </p>
 
                   <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink)] flex flex-col items-end">
                     <div className="flex items-center gap-2">
-                      <span>Serial Bar #AU-999.9-CH-8821 verified</span>
+                      <span>Custodian named in the docs</span>
                       <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>Monthly independent Bureau Veritas attestations</span>
+                      <span>Inventory verifiable on-chain or by attestation</span>
                       <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>Direct 1:1 physical redemption contractually secured</span>
+                      <span>Volume series any reader can check</span>
                       <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
                     </div>
                   </div>
@@ -320,8 +320,8 @@ export default function CrucibleManifesto() {
               </div>
 
               <div className="relative z-10 pt-3 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-[10px]">
-                <span className="text-[var(--ink-3)]">CUSTODY STATUS:</span>
-                <span className="font-bold text-[var(--gold)]">ALLOCATED SWISS VAULT</span>
+                <span className="text-[var(--ink-3)]">EVIDENCE FILE:</span>
+                <span className="font-bold text-[var(--gold)]">DOCUMENTED</span>
               </div>
             </motion.div>
 
@@ -341,7 +341,7 @@ export default function CrucibleManifesto() {
               <div className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center bg-gradient-to-t from-amber-600/40 via-[var(--gold)]/30 to-transparent backdrop-blur-[2px] animate-pulse">
                 <div className="flex flex-col items-center gap-2 rounded-xl bg-[var(--dark)] px-4 py-2 font-mono text-xs font-black text-[var(--gold)] shadow-2xl border border-[var(--gold)]">
                   <Flame size={28} className="text-amber-400 animate-bounce" />
-                  <span>SMELTING 1,064°C // PURITY 999.9 CONFIRMED</span>
+                  <span>RECOMPUTING FINENESS</span>
                 </div>
               </div>
             )}
@@ -364,17 +364,17 @@ export default function CrucibleManifesto() {
                 {isSmelting ? (
                   <>
                     <RefreshCw size={12} className="animate-spin text-[var(--gold)]" />
-                    <span>SMELTING WITH CRUCIBLE FLAME...</span>
+                    <span>WEIGHING THE EVIDENCE...</span>
                   </>
                 ) : hasSmelted ? (
                   <>
                     <ShieldCheck size={13} className="text-emerald-400" />
-                    <span>METALLURGICALLY CERTIFIED (24K AU)</span>
+                    <span>WEIGHED AT HOUSE WEIGHTS</span>
                   </>
                 ) : (
                   <>
                     <Flame size={13} className="text-[var(--gold)]" />
-                    <span>IGNITE CRUCIBLE FLAME (1,064°C)</span>
+                    <span>RUN THE WEIGHING</span>
                   </>
                 )}
               </button>

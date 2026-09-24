@@ -35,64 +35,64 @@ const REFINERY_STATIONS: Station[] = [
     id: 'ingest',
     stationNumber: 'BAY 01',
     badge: 'STAGE I // INGESTION',
-    title: 'The Vault & Chain Ingestion',
-    subtitle: 'Autonomous monthly depository proof sampling',
-    desc: 'At each snapshot cut, automated daemons harvest smart contract bytecode, decentralized oracle feeds, and custodian vault registries simultaneously.',
+    title: 'The Monthly Pull',
+    subtitle: 'Published figures in, gaps stay null',
+    desc: 'At each snapshot cut, the ingest job pulls published volume, fee and TVL figures plus contract verification. A missing figure stays null and renders as not published — never fabricated, never inferred.',
     icon: Database,
     primaryDetails: [
-      { label: 'BLOCK TIMESTAMP', value: 'ETH #21,049,281', note: 'Frozen snapshot cut' },
-      { label: 'VAULT AUDIT LOCATIONS', value: 'Zurich, London, New York', note: 'Segregated depositories' },
-      { label: 'CHAINLINK ORACLES', value: 'XAU / USD Feed Active', note: 'Spot price convergence' },
-      { label: 'CUSTODIAN ATTESTATIONS', value: 'Inspectorate & Bureau Veritas', note: 'Monthly bar-by-bar lists' },
+      { label: 'SNAPSHOT CADENCE', value: 'MONTHLY · DAY 1', note: 'Frozen snapshot cut' },
+      { label: 'PROVIDERS', value: 'BITQUERY · LLAMA · EXPLORER', note: 'Volume, fees, TVL, verification' },
+      { label: 'MISSING DATA', value: 'NULL, NEVER ZERO', note: 'Renders as not published' },
+      { label: 'WRITE SCOPE', value: 'METRICS + CONTRACTS', note: 'Scores stay editorial' },
     ],
     deliverable: {
-      title: 'RAW TELEMETRY DOSSIER',
-      tag: 'IMMUTABLE PROOFS',
-      stamp: 'INGESTED 100%',
+      title: 'DATED SNAPSHOT FILE',
+      tag: 'IMMUTABLE INPUT',
+      stamp: 'PULLED, NOT INVENTED',
     },
-    specMetric: { label: 'INGESTION LATENCY', value: '14.2ms' },
+    specMetric: { label: 'WRITE MODE', value: 'ATOMIC' },
   },
   {
     id: 'smelt',
     stationNumber: 'BAY 02',
-    badge: 'STAGE II // SMELTING',
-    title: 'The 5-Pillar Metallurgical Crucible',
-    subtitle: 'Balancing physical backing against structural counterparty opacity',
-    desc: 'Raw parameters pass through the Crucible engine. Five mathematical criteria weigh the token across tangible reserves, market volume, disclosure, custody, and contract durability.',
+    badge: 'STAGE II // SCORING',
+    title: 'The 5-Criterion Weighing',
+    subtitle: 'House weights on editorial scores 0 to 10',
+    desc: 'Snapshot in hand, each venue is scored 0 to 10 on asset, traction, transparency, compliance and durability. Weighted mean times 100, rounded once. Same inputs, same output — readers reproduce it in the browser.',
     icon: Scale,
     primaryDetails: [
-      { label: 'ASSET BACKING (30%)', value: '1:1 Physical Allocated', note: 'Gold bars legally titled to holders' },
-      { label: 'VOLUME TRACTION (25%)', value: '$84.2M 30-Day Velocity', note: 'Secondary market liquidity health' },
-      { label: 'RESERVE TRANSPARENCY (20%)', value: 'Public Serial Registry', note: 'Bar-by-bar inventory search' },
-      { label: 'CUSTODY COMPLIANCE (15%)', value: 'Bankruptcy-Remote Trust', note: 'Segregated from issuer balance sheet' },
+      { label: 'ASSET · 30%', value: 'BACKING EVIDENCE', note: 'Custody, redemption, verifiability' },
+      { label: 'TRACTION · 25%', value: 'VOLUME + FEES + DEPTH', note: 'Turnover and pool health' },
+      { label: 'TRANSPARENCY · 20%', value: 'CONTRACTS + DOCS', note: 'Verified, named entity' },
+      { label: 'COMPLIANCE · 15%', value: 'STANDING', note: 'Licences and disclosure' },
     ],
     deliverable: {
-      title: '5-PILLAR CALIPER BALANCED',
+      title: 'FINENESS 0–1000',
       tag: 'DETERMINISTIC MATH',
-      stamp: 'SCORE: 999 / 1000',
+      stamp: 'ROUNDED ONCE',
     },
-    specMetric: { label: 'CRUCIBLE THERMALS', value: '1,064°C' },
+    specMetric: { label: 'HOUSE WEIGHTS', value: '30·25·20·15·10' },
   },
   {
     id: 'hallmark',
     stationNumber: 'BAY 03',
-    badge: 'STAGE III // HALLMARK',
-    title: 'The Sovereign Karat Hallmark',
-    subtitle: 'Striking the permanent seal of purity into open machine-readable JSON',
-    desc: 'The official Fineness hallmark (0 to 1000) is engraved onto the public register. An immutable SHA-256 hash seals the entire edition dataset into public IPFS and web endpoints.',
+    badge: 'STAGE III // FREEZE',
+    title: 'The Frozen Edition',
+    subtitle: 'Ranked, hashed, published — then immutable',
+    desc: 'Fineness 0 to 1000 is written into the edition JSON beside its SHA-256 snapshot hash. Deltas compute against the prior edition at house weights only. A published edition never changes silently.',
     icon: Stamp,
     primaryDetails: [
-      { label: 'KARAT PURITY GRADE', value: '24 Karat (999.9 Fine)', note: 'Surpasses 750 / 1000 threshold' },
-      { label: 'HALLMARK GATE', value: 'Passed 375 / 1000 Cutoff', note: 'Certified institutional asset' },
-      { label: 'SNAPSHOT DIGEST', value: 'sha256:d8388ed9157e...', note: 'Cryptographically sealed' },
-      { label: 'MACHINE ACCESS', value: '/editions/2026-10.json', note: 'Free public developer endpoint' },
+      { label: 'BAND SCALE', value: '22K·18K·14K·9K', note: 'Gate at 375' },
+      { label: 'HALLMARK GATE', value: '375 / 1000 CUTOFF', note: 'Below: listed, not certified' },
+      { label: 'SNAPSHOT DIGEST', value: 'SHA-256 OF BYTES', note: 'Recorded in the header' },
+      { label: 'MACHINE ACCESS', value: '/editions/:id.json', note: 'Free public endpoint' },
     ],
     deliverable: {
-      title: 'SOVEREIGN ASSAY HALLMARK',
-      tag: 'CERTIFIED PURE',
-      stamp: 'STAMP STRUCK ★',
+      title: 'RANKED REGISTER',
+      tag: 'FROZEN RECORD',
+      stamp: 'EDITION FROZEN',
     },
-    specMetric: { label: 'HALLMARK FIDELITY', value: '24 KARAT' },
+    specMetric: { label: 'DELTAS', value: 'HOUSE WEIGHTS ONLY' },
   },
 ];
 
@@ -188,12 +188,12 @@ export default function AssayWorkflow() {
                 CRUCIBLE REFINERY // HORIZONTAL CONVEYOR RAIL
               </p>
             </div>
-            <h2 className="mt-1 font-[var(--font-inter)] text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-[var(--ink)]">
-              How the Crucible Machine Audits
-            </h2>
-            <p className="text-xs sm:text-sm text-[var(--ink-2)] mt-0.5 max-w-[65ch]">
-              Scroll down to propel the physical ingot along the three metallurgical inspection bays.
-            </p>
+              <h2 className="mt-1 font-[var(--font-inter)] text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-[var(--ink)]">
+                How an edition gets built
+              </h2>
+              <p className="text-xs sm:text-sm text-[var(--ink-2)] mt-0.5 max-w-[65ch]">
+                Scroll to travel the three bays: pull, score, freeze.
+              </p>
           </div>
 
           {/* Bay Stepper Selector & Position Indicator */}
@@ -318,7 +318,7 @@ export default function AssayWorkflow() {
                               <span>DAEMON HARVESTING</span>
                             </div>
                             <span className="text-[9px] text-white/50 mt-1 z-10 font-mono">
-                              24/24 VAULT BLOCKS SYNCED
+                              PULLING FIGURES
                             </span>
                             <div className="w-3/4 h-1 bg-white/10 rounded-full mt-2 overflow-hidden z-10">
                               <div className="h-full bg-[var(--gold)] w-3/4 animate-pulse" />
@@ -331,10 +331,10 @@ export default function AssayWorkflow() {
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,100,20,0.2),transparent_70%)]" />
                             <Flame size={22} className="text-amber-500 animate-bounce mb-1 z-10" />
                             <span className="text-xs font-bold text-amber-400 z-10">
-                              SMELTING AT 1,064°C
+                              WEIGHTED MEAN × 100
                             </span>
                             <span className="text-[9px] text-white/60 z-10 mt-0.5">
-                              5-PILLAR WEIGHT CALIBRATION ACTIVE
+                              ROUNDED ONCE · TIES A–Z
                             </span>
                           </div>
                         )}
@@ -346,7 +346,7 @@ export default function AssayWorkflow() {
                               <Stamp size={18} />
                             </div>
                             <span className="text-xs font-black tracking-widest text-[var(--gold)] z-10">
-                              24K HALLMARK STRUCK
+                              EDITION FROZEN
                             </span>
                           </div>
                         )}
@@ -376,11 +376,11 @@ export default function AssayWorkflow() {
         <div className="w-full max-w-7xl mx-auto pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[11px] text-[var(--ink-3)] z-20">
           <div className="flex items-center gap-2">
             <span className="font-bold text-[var(--gold)]">CONVEYOR TRACK:</span>
-            <span>SWISS HALLMARK ASSEMBLY</span>
+            <span>MONTHLY EDITION ASSEMBLY</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">STATUS: SYNCHRONIZED</span>
+            <span className="hidden sm:inline">STATUS: FROZEN AFTER PUBLISH</span>
             <span className="text-[var(--ink)] font-bold">
               BAY {activeStationIndex + 1} OF 3
             </span>

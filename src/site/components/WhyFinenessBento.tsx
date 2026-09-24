@@ -74,7 +74,7 @@ export default function WhyFinenessBento() {
               Built for Capital That Cannot Afford to Guess
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] max-w-2xl leading-relaxed">
-              DeFi lending markets, institutional allocators, and arbitrageurs rely on Fineness hallmarks to parameterize liquidation buffers and detect depository divergence.
+              How readers use the register: compare backing evidence, reweight the criteria, share the result.
             </p>
           </div>
 
@@ -110,51 +110,51 @@ export default function WhyFinenessBento() {
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]">
                 <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-[var(--gold)]">
                   <Lock size={14} />
-                  <span>DECK I: COLLATERAL DEFENSE</span>
+                  <span>DECK I: READ THE GAP</span>
                 </div>
                 <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)]">
-                  LENDING PROTOCOLS
+                  EDITORIAL THESIS
                 </span>
               </div>
 
               <h3 className="mt-4 font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)] leading-snug">
-                Protect Money Markets from Toxic Paper Claims
+                Separate backing evidence from hype
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Money markets (Aave, Morpho) and stablecoin minters link maximum loan-to-value limits directly to Fineness Karat standings, isolating real allocated gold from commingled corporate liabilities.
+                The register measures one gap: venues marketed as real-world-asset platforms whose only real asset exposure is the pairing. Eight of ten venues clear the hallmark — two do not.
               </p>
             </div>
 
-            {/* Live Interactive LTV Gauge & Haircut Visual */}
+            {/* Register split gauge from the latest edition */}
             <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 font-mono">
               <div className="flex items-center justify-between text-xs mb-2">
-                <span className="text-[var(--ink-2)] font-semibold">MAXIMUM LTV CEILING</span>
-                <span className="text-[var(--gold)] font-black text-sm">85% ALLOCATED</span>
+                <span className="text-[var(--ink-2)] font-semibold">REGISTER SPLIT</span>
+                <span className="text-[var(--gold)] font-black text-sm">8 OF 10 CERTIFIED</span>
               </div>
 
               <div className="w-full h-3 rounded-full bg-[var(--surface-alt)] border border-[var(--rule)] overflow-hidden flex">
-                <div className="h-full bg-[var(--gold)] w-[85%] relative flex items-center justify-end pr-2 text-[9px] font-bold text-white">
-                  <span>85% 24K</span>
+                <div className="h-full bg-[var(--band-high)] w-[80%] relative flex items-center justify-end pr-2 text-[9px] font-bold text-white">
+                  <span>8 CERTIFIED</span>
                 </div>
-                <div className="h-full bg-red-500/30 w-[15%] flex items-center justify-center text-[8px] text-red-400 font-bold">
-                  HAIRCUT
+                <div className="h-full bg-[var(--band-none)]/70 w-[20%] flex items-center justify-center text-[8px] text-white font-bold">
+                  2 BELOW
                 </div>
               </div>
 
               <div className="mt-3 grid grid-cols-2 gap-2 text-[10px] pt-3 border-t border-[var(--rule)] text-[var(--ink-2)]">
                 <div>
-                  <span className="text-[var(--ink-3)] block uppercase">LIQUIDATION BUFFER:</span>
-                  <span className="font-bold text-[var(--ink)]">15% AUTOMATIC GAP</span>
+                  <span className="text-[var(--ink-3)] block uppercase">Gate:</span>
+                  <span className="font-bold text-[var(--ink)]">375 HALLMARK</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[var(--ink-3)] block uppercase">ORACLE CONVERGENCE:</span>
-                  <span className="font-bold text-emerald-600">ZERO LATENCY</span>
+                  <span className="text-[var(--ink-3)] block uppercase">Below means:</span>
+                  <span className="font-bold text-[var(--ink)]">LISTED, NOT CERTIFIED</span>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* DECK 2: DEPEG ARBITRAGE RADAR (Cols 8-12) */}
+          {/* DECK 2: EDITION DELTAS (Cols 8-12) */}
           <motion.div
             style={{ y: rightColY }}
             className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
@@ -163,22 +163,22 @@ export default function WhyFinenessBento() {
               <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)]">
                 <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-[var(--gold)]">
                   <TrendingUp size={14} />
-                  <span>DECK II: ARBITRAGE RADAR</span>
+                  <span>DECK II: EDITION DELTAS</span>
                 </div>
-                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600">
-                  LIVE SWEEP
+                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)]">
+                  FROZEN DELTAS
                 </span>
               </div>
 
               <h3 className="mt-4 font-[var(--font-inter)] text-xl font-black text-[var(--ink)] leading-snug">
-                Detect Depository Divergence
+                Follow movement month over month
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Spot physical London Good Delivery spreads ($2,741.80/oz) vs AMM liquidity pools to front-run depeg runs before insolvency triggers.
+                Every edition carries fineness and rank movement against the prior edition — computed at house weights only, so reader reweighting never rewrites history.
               </p>
             </div>
 
-            {/* Radar Sweep Widget */}
+            {/* Delta readout */}
             <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[#0C1014] p-4 text-center font-mono relative overflow-hidden flex flex-col items-center justify-center h-40">
               {/* Radar Grid Circles */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -203,10 +203,10 @@ export default function WhyFinenessBento() {
               <div className="relative z-10">
                 <Crosshair size={24} className="text-emerald-400 mx-auto animate-pulse" />
                 <span className="text-[11px] font-bold text-emerald-300 block mt-1">
-                  1.0000 AU REDEMPTION PARITY
+                  FINENESS Δ · RANK Δ
                 </span>
                 <span className="text-[9px] text-white/50 block">
-                  PARITY SPREAD: 0.02% (NORMAL)
+                  BAND CHANGE FLAGGED
                 </span>
               </div>
             </div>
@@ -232,7 +232,7 @@ export default function WhyFinenessBento() {
                 Unbribable Assayer Integrity
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Zero listing fees, zero foundation grants, zero marketing tolls. No venue can buy a 24K hallmark. If vault reserves fail inspection, the venue is struck from the public ledger.
+                Zero listing fees, zero foundation grants, zero marketing tolls. No venue can buy placement. A venue goes quiet for 60 days, goes dark, or fails pairing on re-review — it is struck from the register.
               </p>
             </div>
 
@@ -272,30 +272,28 @@ export default function WhyFinenessBento() {
               </div>
 
               <h3 className="mt-4 font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)] leading-snug">
-                Dynamic Risk Calibration & URL State Persistence
+                House weights, reader reweighting
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Backing (30%), Volume (25%), Reserves (20%), Custody (15%), and Durability (10%) mathematically balance into a unified Karat rating, serializing directly into verifiable URL permalinks.
+                Asset (30%), traction (25%), transparency (20%), compliance (15%) and durability (10%) balance into one fineness figure — and your own weights serialize into a shareable URL.
               </p>
             </div>
 
             {/* Dancing Equalizer Bars & Formula Preview */}
             <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 font-mono">
               <div className="flex items-center justify-between text-xs mb-3">
-                <span className="text-[var(--ink-2)] font-semibold">5-PILLAR EQUILIBRIUM:</span>
+                <span className="text-[var(--ink-2)] font-semibold">5-CRITERION EQUILIBRIUM:</span>
                 <span className="text-[var(--gold)] font-bold">30 / 25 / 20 / 15 / 10 HOUSE</span>
               </div>
 
               {/* Equalizer Frequency Dancing Bars - Hardware Accelerated Transform */}
               <div className="flex items-end justify-between gap-2 h-16 pt-2 pb-1 px-4 rounded-lg bg-[var(--surface-alt)] border border-[var(--rule)]">
                 {[
-                  { label: 'BACK', scale: 0.85, delay: 0 },
-                  { label: 'VOL', scale: 0.65, delay: 0.2 },
-                  { label: 'RES', scale: 0.92, delay: 0.4 },
-                  { label: 'CUST', scale: 0.78, delay: 0.1 },
-                  { label: 'DUR', scale: 0.60, delay: 0.3 },
-                  { label: 'HARMONIC', scale: 0.95, delay: 0.5 },
-                  { label: 'KARAT', scale: 1.0, delay: 0.25 },
+                  { label: 'ASSET', scale: 0.85, delay: 0 },
+                  { label: 'TRACT', scale: 0.65, delay: 0.2 },
+                  { label: 'TRANSP', scale: 0.92, delay: 0.4 },
+                  { label: 'COMPL', scale: 0.78, delay: 0.1 },
+                  { label: 'DURAB', scale: 0.60, delay: 0.3 },
                 ].map((bar, bIdx) => (
                   <div key={bIdx} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
                     <motion.div

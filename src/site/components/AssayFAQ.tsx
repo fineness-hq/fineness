@@ -9,15 +9,15 @@ import { WordText } from './Stagger';
 const FAQ_ITEMS = [
   {
     q: 'What is Fineness and why is it graded on a 0 to 1000 scale?',
-    a: 'Fineness is the classical metallurgical standard for gold purity (1000/1000 is pure 24K bullion, and 750/1000 is 18K). We apply this rigorous physical framework to tokenized assets to evaluate whether a token represents true physical bullion or merely synthetic paper promises.',
+    a: 'Fineness borrows the gold purity scale (1000 is fine, 750 is 18 karat) to score one gap: venues marketed as real-world-asset platforms whose real asset shows up only as the pairing.',
   },
   {
     q: 'What does the 375 / 1000 Hallmark Gate signify?',
-    a: '375 / 1000 represents 9 Karat gold — the universal legal minimum for metal to receive an official hallmark stamp. In the Crucible register, any token scoring below 375 fails assay and remains uncertified with elevated depeg risk.',
+    a: '375 / 1000 is the 9-karat line: the minimum for a venue to count as certified. Below it a venue stays listed but uncertified. The gate moves with reweighting, but the published standing never does.',
   },
   {
-    q: 'How does Fineness verify physical vault reserves?',
-    a: 'We evaluate three independent verification vectors: (1) on-chain proof-of-reserves smart contract oracles, (2) monthly legal attestations from accredited audit firms like Inspectorate or Bureau Veritas, and (3) provable 1:1 physical redemption mechanics for sovereign bars.',
+    q: 'How is backing evidence checked?',
+    a: 'Analysts read public material only: verified contracts and docs, published volume series, and the pairing record — who custodies it, whether it redeems, how it verifies. A missing figure stays null and renders as not published, never as zero.',
   },
   {
     q: 'Can a protocol pay to improve its Karat hallmark?',
