@@ -31,7 +31,6 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
 
   // Top 5 venues sorted by fineness
   const top = [...venues].sort((a, b) => b.fineness - a.fineness).slice(0, 5);
-  const top3 = top.slice(0, 3);
 
   function jump(id: string) {
     window.dispatchEvent(new CustomEvent<string>('fineness:expand', { detail: id }));
@@ -39,107 +38,61 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
   }
 
   return (
-    <div
-      className="tera-board relative overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-4 sm:p-5 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
-      role="region"
-      aria-label="Crucible auditor cat mascot and top tokenized asset venues leaderboard"
-    >
-      {/* Top indicator bar */}
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-[var(--gold)]" />
-
-      {/* Header with status and view toggle */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[var(--rule)] pb-3">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--gold)] opacity-75" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--gold)]" />
-          </span>
-          <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
-            CRUCIBLE // {tab === 'guardian' ? 'CHIEF AUDITOR' : 'LEADERBOARD'}
-          </span>
-        </div>
-
-        {/* Tab switcher: Mascot vs Table */}
-        <div className="flex items-center gap-1 rounded bg-[var(--surface-alt)] p-0.5 text-[10px] font-mono">
-          <button
-            type="button"
-            onClick={() => setTab('guardian')}
-            className={`flex items-center gap-1 rounded px-2.5 py-1 font-semibold transition-all ${
-              tab === 'guardian'
-                ? 'bg-[var(--dark)] text-white shadow-xs'
-                : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
-            }`}
-          >
-            <Sparkles size={11} className={tab === 'guardian' ? 'text-[var(--gold)]' : ''} />
-            AUDITOR CAT
-          </button>
-          <button
-            type="button"
-            onClick={() => setTab('table')}
-            className={`flex items-center gap-1 rounded px-2.5 py-1 font-semibold transition-all ${
-              tab === 'table'
-                ? 'bg-[var(--dark)] text-white shadow-xs'
-                : 'text-[var(--ink-2)] hover:text-[var(--ink)]'
-            }`}
-          >
-            <TableProperties size={11} />
-            TOP 5
-          </button>
-        </div>
-      </div>
-
-      {/* Tab Content: 3D Mascot Guardian */}
+    <>
+      {/* 1. SEAMLESS UNBOXED AUDITOR CAT STAGE (NO CARDS, BLENDED WITH BACKGROUND) */}
       {tab === 'guardian' && (
-        <div className="mt-3 flex flex-col gap-3">
-          <AuditorCat />
+        <AuditorCat
+          venues={venues}
+          onJump={jump}
+          onSwitchToTable={() => setTab('table')}
+        />
+      )}
 
-          {/* Quick Podium Ticker */}
-          <div className="rounded border border-[var(--rule)] bg-[var(--surface-2)] p-2.5">
-            <div className="mb-1.5 flex items-center justify-between text-[10px] font-mono text-[var(--ink-3)]">
-              <span className="font-semibold uppercase tracking-wider text-[var(--ink)]">
-                TOP PURITY ARBITRATION
+      {/* 2. DETAILED AUDIT LEADERBOARD TABLE (SHOWN ONLY ON 'TABLE' TAB) */}
+      {tab === 'table' && (
+        <div
+          className="tera-board relative overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]/95 p-4 sm:p-5 shadow-xl backdrop-blur-md transition-all hover:border-[var(--dark)]"
+          role="region"
+          aria-label="Top 5 tokenized asset venues leaderboard"
+        >
+          {/* Top indicator bar */}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-[var(--gold)]" />
+
+          {/* Header with status and view toggle */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[var(--rule)] pb-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--gold)] opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--gold)]" />
               </span>
+              <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--ink)]">
+                CRUCIBLE // LEADERBOARD
+              </span>
+            </div>
+
+            {/* Tab switcher: Mascot vs Table */}
+            <div className="flex items-center gap-1 rounded bg-[var(--surface-alt)] p-0.5 text-[10px] font-mono">
+              <button
+                type="button"
+                onClick={() => setTab('guardian')}
+                className="flex items-center gap-1 rounded px-2.5 py-1 font-semibold text-[var(--ink-2)] transition-all hover:text-[var(--ink)]"
+              >
+                <Sparkles size={11} />
+                AUDITOR CAT
+              </button>
               <button
                 type="button"
                 onClick={() => setTab('table')}
-                className="text-[var(--gold)] hover:underline"
+                className="flex items-center gap-1 rounded bg-[var(--dark)] px-2.5 py-1 font-semibold text-white shadow-xs transition-all"
               >
-                EXPAND TABLE (5) →
+                <TableProperties size={11} />
+                TOP 5
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-2">
-              {top3.map((v, i) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  onClick={() => jump(v.id)}
-                  className="group flex flex-col rounded border border-[var(--rule-soft)] bg-[var(--surface)] p-2 text-left transition-all hover:border-[var(--gold)] hover:bg-[var(--tint)]"
-                >
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="mono font-bold text-[var(--ink-3)]">0{i + 1}</span>
-                    <span
-                      className="mono font-bold"
-                      style={{ color: BAND_COLOR[v.band as Band] }}
-                    >
-                      {v.fineness}‰
-                    </span>
-                  </div>
-                  <span className="mt-0.5 truncate text-xs font-semibold text-[var(--ink)] group-hover:text-[var(--action)]">
-                    {v.name}
-                  </span>
-                  <span className="mono text-[9px] uppercase tracking-wider text-[var(--ink-3)]">
-                    {v.band}
-                  </span>
-                </button>
-              ))}
-            </div>
           </div>
-        </div>
-      )}
 
-      {/* Tab Content: Detailed Table View */}
-      {tab === 'table' && (
-        <div className="mt-3">
+          {/* Detailed Table Content */}
+          <div className="mt-3">
           {/* Subheader with mode selector pills */}
           <div className="flex items-center justify-between border-b border-[var(--rule)] pb-2 text-[10px]">
             <span className="mono font-semibold text-[var(--ink-3)]">METRIC FILTER:</span>
@@ -269,8 +222,9 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
         </span>
         <span className="mono font-medium tracking-wide">CLICK ROW TO EXPAND AUDIT ↓</span>
       </div>
-        </div>
-      )}
     </div>
-  );
+  </div>
+)}
+</>
+);
 }
