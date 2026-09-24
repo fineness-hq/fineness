@@ -324,10 +324,12 @@ html.js [data-xslide='hidden'] {
   opacity: 0.6;
   animation-direction: alternate-reverse;
 }
-.tera-load-mark .tera-mark {
+.tera-load-mark .tera-mark,
+.tera-load-mark .tera-load-svg-mark {
   width: 64px;
   height: 64px;
   animation: tera-load-float 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 16px rgba(196, 139, 15, 0.4));
 }
 .tera-load-title {
   font-size: clamp(64px, 9vw, 138px);

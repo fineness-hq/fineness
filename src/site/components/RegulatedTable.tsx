@@ -14,7 +14,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }
   struck: { label: 'DELISTED', color: 'var(--band-none)', bg: 'rgba(211,47,47,0.1)' },
 };
 
-/** Institutional custody and regulatory standing audit ledger. */
+/** Institutional custody and regulatory standing ledger. */
 export default function RegulatedTable({ venues }: RegulatedTableProps) {
   const rows = [...venues].sort(
     (a, b) => b.scores.compliance - a.scores.compliance || a.name.localeCompare(b.name),

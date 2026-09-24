@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -43,11 +42,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${plexMono.variable}`}
     >
       <head>
-        {/* Progressive-enhancement flag: scroll/hydro reveals only run with JS.
-            Without it every word, row and lockup renders visible by default. */}
-        <Script id="js-flag" strategy="beforeInteractive">
-          {`document.documentElement.classList.add('js')`}
-        </Script>
+        {/* Progressive-enhancement flag: plain blocking script so the
+            class lands before first paint. Scroll reveals only hide
+            content when JS runs; no-JS readers get visible text. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js')`,
+          }}
+        />
       </head>
       <body>
         <Preloader edition={LATEST_EDITION.edition} />

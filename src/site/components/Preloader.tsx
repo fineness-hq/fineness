@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import FinenessMark from './FinenessMark';
 
 const STAGES = [20, 40, 60, 80, 100];
 const HARD_DEADLINE_MS = 6000;
@@ -125,13 +126,14 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
           <i key={i} style={{ '--i': i } as CSSProperties} />
         ))}
       </div>
-      <div className="tera-load-top">
+      <div className="tera-load-top flex items-center gap-2">
+        <FinenessMark size={16} color="var(--gold)" />
         <span className="tera-load-brand">FINENESS</span>
         <span className="tera-load-edition">Edition {edition}</span>
       </div>
       <div className="tera-load-center">
         <div className="tera-load-mark" aria-hidden="true">
-          <span className="tera-mark" />
+          <FinenessMark size={64} color="var(--gold)" className="tera-load-svg-mark" />
         </div>
         <p className="tera-load-title" aria-hidden="true">
           {title.split('').map((ch, i) => (
