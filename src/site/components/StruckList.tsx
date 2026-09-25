@@ -67,9 +67,14 @@ export default function StruckList({ venues }: StruckListProps) {
                     </span>
                   </div>
                 </div>
-                <span className="mono text-xs font-bold tabular-nums text-[var(--band-none)]">
-                  TERMINAL FINENESS {v.fineness} / 1000
-                </span>
+                <div className="text-right">
+                  <span className="mono block text-xs font-bold tabular-nums text-[var(--band-none)]">
+                    TERMINAL FINENESS {v.fineness} / 1000
+                  </span>
+                  <span className="mono mt-0.5 block text-[10px] tabular-nums text-[var(--ink-3)]">
+                    STRUCK {v.struckDate ?? 'DATE UNRECORDED'}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

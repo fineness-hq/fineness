@@ -78,5 +78,38 @@ export function validateEdition(
     if (band(v.fineness) !== v.band) {
       fail(v.id, "band does not match fineness");
     }
+    if (v.struckDate !== null && v.struckDate !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(v.struckDate)) {
+      fail(v.id, "struckDate must be null or YYYY-MM-DD");
+    }
+    if ((v.status === "struck") === (v.struckDate == null)) {
+      fail(v.id, "struck status and struckDate must agree");
+    }
+    if (v.delta !== undefined) {
+      const d = v.delta;
+      if (
+        typeof d.fineness !== "number" ||
+        typeof d.rank !== "number" ||
+        typeof d.bandChanged !== "boolean" ||
+        typeof d.crossedHallmark !== "boolean" ||
+        typeof d.basis !== "string" ||
+        d.basis.length === 0
+      ) {
+        fail(v.id, "delta must be {fineness, rank, bandChanged, crossedHallmark, basis}");
+      }
+    }
+  }
+  if (!Array.isArray(edition.corrections)) {
+    throw new Error("edition corrections must be an array");
+  }
+  for (const c of edition.corrections ?? []) {
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(c.date ?? "") ||
+      typeof c.note !== "string" ||
+      c.note.trim().length === 0 ||
+      typeof c.originalFigure !== "string" ||
+      c.originalFigure.trim().length === 0
+    ) {
+      throw new Error("each correction needs {date YYYY-MM-DD, note, originalFigure}");
+    }
   }
 }

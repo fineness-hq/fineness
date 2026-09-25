@@ -43,7 +43,7 @@ function DeltaMark({ delta }: { delta?: Delta }) {
   if (!delta) {
     return (
       <span className="mono rounded bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-[var(--ink-3)]">
-        New
+        NEW
       </span>
     );
   }

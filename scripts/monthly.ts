@@ -8,6 +8,7 @@ import { rm, readFile, rename, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { buildNextEdition } from '../src/build/carry';
+import { checkAdmission } from '../src/build/admission';
 import { validateEdition } from '../src/build/validate';
 import { warnScoreMoves } from '../src/build/score-moves';
 import { run } from '../src/ingest/run';
@@ -105,6 +106,9 @@ async function main(): Promise<void> {
     validateEdition(edition, sources);
     const warnings = warnScoreMoves(edition, prev);
     for (const w of warnings) console.log(`warn: ${w}`);
+    for (const f of checkAdmission(edition.venues)) {
+      for (const reason of f.failed) console.log(`admission: ${f.id} ${reason}`);
+    }
     if (review) for (const n of review.notes) console.log(`note: ${n}`);
     await atomicWrite(
       join(editionsDir, `${editionId}.json`),

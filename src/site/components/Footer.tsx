@@ -201,7 +201,7 @@ export default function Footer({ edition }: FooterProps) {
               </li>
               <li className="pt-2 border-t border-[var(--rule)] text-[10px] text-emerald-500 font-bold flex items-center gap-1">
                 <CheckCircle2 size={12} />
-                <span>OPEN MIT / CC0 DATA LICENSE</span>
+                <span>OPEN DATA · METHOD + JSON PUBLIC</span>
               </li>
             </ul>
           </div>

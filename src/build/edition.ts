@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import { band, fineness, HOUSE_WEIGHTS } from "../scoring/fineness";
-import type { Edition, Snapshot, Venue } from "../types";
+import type { CorrectionNote, Edition, Snapshot, Venue } from "../types";
 
 export interface EditorialVenue extends Omit<
   Venue,
-  "fineness" | "band" | "rank" | "metrics" | "contracts"
+  "fineness" | "band" | "rank" | "delta" | "metrics" | "contracts"
 > {
   metrics: Omit<Venue["metrics"], "asOf"> & { asOf?: string };
 }
@@ -20,6 +20,7 @@ export interface EditionInput {
   dataAsOf: string;
   snapshotHash: string;
   disclosures?: string[];
+  corrections?: CorrectionNote[];
 }
 
 /**
@@ -52,6 +53,7 @@ export function buildEdition(
     snapshotHash: input.snapshotHash,
     houseWeights: { ...HOUSE_WEIGHTS },
     disclosures: input.disclosures ?? [],
+    corrections: input.corrections ?? [],
     venues,
   };
 }

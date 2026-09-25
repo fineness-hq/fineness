@@ -35,10 +35,15 @@ export const KNOWN_EDITION_IDS = EDITIONS.map((e) => e.edition);
 
 export const SOURCES = sourcesData as unknown as SourceRegistry;
 
-/** Deltas of an edition against its predecessor. First edition has none. */
+/** Deltas of an edition against its predecessor. First edition has none.
+ *  Stored per-venue deltas win; anything missing is derived. */
 export function deltasFor(edition: Edition): Record<string, Delta> {
   const index = EDITIONS.findIndex((e) => e.edition === edition.edition);
-  if (index <= 0) return {};
-  const prev = EDITIONS[index - 1];
-  return computeDeltas(edition.venues, prev.venues, prev.edition);
+  const computed =
+    index <= 0 ? {} : computeDeltas(edition.venues, EDITIONS[index - 1].venues, EDITIONS[index - 1].edition);
+  const out: Record<string, Delta> = { ...computed };
+  for (const v of edition.venues) {
+    if (v.delta) out[v.id] = { ...v.delta };
+  }
+  return out;
 }

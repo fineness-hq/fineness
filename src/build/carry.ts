@@ -1,4 +1,5 @@
 import { buildEdition, type EditionInput, type EditorialVenue } from './edition';
+import { computeDeltas } from './deltas';
 import type { EditionReview } from '../llm/review';
 import type { Edition, Snapshot } from '../types';
 
@@ -8,7 +9,8 @@ import type { Edition, Snapshot } from '../types';
  * fresh snapshot metrics. An AI review may move scores inside the ±1 cap
  * with rewritten rationale; without one, everything carries unchanged and
  * the run publishes steady numbers with refreshed data. Ranks and bands
- * recompute at house weights.
+ * recompute at house weights. Deltas vs the prior edition are embedded
+ * at house weights only; struck venues record the freeze date.
  */
 export function buildNextEdition(
   prev: Edition,
@@ -24,12 +26,20 @@ export function buildNextEdition(
     // Union of prior and fresh provenance: retained figures keep their
     // original source, refreshed figures gain the confirming provider.
     const sourceIds = [...new Set([...v.metrics.sourceIds, ...(providers[v.id] ?? [])])];
+    const status = rev?.status ?? v.status;
+    const struckDate =
+      status === 'struck'
+        ? v.status === 'struck'
+          ? (v.struckDate ?? input.dataAsOf)
+          : input.dataAsOf
+        : null;
     return {
       id: v.id,
       name: v.name,
       chain: v.chain,
       resident: v.resident,
-      status: rev?.status ?? v.status,
+      status,
+      struckDate,
       admittedEdition: v.admittedEdition,
       thesis: rev?.thesis ?? v.thesis,
       scores: rev ? { ...rev.scores } : { ...v.scores },
@@ -46,5 +56,14 @@ export function buildNextEdition(
       facts: v.facts.map((f) => [...f] as [string, string]),
     };
   });
-  return buildEdition(snapshot, editorial, input);
+  const edition = buildEdition(snapshot, editorial, {
+    ...input,
+    disclosures: input.disclosures,
+    corrections: [...(prev.corrections ?? []), ...(input.corrections ?? [])],
+  });
+  const deltas = computeDeltas(edition.venues, prev.venues, prev.edition);
+  for (const v of edition.venues) {
+    if (deltas[v.id]) v.delta = deltas[v.id];
+  }
+  return edition;
 }

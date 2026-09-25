@@ -83,7 +83,7 @@ flowchart LR
   style SCORE fill:#f4e9ea,stroke:#7a1f2b
 ```
 
-Shaded nodes carry editorial judgement. Every other step is deterministic and reproducible from public data. The editorial desk writes only into the `scores` and `rationale` fields.
+Shaded nodes carry editorial judgement. Every other step is deterministic and reproducible from public data. The editorial desk writes only into the `scores` and `rationale` fields. Amendment 2026-09-25: `thesis`, `status` (plus derived `struckDate`), `pairing`, `links` and `facts` also carry forward as judgement, changed only through review; metrics and contracts stay machine-written.
 
 ***
 

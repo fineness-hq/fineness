@@ -53,6 +53,16 @@ export interface Venue {
   chain: string;
   resident: boolean;
   status: VenueStatus;
+  /** Edition this venue was struck, if ever. Null otherwise. */
+  struckDate: string | null;
+  /** Movement vs the prior edition at house weights. Absent for new admissions. */
+  delta?: {
+    fineness: number;
+    rank: number;
+    bandChanged: boolean;
+    crossedHallmark: boolean;
+    basis: string;
+  };
   admittedEdition: string;
   thesis: string;
   scores: Scores;
@@ -67,6 +77,12 @@ export interface Venue {
   facts: [string, string][];
 }
 
+export interface CorrectionNote {
+  date: string;
+  note: string;
+  originalFigure: string;
+}
+
 export interface EditionHeader {
   edition: string;
   published: string;
@@ -74,6 +90,8 @@ export interface EditionHeader {
   snapshotHash: string;
   houseWeights: Weights;
   disclosures: string[];
+  /** Dated correction notes. Original figures stay in place, never edited. */
+  corrections: CorrectionNote[];
 }
 
 export interface Edition extends EditionHeader {

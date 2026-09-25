@@ -3,6 +3,7 @@ import type { Delta } from '../build/deltas';
 import type { Edition, SourceRegistry } from '../types';
 import AlertStrip from './components/AlertStrip';
 import ComparisonTable from './components/ComparisonTable';
+import Corrections from './components/Corrections';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import Limits from './components/Limits';
@@ -81,6 +82,7 @@ export default function EditionView({
       <ProtocolCTA edition={edition.edition} />
 
       <NextEdition currentEdition={edition.edition} />
+      <Corrections corrections={edition.corrections} />
       <Sources sources={sources} disclosures={edition.disclosures} />
       <Footer edition={edition.edition} />
       <FloatingMascot />

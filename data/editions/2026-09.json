@@ -20,7 +20,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Long.xyz lists tokenized equities with on-chain inventory backing and real secondary volume.",
-      "scores": { "asset": 8, "traction": 8, "transparency": 6, "compliance": 6, "durability": 7 },
+      "scores": {
+        "asset": 8,
+        "traction": 8,
+        "transparency": 6,
+        "compliance": 6,
+        "durability": 7
+      },
       "fineness": 720,
       "band": "14k",
       "rank": 1,
@@ -43,15 +49,29 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["coindesk-research", "airdropalert"]
+        "sourceIds": [
+          "coindesk-research",
+          "airdropalert"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://long.xyz", "docs": "https://docs.long.xyz" },
+      "links": {
+        "site": "https://long.xyz",
+        "docs": "https://docs.long.xyz"
+      },
       "facts": [
-        ["~20%", "of all tokenized stock TVL on the chain"]
-      ]
+        [
+          "~20%",
+          "of all tokenized stock TVL on the chain"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "pons",
@@ -61,7 +81,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Pons moves the highest daily flow in the register against thinner asset backing.",
-      "scores": { "asset": 5, "traction": 10, "transparency": 8, "compliance": 5, "durability": 8 },
+      "scores": {
+        "asset": 5,
+        "traction": 10,
+        "transparency": 8,
+        "compliance": 5,
+        "durability": 8
+      },
       "fineness": 715,
       "band": "14k",
       "rank": 2,
@@ -84,15 +110,29 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["coindesk-research", "bitquery"]
+        "sourceIds": [
+          "coindesk-research",
+          "bitquery"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://pons.markets", "docs": "https://docs.pons.markets" },
+      "links": {
+        "site": "https://pons.markets",
+        "docs": "https://docs.pons.markets"
+      },
       "facts": [
-        ["2.4B", "cumulative volume in USD across tracked pools"]
-      ]
+        [
+          "2.4B",
+          "cumulative volume in USD across tracked pools"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "stonkfun",
@@ -102,7 +142,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "StonkFun is a Solana memecoin launcher whose only real asset exposure is an index pairing.",
-      "scores": { "asset": 6, "traction": 7, "transparency": 6, "compliance": 4, "durability": 6 },
+      "scores": {
+        "asset": 6,
+        "traction": 7,
+        "transparency": 6,
+        "compliance": 4,
+        "durability": 6
+      },
       "fineness": 595,
       "band": "14k",
       "rank": 3,
@@ -125,15 +171,29 @@
         "fees24hUsd": 120000,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["defillama", "bitquery"]
+        "sourceIds": [
+          "defillama",
+          "bitquery"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://stonkfun.io", "docs": "https://docs.stonkfun.io" },
+      "links": {
+        "site": "https://stonkfun.io",
+        "docs": "https://docs.stonkfun.io"
+      },
       "facts": [
-        ["120k", "daily fees in USD at the cut date"]
-      ]
+        [
+          "120k",
+          "daily fees in USD at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "pools-trade",
@@ -143,7 +203,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Pools.trade runs audited index vaults with modest flow but strong disclosure.",
-      "scores": { "asset": 3, "traction": 5, "transparency": 9, "compliance": 7, "durability": 9 },
+      "scores": {
+        "asset": 3,
+        "traction": 5,
+        "transparency": 9,
+        "compliance": 7,
+        "durability": 9
+      },
       "fineness": 590,
       "band": "14k",
       "rank": 4,
@@ -166,15 +232,29 @@
         "fees24hUsd": 9500,
         "tvlUsd": 45000000,
         "asOf": "2026-09-20",
-        "sourceIds": ["defillama", "explorer"]
+        "sourceIds": [
+          "defillama",
+          "explorer"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f70", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f70",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://pools.trade", "docs": "https://docs.pools.trade" },
+      "links": {
+        "site": "https://pools.trade",
+        "docs": "https://docs.pools.trade"
+      },
       "facts": [
-        ["45M", "vault TVL in USD at the cut date"]
-      ]
+        [
+          "45M",
+          "vault TVL in USD at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "flap",
@@ -184,7 +264,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Flap pairs solid equity backing with thin trading activity and early-stage disclosure.",
-      "scores": { "asset": 8, "traction": 4, "transparency": 6, "compliance": 4, "durability": 6 },
+      "scores": {
+        "asset": 8,
+        "traction": 4,
+        "transparency": 6,
+        "compliance": 4,
+        "durability": 6
+      },
       "fineness": 580,
       "band": "9k",
       "rank": 5,
@@ -207,15 +293,29 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["bitquery", "airdropalert"]
+        "sourceIds": [
+          "bitquery",
+          "airdropalert"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7081", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7081",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://flap.trade", "docs": "https://docs.flap.trade" },
+      "links": {
+        "site": "https://flap.trade",
+        "docs": "https://docs.flap.trade"
+      },
       "facts": [
-        ["310M", "cumulative volume in USD across tracked pools"]
-      ]
+        [
+          "310M",
+          "cumulative volume in USD across tracked pools"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "pair",
@@ -225,7 +325,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "PAIR tokenizes collectibles into redeemable vault shares with light trading volume.",
-      "scores": { "asset": 7, "traction": 3, "transparency": 7, "compliance": 5, "durability": 4 },
+      "scores": {
+        "asset": 7,
+        "traction": 3,
+        "transparency": 7,
+        "compliance": 5,
+        "durability": 4
+      },
       "fineness": 540,
       "band": "9k",
       "rank": 6,
@@ -248,15 +354,29 @@
         "fees24hUsd": null,
         "tvlUsd": 12000000,
         "asOf": "2026-09-20",
-        "sourceIds": ["defillama", "docs-venue"]
+        "sourceIds": [
+          "defillama",
+          "docs-venue"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://pair.market", "docs": "https://docs.pair.market" },
+      "links": {
+        "site": "https://pair.market",
+        "docs": "https://docs.pair.market"
+      },
       "facts": [
-        ["12M", "vault TVL in USD at the cut date"]
-      ]
+        [
+          "12M",
+          "vault TVL in USD at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "bankr",
@@ -266,7 +386,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Bankr publishes a live launcher but no verifiable volume or backing evidence.",
-      "scores": { "asset": 4, "traction": 4, "transparency": 6, "compliance": 4, "durability": 5 },
+      "scores": {
+        "asset": 4,
+        "traction": 4,
+        "transparency": 6,
+        "compliance": 4,
+        "durability": 5
+      },
       "fineness": 450,
       "band": "9k",
       "rank": 7,
@@ -289,15 +415,28 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["docs-venue"]
+        "sourceIds": [
+          "docs-venue"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://bankr.bot", "docs": "https://docs.bankr.bot" },
+      "links": {
+        "site": "https://bankr.bot",
+        "docs": "https://docs.bankr.bot"
+      },
       "facts": [
-        ["not published", "verifiable volume at the cut date"]
-      ]
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "cardpad",
@@ -307,7 +446,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Cardpad documents its collectible vaults well while trading almost nothing.",
-      "scores": { "asset": 3, "traction": 2, "transparency": 9, "compliance": 5, "durability": 3 },
+      "scores": {
+        "asset": 3,
+        "traction": 2,
+        "transparency": 9,
+        "compliance": 5,
+        "durability": 3
+      },
       "fineness": 425,
       "band": "9k",
       "rank": 8,
@@ -330,15 +475,29 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["docs-venue", "explorer"]
+        "sourceIds": [
+          "docs-venue",
+          "explorer"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x8192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x8192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://cardpad.io", "docs": "https://docs.cardpad.io" },
+      "links": {
+        "site": "https://cardpad.io",
+        "docs": "https://docs.cardpad.io"
+      },
       "facts": [
-        ["not published", "verifiable volume at the cut date"]
-      ]
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "factory-new",
@@ -348,7 +507,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "Factory New ships launch tooling with no backing claim and no measurable market.",
-      "scores": { "asset": 4, "traction": 2, "transparency": 6, "compliance": 2, "durability": 2 },
+      "scores": {
+        "asset": 4,
+        "traction": 2,
+        "transparency": 6,
+        "compliance": 2,
+        "durability": 2
+      },
       "fineness": 340,
       "band": "below-hallmark",
       "rank": 9,
@@ -371,15 +536,28 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["explorer"]
+        "sourceIds": [
+          "explorer"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0x92a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5", "verified": true }
+        {
+          "label": "factory",
+          "address": "0x92a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://factorynew.xyz", "docs": null },
+      "links": {
+        "site": "https://factorynew.xyz",
+        "docs": null
+      },
       "facts": [
-        ["not published", "verifiable volume at the cut date"]
-      ]
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "struckDate": null
     },
     {
       "id": "csl",
@@ -389,7 +567,13 @@
       "status": "active",
       "admittedEdition": "2026-09",
       "thesis": "CSL is a thin prelaunch listing with a deployed factory but no market yet.",
-      "scores": { "asset": 2, "traction": 1, "transparency": 5, "compliance": 1, "durability": 2 },
+      "scores": {
+        "asset": 2,
+        "traction": 1,
+        "transparency": 5,
+        "compliance": 1,
+        "durability": 2
+      },
       "fineness": 220,
       "band": "below-hallmark",
       "rank": 10,
@@ -412,15 +596,29 @@
         "fees24hUsd": null,
         "tvlUsd": null,
         "asOf": "2026-09-20",
-        "sourceIds": ["docs-venue"]
+        "sourceIds": [
+          "docs-venue"
+        ]
       },
       "contracts": [
-        { "label": "factory", "address": "0xa3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6", "verified": true }
+        {
+          "label": "factory",
+          "address": "0xa3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6",
+          "verified": true
+        }
       ],
-      "links": { "site": "https://csl.markets", "docs": null },
+      "links": {
+        "site": "https://csl.markets",
+        "docs": null
+      },
       "facts": [
-        ["not published", "verifiable volume at the cut date"]
-      ]
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "struckDate": null
     }
-  ]
+  ],
+  "corrections": []
 }
