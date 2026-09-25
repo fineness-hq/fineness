@@ -28,7 +28,7 @@ function formatNumber(n: number) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-const STAMP_PHRASES = ['24K ASSAYED', 'CRUCIBLE PASS', 'HALLMARK 999.9', 'PHYSICAL BACKED', '18K CLEARED'];
+const STAMP_PHRASES = ['24K ASSAYED', 'CRUCIBLE PASS', 'HALLMARK 375+', 'PHYSICAL BACKED', '18K CLEARED'];
 
 export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCatProps) {
   const reduce = useReducedMotion();

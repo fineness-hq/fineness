@@ -142,7 +142,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
               <span>THE REGISTER</span>
             </Link>
             <span>/</span>
-            <span className="text-[var(--gold)] font-bold">VENUE ASSAY DOSSIER</span>
+            <span className="text-[var(--gold)] font-bold">VENUE DOSSIER</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
@@ -387,7 +387,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
           </div>
           <div className="font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]">
             <span className="text-[var(--ink-3)]">ADMISSION CONDITION: </span>
-            <span className="font-bold text-[var(--gold)]">NON-NATIVE COLLATERAL</span>
+            <span className="font-bold text-[var(--gold)]">PAIRING WITH RWA CLAIM</span>
           </div>
         </div>
 
@@ -402,15 +402,15 @@ export default async function VenuePage({ params }: VenuePageProps) {
                     <Sparkles size={12} className="text-[var(--gold)]" />
                     <span>VAULT SCHEMATIC BLUEPRINT</span>
                   </span>
-                  <span className="text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
-                    ISO 9001 / LBMA SECURE
+                  <span className="text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30 uppercase">
+                    {current.pairing.assetType}
                   </span>
                 </div>
 
                 <div className="relative mt-3 h-52 sm:h-64 w-full rounded-xl overflow-hidden border border-[var(--rule)] bg-[#07090D]">
                   <Image
                     src="/images/vault-schematic.jpg"
-                    alt="Swiss Underground Vault Blueprint Schematic"
+                    alt="Illustrative vault schematic, not the venue's vault"
                     fill
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
@@ -419,10 +419,10 @@ export default async function VenuePage({ params }: VenuePageProps) {
                   <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
                     <span className="text-amber-300 font-bold text-[11px] flex items-center gap-1">
                       <Lock size={11} />
-                      <span>{current.pairing.custodian ?? 'DIRECT PROTOCOL CUSTODY'}</span>
+                      <span>{current.pairing.custodian ?? 'NO CUSTODIAN NAMED'}</span>
                     </span>
-                    <span className="text-[9px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20">
-                      SUBTERRANEAN
+                    <span className="text-[9px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20 uppercase">
+                      {current.pairing.verifiability}
                     </span>
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-[var(--ink-3)]">PHYSICAL REDEMPTION</span>
                   <span className={current.pairing.redeemable ? 'text-emerald-500 font-bold' : 'text-amber-500 font-bold'}>
-                    {current.pairing.redeemable ? 'DIRECT REVERSAL ALLOWED' : 'SYNTHETIC / NO DIRECT REDEMPTION'}
+                    {current.pairing.redeemable ? 'REDEMPTION: YES' : 'REDEMPTION: NO'}
                   </span>
                 </div>
               </div>
@@ -551,7 +551,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
             Current Evaluation Breakdown
           </h2>
           <p className="prose mt-1 max-w-[68ch] text-xs sm:text-sm text-[var(--ink-2)]">
-            Detailed criteria ratings out of 10 with verified editorial rationale and house weight contributions.
+                Detailed criteria ratings out of 10 with documented editorial rationale and house weight contributions.
           </p>
         </div>
 

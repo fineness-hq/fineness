@@ -221,40 +221,40 @@ export default function MethodPage() {
               </div>
             </div>
 
-            {/* Right Column: Precision Analytical Balance Showcase Card (5 cols) */}
+            {/* Right Column: Swiss Metallurgical Benchmark Card (5 cols) */}
             <div className="lg:col-span-5">
               <div className="rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl relative overflow-hidden group hover:border-[var(--gold)]/60 transition-colors">
                 <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)] font-mono text-xs">
                   <span className="font-bold text-[var(--gold)] flex items-center gap-1.5">
                     <Sparkles size={12} className="text-[var(--gold)]" />
-                    <span>ANALYTICAL TOUCHSTONE</span>
+                    <span>SWISS METALLURGICAL SCALE</span>
                   </span>
-                  <span className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
-                    CALIBRATED 999.9
+                  <span className="text-[10px] text-[var(--gold)] font-bold bg-[var(--tint)] px-2 py-0.5 rounded border border-[var(--gold)]/30">
+                    0 — 1000 FINENESS
                   </span>
                 </div>
 
-                {/* Macro Photograph */}
+                {/* Assay Desk Visual */}
                 <div className="relative mt-3 h-48 sm:h-56 w-full rounded-xl overflow-hidden border border-[var(--rule)] bg-[#0A0D12]">
                   <Image
                     src="/images/swiss-assay-lab.jpg"
-                    alt="Valcambi Suisse 1kg 999.9 Fine Gold on Analytical Balance"
+                    alt="Swiss Bullion Assay Desk"
                     fill
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
                   <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
-                    <span className="text-amber-300 font-bold text-[11px]">METTLER TOLEDO 999.9678g</span>
+                    <span className="text-amber-300 font-bold text-[11px]">STANDALONE BENCHMARK</span>
                     <span className="text-[9px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20">
-                      SPECTRAL PASS
+                      EDITORIAL INTEGRITY
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-3.5 flex items-center justify-between font-mono text-[11px] pt-3 border-t border-[var(--rule)]">
-                  <span className="text-[var(--ink-3)]">RESOLUTION</span>
-                  <span className="text-[var(--ink)] font-bold">0.0001g ANALYTICAL SENSITIVITY</span>
+                  <span className="text-[var(--ink-3)]">HALLMARK CUTOFF</span>
+                  <span className="text-[var(--ink)] font-bold">375 / 1000 MINIMUM GATE</span>
                 </div>
               </div>
             </div>
