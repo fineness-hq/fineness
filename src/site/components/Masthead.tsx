@@ -38,7 +38,7 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
               <Github size={16} aria-hidden="true" />
             </a>
             <a
-              href="https://x.com"
+              href="https://x.com/finenesslabs"
               target="_blank"
               rel="noopener noreferrer"
               className="tera-gh"

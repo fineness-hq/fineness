@@ -194,7 +194,7 @@ export default function Footer({ edition }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="https://x.com"
+                  href="https://x.com/finenesslabs"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors inline-flex items-center gap-1.5"

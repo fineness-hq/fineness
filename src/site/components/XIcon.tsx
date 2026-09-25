@@ -3,7 +3,7 @@ interface XIconProps {
   className?: string;
 }
 
-/** X (Twitter) brand mark. Placeholder link target until the handle exists. */
+/** X (Twitter) brand mark for the finenesslabs profile. */
 export default function XIcon({ size = 16, className }: XIconProps) {
   return (
     <svg
