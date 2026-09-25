@@ -1,7 +1,17 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Award, ArrowLeft, ArrowRight } from 'lucide-react';
+import {
+  Award,
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  ShieldCheck,
+  Lock,
+  FileCode,
+  Sparkles,
+} from 'lucide-react';
 import { CRITERIA, HOUSE_WEIGHTS } from '../../../src/scoring/fineness';
 import Footer from '../../../src/site/components/Footer';
 import Masthead from '../../../src/site/components/Masthead';
@@ -44,8 +54,16 @@ function x(index: number, count: number): number {
   return 40 + (index * (W - 80)) / (count - 1);
 }
 
+function formatUsd(val: number | null): string {
+  if (val === null) return 'Not published';
+  if (val >= 1e9) return `$${(val / 1e9).toFixed(2)}B`;
+  if (val >= 1e6) return `$${(val / 1e6).toFixed(1)}M`;
+  if (val >= 1e3) return `$${(val / 1e3).toFixed(0)}K`;
+  return `$${val.toLocaleString()}`;
+}
+
 const CRITERION_META: Record<string, { label: string; weight: string; tag: string }> = {
-  assetQuality: { label: 'Asset Quality & Backing', weight: '30%', tag: 'PHYSICAL ALLOCATION' },
+  asset: { label: 'Asset Quality & Backing', weight: '30%', tag: 'PHYSICAL ALLOCATION' },
   traction: { label: 'Secondary Market Traction', weight: '25%', tag: 'LIQUIDITY DEPTH' },
   transparency: { label: 'Reserve Transparency', weight: '20%', tag: 'ORACLES & REGISTRY' },
   compliance: { label: 'Custody & Legal Title', weight: '15%', tag: 'BANKRUPTCY REMOTENESS' },
@@ -89,12 +107,30 @@ export default async function VenuePage({ params }: VenuePageProps) {
 
       {/* Luxury Venue Header Dossier */}
       <div className="relative border-b border-[var(--rule)] bg-[var(--surface-alt)] py-14 md:py-20 overflow-hidden">
+        {/* Atmospheric Swiss Bank Vault Backdrop */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(196,139,15,0.09)_0%,transparent_65%)]"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        >
+          <Image
+            src="/images/swiss-vault-bg.jpg"
+            alt="Swiss Institutional Vault"
+            fill
+            sizes="100vw"
+            className="object-cover object-center filter brightness-40 contrast-125 opacity-20"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_30%,var(--surface-alt)_85%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-alt)] via-transparent to-[var(--surface-alt)]" />
+        </div>
+
+        {/* Ambient Gold Radial Glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(196,139,15,0.12)_0%,transparent_65%)]"
         />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="relative z-10 page-wrap">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 font-mono text-xs text-[var(--ink-3)] mb-4">
@@ -144,6 +180,34 @@ export default async function VenuePage({ params }: VenuePageProps) {
                   &ldquo;{current.thesis}&rdquo;
                 </p>
               </div>
+
+              {/* Direct Official Links */}
+              {(current.links.site || current.links.docs) && (
+                <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
+                  {current.links.site && (
+                    <a
+                      href={current.links.site}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--gold)] hover:border-[var(--gold)] transition-colors"
+                    >
+                      <ExternalLink size={12} />
+                      <span>{current.links.site.replace(/^https?:\/\//, '')}</span>
+                    </a>
+                  )}
+                  {current.links.docs && (
+                    <a
+                      href={current.links.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)] hover:text-[var(--gold)] hover:border-[var(--gold)] transition-colors"
+                    >
+                      <FileCode size={12} />
+                      <span>Official Documentation</span>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Prominent Swiss Hallmark Caliper Badge */}
@@ -174,7 +238,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
       </div>
 
       {/* SECTION 1: HISTORICAL TRAJECTORY */}
-      <section aria-labelledby="history-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-14 border-b border-[var(--rule)]">
+      <section aria-labelledby="history-title" className="page-wrap py-14 border-b border-[var(--rule)]">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
@@ -307,8 +371,175 @@ export default async function VenuePage({ params }: VenuePageProps) {
         </div>
       </section>
 
-      {/* SECTION 2: 5-PILLAR METALLURGICAL SCORES */}
-      <section aria-labelledby="scores-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-14">
+      {/* SECTION 2: ASSET BACKING & VAULT CUSTODY ARCHITECTURE */}
+      <section aria-labelledby="custody-title" className="page-wrap py-14 border-b border-[var(--rule)]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--rule)]">
+          <div>
+            <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
+              RESERVE ARCHITECTURE // CUSTODIAL SCHEMATIC
+            </p>
+            <h2
+              id="custody-title"
+              className="mt-1 font-[var(--font-inter)] text-2xl font-black tracking-tight text-[var(--ink)]"
+            >
+              Custodial Structure & Reserve Backing
+            </h2>
+          </div>
+          <div className="font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]">
+            <span className="text-[var(--ink-3)]">ADMISSION CONDITION: </span>
+            <span className="font-bold text-[var(--gold)]">NON-NATIVE COLLATERAL</span>
+          </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          {/* Left: Vault Schematic Blueprint Showcase (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="h-full rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-4 sm:p-5 shadow-xl relative overflow-hidden group hover:border-[var(--gold)]/60 transition-colors flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)] font-mono text-xs">
+                  <span className="font-bold text-[var(--gold)] flex items-center gap-1.5">
+                    <Sparkles size={12} className="text-[var(--gold)]" />
+                    <span>VAULT SCHEMATIC BLUEPRINT</span>
+                  </span>
+                  <span className="text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
+                    ISO 9001 / LBMA SECURE
+                  </span>
+                </div>
+
+                <div className="relative mt-3 h-52 sm:h-64 w-full rounded-xl overflow-hidden border border-[var(--rule)] bg-[#07090D]">
+                  <Image
+                    src="/images/vault-schematic.jpg"
+                    alt="Swiss Underground Vault Blueprint Schematic"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 500px"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
+                    <span className="text-amber-300 font-bold text-[11px] flex items-center gap-1">
+                      <Lock size={11} />
+                      <span>{current.pairing.custodian ?? 'DIRECT PROTOCOL CUSTODY'}</span>
+                    </span>
+                    <span className="text-[9px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20">
+                      SUBTERRANEAN
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-[var(--rule)] font-mono text-[11px] space-y-1.5 text-[var(--ink-2)]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[var(--ink-3)]">VERIFIABILITY PROTOCOL</span>
+                  <span className="text-[var(--ink)] font-bold">{current.pairing.verifiability.toUpperCase()}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[var(--ink-3)]">PHYSICAL REDEMPTION</span>
+                  <span className={current.pairing.redeemable ? 'text-emerald-500 font-bold' : 'text-amber-500 font-bold'}>
+                    {current.pairing.redeemable ? 'DIRECT REVERSAL ALLOWED' : 'SYNTHETIC / NO DIRECT REDEMPTION'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Technical Specs & Metrics (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
+            
+            {/* Top Grid: 4 Core Metric Quadrants */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-3.5 shadow-2xs font-mono">
+                <span className="text-[10px] text-[var(--ink-3)] uppercase block mb-1">CUMULATIVE VOL</span>
+                <span className="text-sm sm:text-base font-black text-[var(--ink)]">
+                  {formatUsd(current.metrics.cumulativeVolumeUsd)}
+                </span>
+              </div>
+
+              <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-3.5 shadow-2xs font-mono">
+                <span className="text-[10px] text-[var(--ink-3)] uppercase block mb-1">24H VOLUME</span>
+                <span className="text-sm sm:text-base font-black text-[var(--gold)]">
+                  {formatUsd(current.metrics.dailyVolumeUsd)}
+                </span>
+              </div>
+
+              <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-3.5 shadow-2xs font-mono">
+                <span className="text-[10px] text-[var(--ink-3)] uppercase block mb-1">24H FEES</span>
+                <span className="text-sm sm:text-base font-black text-[var(--ink)]">
+                  {formatUsd(current.metrics.fees24hUsd)}
+                </span>
+              </div>
+
+              <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-3.5 shadow-2xs font-mono">
+                <span className="text-[10px] text-[var(--ink-3)] uppercase block mb-1">REPORTED TVL</span>
+                <span className="text-sm sm:text-base font-black text-[var(--ink)]">
+                  {formatUsd(current.metrics.tvlUsd)}
+                </span>
+              </div>
+            </div>
+
+            {/* Key Facts Dossier */}
+            {current.facts.length > 0 && (
+              <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 sm:p-5 shadow-xs">
+                <span className="font-mono text-[10px] font-bold text-[var(--gold)] uppercase tracking-wider block mb-3">
+                  RECORDED ARCHITECTURAL FACTS
+                </span>
+                <div className="space-y-2.5">
+                  {current.facts.map(([headline, text], idx) => (
+                    <div key={idx} className="flex items-start gap-3 text-xs">
+                      <span className="font-mono font-black text-[var(--gold)] px-2 py-0.5 rounded bg-[var(--surface-alt)] border border-[var(--rule)] shrink-0">
+                        {headline}
+                      </span>
+                      <p className="text-[var(--ink-2)] leading-relaxed mt-0.5">
+                        {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Verified Smart Contracts */}
+            <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 sm:p-5 shadow-xs">
+              <div className="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+                <span className="font-mono text-[10px] font-bold text-[var(--gold)] uppercase tracking-wider">
+                  VERIFIED SMART CONTRACTS
+                </span>
+                <span className="font-mono text-[10px] text-[var(--ink-3)]">
+                  AS OF {current.metrics.asOf}
+                </span>
+              </div>
+              
+              {current.contracts.length > 0 ? (
+                <div className="mt-3 space-y-2 font-mono text-xs">
+                  {current.contracts.map((c) => (
+                    <div
+                      key={c.address}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)]"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck size={14} className={c.verified ? 'text-emerald-500' : 'text-amber-500'} />
+                        <span className="font-bold text-[var(--ink)] uppercase">{c.label}</span>
+                      </div>
+                      <span className="text-[11px] text-[var(--ink-2)] truncate max-w-xs font-mono">
+                        {c.address}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-3 text-xs text-[var(--ink-3)] italic">
+                  No public smart contract bindings registered for this venue.
+                </p>
+              )}
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 3: 5-PILLAR METALLURGICAL SCORES */}
+      <section aria-labelledby="scores-title" className="page-wrap py-14">
         <div className="pb-4 border-b border-[var(--rule)]">
           <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
             METALLURGICAL BREAKDOWN // 5 CRITERIA CALIPERS

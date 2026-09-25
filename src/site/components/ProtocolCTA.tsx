@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
 import {
   Terminal,
   Code,
@@ -12,8 +11,6 @@ import {
   Copy,
   Check,
 } from 'lucide-react';
-import Reveal from './Reveal';
-import { WordText } from './Stagger';
 
 interface ProtocolCTAProps {
   edition: string;
@@ -28,7 +25,6 @@ type TabKey = 'curl' | 'ts' | 'json';
  * traffic lights, syntax-colored snippets, and live response preview.
  */
 export default function ProtocolCTA({ edition }: ProtocolCTAProps) {
-  const reduce = useReducedMotion();
   const [activeTab, setActiveTab] = useState<TabKey>('curl');
   const [copied, setCopied] = useState(false);
 
@@ -59,55 +55,50 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
 
   return (
     <section aria-labelledby="cta-title" className="page-wrap py-20">
-      <Reveal>
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 32, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5, ease: [0.16, 0.33, 0.3, 1] }}
-          className="relative overflow-hidden rounded-3xl border-2 border-[var(--rule)] bg-[var(--surface)] p-8 sm:p-12 md:p-14 shadow-2xl"
+      <div
+        className="relative overflow-hidden rounded-3xl border-2 border-[var(--rule)] bg-[var(--surface)] p-6 sm:p-10 md:p-12 shadow-2xl"
+      >
+        {/* Top Gold Bullion Stripe */}
+        <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
+
+        {/* Atmospheric Swiss Vault Backdrop */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         >
-          {/* Top Gold Bullion Stripe */}
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
-
-          {/* Atmospheric Swiss Vault Backdrop */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-          >
-            <Image
-              src="/images/swiss-vault-bg.jpg"
-              alt="Swiss Gold Bullion Vault"
-              fill
-              sizes="(max-width: 1200px) 100vw, 1200px"
-              className="object-cover object-center filter brightness-50 contrast-125 opacity-25"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/90 to-[var(--surface)]/75" />
-          </div>
-
-          {/* Ambient Corner Glow */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[var(--gold)] opacity-10 blur-3xl"
+          <Image
+            src="/images/swiss-vault-bg.jpg"
+            alt="Swiss Gold Bullion Vault"
+            fill
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            className="object-cover object-center filter brightness-50 contrast-125 opacity-25"
+            priority={false}
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/90 to-[var(--surface)]/75" />
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left Column: Heading & Value Proposition (5 cols) */}
-            <div className="lg:col-span-5 flex flex-col justify-between">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-xs font-bold text-[var(--gold)] shadow-2xs">
-                  <Terminal size={13} className="text-[var(--gold)]" />
-                  <span>OPEN MACHINE-READABLE ENDPOINTS</span>
-                </div>
+        {/* Ambient Corner Glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[var(--gold)] opacity-10 blur-3xl"
+        />
 
-                <h2
-                  id="cta-title"
-                  className="mt-4 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)] leading-tight"
-                >
-                  <WordText text="Take the frozen register with you, as JSON" />
-                </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+          
+          {/* Left Column: Heading & Value Proposition (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-[var(--tint)] px-3 py-1 font-mono text-xs font-bold text-[var(--gold)] shadow-2xs">
+                <Terminal size={13} className="text-[var(--gold)]" />
+                <span>OPEN MACHINE-READABLE ENDPOINTS</span>
+              </div>
+
+              <h2
+                id="cta-title"
+                className="mt-4 font-[var(--font-inter)] text-3xl sm:text-4xl font-black tracking-tight text-[var(--ink)] leading-tight"
+              >
+                Take the frozen register with you, as JSON
+              </h2>
 
                 <p className="mt-4 text-xs sm:text-sm md:text-base leading-relaxed text-[var(--ink-2)]">
                   Every frozen edition ships beside a verifiable machine-readable JSON dossier containing the exact data rendered on-screen: venues, scores, bands, ranks, raw metrics, and publication source registries.
@@ -322,8 +313,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
             </div>
 
           </div>
-        </motion.div>
-      </Reveal>
-    </section>
-  );
-}
+        </div>
+      </section>
+    );
+  }

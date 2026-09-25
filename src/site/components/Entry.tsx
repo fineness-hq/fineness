@@ -94,7 +94,7 @@ export default function Entry({
 
   const detail = (
     <div className="border-t border-[var(--rule)] bg-[var(--surface-alt)]/40 px-5 py-6">
-      {/* Official Audit Dossier Header */}
+      {/* Official Assay Dossier Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4 mb-4">
         <div className="flex items-center gap-2">
           <span className="flex h-6 w-6 items-center justify-center rounded bg-[var(--gold)] text-white shadow-xs">

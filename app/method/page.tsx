@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   Scale,
@@ -8,6 +9,7 @@ import {
   XCircle,
   FileCode,
   ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import Footer from '../../src/site/components/Footer';
 import Masthead from '../../src/site/components/Masthead';
@@ -156,50 +158,113 @@ export default function MethodPage() {
 
       {/* Hero Header */}
       <div className="relative border-b border-[var(--rule)] bg-[var(--surface-alt)] py-16 md:py-24 overflow-hidden">
+        {/* Atmospheric Swiss Assay Laboratory Backdrop */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(196,139,15,0.08)_0%,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        >
+          <Image
+            src="/images/swiss-assay-lab.jpg"
+            alt="Swiss Gold Bullion Assay Laboratory"
+            fill
+            sizes="100vw"
+            className="object-cover object-center filter brightness-50 contrast-125 opacity-20"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_30%,var(--surface-alt)_85%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-alt)] via-transparent to-[var(--surface-alt)]" />
+        </div>
+
+        {/* Ambient Glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(196,139,15,0.1)_0%,transparent_70%)]"
         />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[var(--gold)]" />
-            <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
-              STANDING CHARTER // METALLURGICAL METHODOLOGY
-            </p>
-          </div>
+        <div className="relative z-10 page-wrap">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Charter Specs (7 cols) */}
+            <div className="lg:col-span-7">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[var(--gold)] animate-pulse" />
+                <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
+                  STANDING CHARTER // METALLURGICAL METHODOLOGY
+                </p>
+              </div>
 
-          <h1 className="mt-3 font-[var(--font-inter)] text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-[var(--ink)] leading-tight">
-            The Fineness Admission Standard & Scoring Methodology
-          </h1>
+              <h1 className="mt-3 font-[var(--font-inter)] text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-[var(--ink)] leading-tight">
+                The Fineness Admission Standard & Scoring Methodology
+              </h1>
 
-          <p className="prose mt-4 max-w-[68ch] text-sm sm:text-base md:text-lg leading-relaxed text-[var(--ink-2)]">
-            The methodology is the product. Every score is deterministically reproducible from published public inputs.
-            Scores are editorial judgements on public information. Fineness is never an audit, a credit rating, or financial advice.
-          </p>
+              <p className="prose mt-4 max-w-[68ch] text-sm sm:text-base leading-relaxed text-[var(--ink-2)]">
+                The methodology is the product. Every score is deterministically reproducible from published public inputs.
+                Scores are editorial judgements on public information. Fineness is never an audit, a credit rating, or financial advice.
+              </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs">
-            <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
-              <Scale size={13} className="text-[var(--gold)]" />
-              <span className="text-[var(--ink-2)]">FORMULA:</span>
-              <span className="font-bold text-[var(--ink)]">WEIGHTED MEAN × 100</span>
+              <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs">
+                <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
+                  <Scale size={13} className="text-[var(--gold)]" />
+                  <span className="text-[var(--ink-2)]">FORMULA:</span>
+                  <span className="font-bold text-[var(--ink)]">WEIGHTED MEAN × 100</span>
+                </div>
+                <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
+                  <ShieldCheck size={13} className="text-emerald-500 font-bold" />
+                  <span className="text-[var(--ink-2)]">GATE:</span>
+                  <span className="font-bold text-[var(--ink)]">375 / 1000 CUTOFF</span>
+                </div>
+                <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
+                  <Lock size={13} className="text-[var(--gold)]" />
+                  <span className="text-[var(--ink-2)]">GOVERNANCE:</span>
+                  <span className="font-bold text-[var(--ink)]">ZERO-TOLL INDEPENDENCE</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
-              <ShieldCheck size={13} className="text-emerald-600" />
-              <span className="text-[var(--ink-2)]">GATE:</span>
-              <span className="font-bold text-[var(--ink)]">375 / 1000 CUTOFF</span>
+
+            {/* Right Column: Precision Analytical Balance Showcase Card (5 cols) */}
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] p-4 sm:p-5 shadow-2xl relative overflow-hidden group hover:border-[var(--gold)]/60 transition-colors">
+                <div className="flex items-center justify-between pb-3 border-b border-[var(--rule)] font-mono text-xs">
+                  <span className="font-bold text-[var(--gold)] flex items-center gap-1.5">
+                    <Sparkles size={12} className="text-[var(--gold)]" />
+                    <span>ANALYTICAL TOUCHSTONE</span>
+                  </span>
+                  <span className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                    CALIBRATED 999.9
+                  </span>
+                </div>
+
+                {/* Macro Photograph */}
+                <div className="relative mt-3 h-48 sm:h-56 w-full rounded-xl overflow-hidden border border-[var(--rule)] bg-[#0A0D12]">
+                  <Image
+                    src="/images/swiss-assay-lab.jpg"
+                    alt="Valcambi Suisse 1kg 999.9 Fine Gold on Analytical Balance"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 500px"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2.5 inset-x-3 flex items-center justify-between font-mono text-xs z-10">
+                    <span className="text-amber-300 font-bold text-[11px]">METTLER TOLEDO 999.9678g</span>
+                    <span className="text-[9px] text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/20">
+                      SPECTRAL PASS
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-3.5 flex items-center justify-between font-mono text-[11px] pt-3 border-t border-[var(--rule)]">
+                  <span className="text-[var(--ink-3)]">RESOLUTION</span>
+                  <span className="text-[var(--ink)] font-bold">0.0001g ANALYTICAL SENSITIVITY</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 shadow-2xs">
-              <Lock size={13} className="text-[var(--gold)]" />
-              <span className="text-[var(--ink-2)]">GOVERNANCE:</span>
-              <span className="font-bold text-[var(--ink)]">ZERO-TOLL INDEPENDENCE</span>
-            </div>
+
           </div>
         </div>
       </div>
 
       {/* SECTION 1: 5-PILLAR SCORING ENGINE */}
-      <section aria-labelledby="scoring-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-16 border-b border-[var(--rule)]">
+      <section aria-labelledby="scoring-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
@@ -309,7 +374,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 2: KARAT SPECTRUM & HALLMARK GATE */}
-      <section aria-labelledby="bands-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-16 border-b border-[var(--rule)]">
+      <section aria-labelledby="bands-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
@@ -409,7 +474,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 3: ADMISSION STANDARD */}
-      <section aria-labelledby="admission-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-16 border-b border-[var(--rule)]">
+      <section aria-labelledby="admission-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="pb-6 border-b border-[var(--rule)]">
           <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
             ADMISSION CHARTER // FOUR CONDITIONS
@@ -453,7 +518,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 4: EDITORIAL INTEGRITY */}
-      <section aria-labelledby="integrity-title" className="mx-auto max-w-5xl px-4 sm:px-6 py-16">
+      <section aria-labelledby="integrity-title" className="page-wrap py-16">
         <div className="pb-6 border-b border-[var(--rule)]">
           <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
             EDITORIAL INTEGRITY // ZERO-TOLL MANDATE
