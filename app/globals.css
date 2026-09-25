@@ -10,6 +10,12 @@ html {
   scroll-padding-top: 100px;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* View transitions between pages, exact bundle values. */
 ::view-transition-old(root) {
   animation: tera-out 0.16s ease both;

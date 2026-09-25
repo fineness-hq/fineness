@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect, MouseEvent } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useSpring, useTransform, useMotionValue, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useMotionValue } from 'framer-motion';
 import {
   Flame,
   FileX,
@@ -30,7 +30,6 @@ import {
 export default function CrucibleManifesto() {
   const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
 
   const [isDragging, setIsDragging] = useState(false);
   const [isSmelting, setIsSmelting] = useState(false);
@@ -60,9 +59,9 @@ export default function CrucibleManifesto() {
 
   // Single fast-settling spring for instant, lag-free caliper motion
   const activeSlider = useSpring(manualSliderPos, {
-    stiffness: 260,
-    damping: 30,
-    mass: 0.18,
+    stiffness: 300,
+    damping: 34,
+    mass: 0.12,
     restDelta: 0.001,
   });
 
@@ -82,12 +81,6 @@ export default function CrucibleManifesto() {
       }
     });
   }, [activeSlider]);
-
-  // 3D holographic tilt spring physics
-  const mouseRotX = useMotionValue(0);
-  const mouseRotY = useMotionValue(0);
-  const smoothRotX = useSpring(mouseRotX, { stiffness: 180, damping: 22 });
-  const smoothRotY = useSpring(mouseRotY, { stiffness: 180, damping: 22 });
 
   // Drag handlers for the caliper slider
   const updateSliderFromClientX = React.useCallback((clientX: number, target: HTMLElement) => {
@@ -113,23 +106,6 @@ export default function CrucibleManifesto() {
       window.removeEventListener('mousemove', handleMouseMoveDoc);
     };
   }, [isDragging, updateSliderFromClientX]);
-
-  // 3D holographic tilt on mouse move
-  function handleCardMouseMove(e: MouseEvent<HTMLDivElement>) {
-    if (reduce) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 4.5;
-    const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 4.5;
-    mouseRotX.set(rotX);
-    mouseRotY.set(rotY);
-  }
-
-  function handleCardMouseLeave() {
-    mouseRotX.set(0);
-    mouseRotY.set(0);
-  }
 
   function triggerSmelt() {
     setIsSmelting(true);
@@ -212,17 +188,10 @@ export default function CrucibleManifesto() {
             </span>
           </div>
 
-          {/* Unified Comparison Viewer with Clip-Path & Hardware-Accelerated 3D Tilt */}
-          <motion.div
+          {/* Unified Comparison Viewer with Clip-Path */}
+          <div
             ref={trackRef}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
-            style={{
-              perspective: 1000,
-              rotateX: reduce ? 0 : smoothRotX,
-              rotateY: reduce ? 0 : smoothRotY,
-            }}
-            className="caliper-track relative w-full h-[390px] sm:h-[400px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden cursor-ew-resize will-change-transform"
+            className="caliper-track relative w-full h-[390px] sm:h-[400px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden cursor-ew-resize"
             onMouseDown={(e) => {
               setIsDragging(true);
               updateSliderFromClientX(e.clientX, e.currentTarget);
@@ -366,7 +335,7 @@ export default function CrucibleManifesto() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </div>
 
           {/* Interactive Action Controls Bar Below Caliper */}
           <div className="mt-4 w-full flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
