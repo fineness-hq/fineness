@@ -31,7 +31,7 @@ interface VenuePageProps {
 
 export async function generateMetadata({ params }: VenuePageProps): Promise<Metadata> {
   const { id } = await params;
-  const venue = EDITIONS.flatMap((e) => e.venues).find((v) => v.id === id);
+  const venue = [...EDITIONS].reverse().flatMap((e) => e.venues).find((v) => v.id === id);
   return {
     title: venue ? `Fineness — ${venue.name} (${venue.fineness}/1000)` : 'Fineness — Venue Dossier',
     description: venue
@@ -63,16 +63,16 @@ function formatUsd(val: number | null): string {
 }
 
 const CRITERION_META: Record<string, { label: string; weight: string; tag: string }> = {
-  asset: { label: 'Asset Quality & Backing', weight: '30%', tag: 'PHYSICAL ALLOCATION' },
-  traction: { label: 'Secondary Market Traction', weight: '25%', tag: 'LIQUIDITY DEPTH' },
-  transparency: { label: 'Reserve Transparency', weight: '20%', tag: 'ORACLES & REGISTRY' },
-  compliance: { label: 'Custody & Legal Title', weight: '15%', tag: 'BANKRUPTCY REMOTENESS' },
-  durability: { label: 'Durability & Resilience', weight: '10%', tag: 'CONTRACT IMMUTABILITY' },
+  asset: { label: 'Asset Quality & Backing', weight: '30%', tag: 'BACKING EVIDENCE' },
+  traction: { label: 'Secondary Market Traction', weight: '25%', tag: 'VOLUME & DEPTH' },
+  transparency: { label: 'Reserve Transparency', weight: '20%', tag: 'CONTRACTS & DOCS' },
+  compliance: { label: 'Custody & Legal Title', weight: '15%', tag: 'DISCLOSURE' },
+  durability: { label: 'Durability & Resilience', weight: '10%', tag: 'TRACK RECORD' },
 };
 
 /**
  * VenuePage:
- * Luxury Swiss Gold Assay Architectural Dossier for a specific tokenized venue.
+ * Per-venue dossier: history across editions, pairing record, metrics and scores.
  */
 export default async function VenuePage({ params }: VenuePageProps) {
   const { id } = await params;
@@ -434,7 +434,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
                   <span className="text-[var(--ink)] font-bold">{current.pairing.verifiability.toUpperCase()}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[var(--ink-3)]">PHYSICAL REDEMPTION</span>
+                  <span className="text-[var(--ink-3)]">REDEMPTION TERMS</span>
                   <span className={current.pairing.redeemable ? 'text-emerald-500 font-bold' : 'text-amber-500 font-bold'}>
                     {current.pairing.redeemable ? 'REDEMPTION: YES' : 'REDEMPTION: NO'}
                   </span>

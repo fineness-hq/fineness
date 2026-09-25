@@ -428,7 +428,7 @@ export default function MethodPage() {
                   <span className="text-xs sm:text-sm font-black text-[var(--ink)]">{b.range}</span>
                 </div>
                 <div className="hidden sm:block">
-                  <span className="text-[10px] text-[var(--ink-3)] block uppercase">METRIC PURITY</span>
+                  <span className="text-[10px] text-[var(--ink-3)] block uppercase">Share of scale</span>
                   <span className="text-xs sm:text-sm font-bold text-[var(--gold)]">{b.goldPct}</span>
                 </div>
               </div>
