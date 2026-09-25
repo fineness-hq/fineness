@@ -139,16 +139,27 @@ export default function Footer({ edition }: FooterProps) {
             <ul className="mt-4 space-y-2.5 font-mono text-xs">
               {[...KNOWN_EDITION_IDS].reverse().map((id, i, arr) => (
                 <li key={id}>
-                  <Link href={`/editions/${id}`} className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
-                    <span>Edition {id}</span>
-                    {i === 0 ? (
-                      <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
-                    ) : i === arr.length - 1 ? (
-                      <span className="text-[10px] text-[var(--ink-3)]">GENESIS</span>
-                    ) : (
-                      <span className="text-[10px] text-[var(--ink-3)]">FROZEN</span>
-                    )}
-                  </Link>
+                  <div className="flex items-center justify-between gap-2">
+                    <Link href={`/editions/${id}`} className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors">
+                      <span>Edition {id}</span>
+                    </Link>
+                    <span className="flex items-center gap-2">
+                      <Link
+                        href={`/editions/${id}.json`}
+                        className="text-[10px] text-[var(--ink-3)] hover:text-[var(--gold)] transition-colors"
+                        title={`Edition ${id} machine JSON`}
+                      >
+                        JSON
+                      </Link>
+                      {i === 0 ? (
+                        <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
+                      ) : i === arr.length - 1 ? (
+                        <span className="text-[10px] text-[var(--ink-3)]">GENESIS</span>
+                      ) : (
+                        <span className="text-[10px] text-[var(--ink-3)]">FROZEN</span>
+                      )}
+                    </span>
+                  </div>
                 </li>
               ))}
               <li className="pt-2 border-t border-[var(--rule)]">
