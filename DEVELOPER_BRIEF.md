@@ -301,7 +301,7 @@ From Edition 02, every entry carries movement against the prior edition. This is
 {
   "delta": {
     "fineness": -45,        // signed, in parts per thousand
-    "rank": 2,              // positive means moved down the register
+    "rank": 2,              // prior rank minus current rank: positive moved up
     "bandChanged": true,    // crossed a karat boundary
     "crossedHallmark": false,
     "basis": "2026-09"
@@ -413,34 +413,61 @@ These constraints are product requirements, enforced in code and in the run book
 ## 13. Repository layout
 
 ```
-fineness/
+fineness/                                   # DEVELOPER_BRIEF.md lives at root
+  app/                          # Next.js routes: /, /editions/[edition], /method, /venues/[id]
   data/
     editions/
-      2026-09.json           # published, immutable
+      2026-09.json              # published, immutable
       2026-10.json
     snapshots/
-      2026-09-01.json        # raw ingest output, immutable
-    sources.json             # sourceId registry
+      2026-09-01.json           # raw ingest output, immutable
+      2026-09-22.json
+    sources.json                # sourceId registry
   src/
     scoring/
       fineness.ts
-      fineness.test.ts       # fixtures from section 14
+      fineness.test.ts          # section 14 fixtures (full 10-venue set in tests/edition-2026-09.test.ts)
     ingest/
       bitquery.ts
       defillama.ts
       explorer.ts
-      run.ts                 # writes snapshots only
+      http.ts                   # never-throw fetch + metric cleaning
+      venues.ts                 # provider mapping (empty until verified)
+      run.ts                    # writes snapshots only
     build/
-      edition.ts             # snapshot + editorial to edition JSON
+      edition.ts                # snapshot + editorial to edition JSON
+      carry.ts                  # carry judgement forward to next edition
       deltas.ts
+      validate.ts               # hard-fail edition validation
+      score-moves.ts            # non-blocking ±1 policy warnings
+    llm/
+      client.ts                 # OpenAI-compatible client, null on failure
+      review.ts                 # analyst/editor with ±1 clamp
     site/
-      routes/
+      editions.ts               # edition loading + deltasFor
+      weight-url.ts             # ?w= parse/serialize/apply
+      EditionView.tsx
       components/
       tokens.css
+    types.ts
+  scripts/
+    monthly.ts                  # hands-free monthly run
+    e2e.mjs                     # production route checks
+  tests/
+    acceptance.test.ts          # section 15 criteria
+    edition-2026-09.test.ts
+    edition-2026-10.test.ts
+    routes.test.ts
+    scaffold.test.ts
   docs/
-    DEVELOPER_BRIEF.md       # this file
-    METHOD.md                # public methodology, mirrors /method
+    METHOD.md                   # public methodology, mirrors /method
     RUNBOOK.md
+    SCORE-POLICY.md
+    ACCEPTANCE.md
+    AI-REVIEW.md
+    DATA-LICENSING.md
+    DESIGN-DECISION.md
+  .github/workflows/monthly.yml # day-1 cron + manual dispatch
 ```
 
 ***

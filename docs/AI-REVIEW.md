@@ -31,6 +31,7 @@ proposes; code disposes.
 
 ## Proven runs
 
-- 2026-11 (2026-09-22): AI review applied, model held all scores steady on
-  retained metrics. Hash, recompute, and zero-delta checks green
-  (`tests/edition-2026-11.test.ts`).
+- 2026-10 (2026-09-22): AI review applied, scores moved inside the ±1
+  calibration cap with rewritten rationale (`tests/edition-2026-10.test.ts`).
+  Earlier 2026-11 trial runs were removed; their provenance dates were
+  unpublishable, so no record is kept.

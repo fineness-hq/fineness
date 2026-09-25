@@ -35,7 +35,7 @@ Day 1 runs without humans via `.github/workflows/monthly.yml` (cron day 1,
 05:00 UTC, plus manual dispatch). One command does the same locally:
 
 ```bash
-npm run monthly -- --edition=2026-11 --as-of=2026-11-01 --published=2026-11-08
+npm run monthly -- --edition=<YYYY-MM> --as-of=<YYYY-MM-DD> --published=<YYYY-MM-DD>
 ```
 
 What it does, in order: read the latest frozen edition, pull providers for
