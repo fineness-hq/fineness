@@ -74,7 +74,8 @@ export default function CrucibleManifesto() {
     restDelta: 0.001,
   });
 
-  const clipPathValue = useTransform(activeSlider, (v) => `inset(0 0 0 ${100 - v}%)`);
+  const clipPathRight = useTransform(activeSlider, (v) => `inset(0 0 0 ${100 - v}%)`);
+  const clipPathLeft = useTransform(activeSlider, (v) => `inset(0 ${v}% 0 0)`);
   const caliperLeft = useTransform(activeSlider, (v) => `${100 - v}%`);
 
   // Update numerical percentage text directly on DOM refs without triggering full component re-renders
@@ -240,7 +241,10 @@ export default function CrucibleManifesto() {
             }}
           >
             {/* Layer 1 (Base): The Paper Trap (Left Side View) */}
-            <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-red-500/5 via-[var(--surface)] to-red-500/10">
+            <motion.div
+              style={{ clipPath: clipPathLeft }}
+              className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-[var(--surface)] bg-gradient-to-br from-red-500/5 via-[var(--surface)] to-red-500/10 z-10 will-change-transform"
+            >
               <div>
                 <div className="flex items-center justify-between pb-3 border-b border-red-500/20">
                   <div className="flex items-center gap-2">
@@ -288,13 +292,14 @@ export default function CrucibleManifesto() {
                 <span className="text-[var(--ink-3)]">EVIDENCE FILE:</span>
                 <span className="font-bold text-red-600">EMPTY</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Layer 2 (Clipped Overlay): documented backing */}
             <motion.div
-              className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-[var(--surface)] via-[var(--tint)]/50 to-[var(--surface)] overflow-hidden will-change-transform"
+              className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-[var(--surface)] overflow-hidden will-change-transform z-20"
               style={{
-                clipPath: clipPathValue,
+                clipPath: clipPathRight,
+                backgroundColor: 'var(--surface)',
               }}
             >
               {/* Gold Bullion Edge Highlight */}
