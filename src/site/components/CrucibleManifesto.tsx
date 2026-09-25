@@ -230,7 +230,7 @@ export default function CrucibleManifesto() {
               rotateX: reduce ? 0 : smoothRotX,
               rotateY: reduce ? 0 : smoothRotY,
             }}
-            className="caliper-track relative w-full h-[360px] sm:h-[380px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden cursor-ew-resize will-change-transform"
+            className="caliper-track relative w-full h-[390px] sm:h-[400px] rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface)] shadow-2xl overflow-hidden cursor-ew-resize will-change-transform"
             onMouseDown={(e) => {
               setIsDragging(true);
               updateSliderFromClientX(e.clientX, e.currentTarget);
@@ -240,20 +240,20 @@ export default function CrucibleManifesto() {
               if (touch) updateSliderFromClientX(touch.clientX, e.currentTarget);
             }}
           >
-            {/* Layer 1 (Base): The Paper Trap (Left Side View) */}
+            {/* Layer 1 (Left Section): Thin Backing */}
             <motion.div
               style={{ clipPath: clipPathLeft }}
               className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-[var(--surface)] bg-gradient-to-br from-red-500/5 via-[var(--surface)] to-red-500/10 z-10 will-change-transform"
             >
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-red-500/20">
+                <div className="flex flex-wrap items-center gap-2 pb-3 border-b border-red-500/20 max-w-[85%] sm:max-w-[46%]">
                   <div className="flex items-center gap-2">
                     <span className="flex h-7 w-7 items-center justify-center rounded bg-red-500/10 text-red-600 font-bold border border-red-500/20">
                       <FileX size={14} />
                     </span>
                     <div>
                       <span className="mono text-xs font-black uppercase tracking-wider text-red-600">
-                        THINLY BACKED VENUE
+                        THIN BACKING
                       </span>
                       <div className="mono text-[9px] text-[var(--ink-3)]">WEAK EVIDENCE • THIN FLOW</div>
                     </div>
@@ -263,18 +263,18 @@ export default function CrucibleManifesto() {
                   </span>
                 </div>
 
-                <div className="mt-5 max-w-md">
-                  <h3 className="font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)]">
+                <div className="mt-4 max-w-[85%] sm:max-w-[46%]">
+                  <h3 className="font-[var(--font-inter)] text-lg sm:text-xl md:text-2xl font-black text-[var(--ink)] leading-snug">
                     When the backing file is empty
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
                     No named custodian, no verifiable inventory, no volume series. The score lands below the hallmark — listed, not certified.
                   </p>
 
-                  <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink-2)]">
+                  <div className="mt-3.5 space-y-1.5 font-mono text-[11px] text-[var(--ink-2)]">
                     <div className="flex items-center gap-2">
                       <XCircle size={13} className="text-red-500 shrink-0" />
-                      <span>No custodian named in the docs</span>
+                      <span>No custodian named in docs</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <XCircle size={13} className="text-red-500 shrink-0" />
@@ -288,13 +288,13 @@ export default function CrucibleManifesto() {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-[var(--rule)] flex items-center justify-between font-mono text-[10px]">
+              <div className="pt-3 border-t border-[var(--rule)] flex items-center gap-2 font-mono text-[10px] max-w-[85%] sm:max-w-[46%]">
                 <span className="text-[var(--ink-3)]">EVIDENCE FILE:</span>
                 <span className="font-bold text-red-600">EMPTY</span>
               </div>
             </motion.div>
 
-            {/* Layer 2 (Clipped Overlay): documented backing */}
+            {/* Layer 2 (Right Section): Documented Backing */}
             <motion.div
               className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between bg-[var(--surface)] overflow-hidden will-change-transform z-20"
               style={{
@@ -306,38 +306,38 @@ export default function CrucibleManifesto() {
               <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[var(--gold)] via-amber-300 to-[var(--gold)]" />
 
               <div className="relative z-10">
-                <div className="flex items-center justify-between pb-3 border-b border-[var(--gold)]/30">
+                <div className="flex flex-wrap items-center justify-end gap-2 pb-3 border-b border-[var(--gold)]/30 max-w-[85%] sm:max-w-[46%] ml-auto text-right">
+                  <span className="mono text-[10px] font-black text-[var(--gold)] bg-[var(--tint)] border border-[var(--gold)]/50 px-2.5 py-0.5 rounded shadow-2xs">
+                    HIGH FINENESS · CERTIFIED
+                  </span>
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded bg-[var(--tint)] text-[var(--gold)] font-bold border border-[var(--gold)]/40 shadow-xs">
-                      <Award size={15} />
-                    </span>
-                    <div>
+                    <div className="text-right">
                       <span className="mono text-xs font-black uppercase tracking-wider text-[var(--gold)]">
                         DOCUMENTED BACKING
                       </span>
                       <div className="mono text-[9px] text-[var(--ink-3)]">NAMED CUSTODIAN • VERIFIABLE</div>
                     </div>
+                    <span className="flex h-7 w-7 items-center justify-center rounded bg-[var(--tint)] text-[var(--gold)] font-bold border border-[var(--gold)]/40 shadow-xs">
+                      <Award size={15} />
+                    </span>
                   </div>
-                  <span className="mono text-[10px] font-black text-[var(--gold)] bg-[var(--tint)] border border-[var(--gold)]/50 px-2.5 py-0.5 rounded shadow-2xs">
-                    HIGH FINENESS · CERTIFIED
-                  </span>
                 </div>
 
-                <div className="mt-5 max-w-md ml-auto text-right">
-                  <h3 className="font-[var(--font-inter)] text-xl sm:text-2xl font-black text-[var(--ink)]">
+                <div className="mt-4 max-w-[85%] sm:max-w-[46%] ml-auto text-right">
+                  <h3 className="font-[var(--font-inter)] text-lg sm:text-xl md:text-2xl font-black text-[var(--ink)] leading-snug">
                     When the backing file is full
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
                     Named custodian, verifiable inventory, published volume. That evidence is what high fineness scores are made of.
                   </p>
 
-                  <div className="mt-4 space-y-1.5 font-mono text-[11px] text-[var(--ink)] flex flex-col items-end">
+                  <div className="mt-3.5 space-y-1.5 font-mono text-[11px] text-[var(--ink)] flex flex-col items-end">
                     <div className="flex items-center gap-2">
-                      <span>Custodian named in the docs</span>
+                      <span>Custodian named in docs</span>
                       <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>Inventory verifiable on-chain or by attestation</span>
+                      <span>Inventory verifiable on-chain</span>
                       <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
                     </div>
                     <div className="flex items-center gap-2">
@@ -348,7 +348,7 @@ export default function CrucibleManifesto() {
                 </div>
               </div>
 
-              <div className="relative z-10 pt-3 border-t border-[var(--gold)]/30 flex items-center justify-between font-mono text-[10px]">
+              <div className="relative z-10 pt-3 border-t border-[var(--gold)]/30 flex items-center justify-end gap-2 font-mono text-[10px] max-w-[85%] sm:max-w-[46%] ml-auto text-right">
                 <span className="text-[var(--ink-3)]">EVIDENCE FILE:</span>
                 <span className="font-bold text-[var(--gold)]">DOCUMENTED</span>
               </div>
