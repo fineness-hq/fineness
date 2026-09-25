@@ -94,10 +94,14 @@ async function main() {
   };
 
   try {
+    // Latest frozen edition drives home expectations — no hardcoded figures.
+    const editionFiles = fs.readdirSync('data/editions').filter((f) => f.endsWith('.json')).sort();
+    const latest = JSON.parse(fs.readFileSync(`data/editions/${editionFiles[editionFiles.length - 1]}`, 'utf8'));
+    const top = latest.venues[0];
     // 1. Home renders full register content (no-JS SSR).
     const home = await get('/');
     check('GET / 200', home.status === 200, `got ${home.status}`);
-    for (const s of ['Pons', '745', '720', 'not published', '375', 'Fineness']) {
+    for (const s of [top.name, String(top.fineness), 'not published', '375', 'Fineness']) {
       check(`GET / contains ${s}`, home.text.includes(s));
     }
     check('GET / contains hallmark line', /hallmark/i.test(home.text));
@@ -133,9 +137,9 @@ async function main() {
     check('GET /method 200', method.status === 200, `got ${method.status}`);
     check('method explains scoring', /fineness/i.test(method.text) && /weight/i.test(method.text));
 
-    // 6. All 10 venue history pages render with fineness.
-    const ids = ['long-xyz', 'pons', 'stonkfun', 'pools-trade', 'flap', 'pair', 'bankr', 'cardpad', 'factory-new', 'csl'];
-    const expected = { 'long-xyz': '720', csl: '220', 'factory-new': '340' };
+    // 6. Venue history pages render with latest fineness (data-driven).
+    const ids = latest.venues.map((v) => v.id);
+    const expected = Object.fromEntries(latest.venues.map((v) => [v.id, String(v.fineness)]));
     for (const id of ids) {
       const v = await get(`/venues/${id}`);
       check(`GET /venues/${id} 200`, v.status === 200, `got ${v.status}`);

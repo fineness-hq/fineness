@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Github, ArrowUpRight, ShieldCheck, FileCode, CheckCircle2 } from 'lucide-react';
 import FinenessMark from './FinenessMark';
 import XIcon from './XIcon';
+import { KNOWN_EDITION_IDS } from '../editions';
 
 interface FooterProps {
   edition: string;
@@ -136,18 +137,20 @@ export default function Footer({ edition }: FooterProps) {
               Editions Archive
             </p>
             <ul className="mt-4 space-y-2.5 font-mono text-xs">
-              <li>
-                <Link href="/editions/2026-10" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
-                  <span>Edition 2026-10</span>
-                  <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/editions/2026-09" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
-                  <span>Edition 2026-09</span>
-                  <span className="text-[10px] text-[var(--ink-3)]">GENESIS</span>
-                </Link>
-              </li>
+              {[...KNOWN_EDITION_IDS].reverse().map((id, i, arr) => (
+                <li key={id}>
+                  <Link href={`/editions/${id}`} className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
+                    <span>Edition {id}</span>
+                    {i === 0 ? (
+                      <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
+                    ) : i === arr.length - 1 ? (
+                      <span className="text-[10px] text-[var(--ink-3)]">GENESIS</span>
+                    ) : (
+                      <span className="text-[10px] text-[var(--ink-3)]">FROZEN</span>
+                    )}
+                  </Link>
+                </li>
+              ))}
               <li className="pt-2 border-t border-[var(--rule)]">
                 <Link
                   href={`/editions/${edition}.json`}

@@ -53,9 +53,11 @@ Robinhood Chain Blockscout endpoint). Venue-to-provider slugs live in
 `src/ingest/venues.ts`; add a slug only after confirming the provider lists
 the venue, otherwise lookups stay null by design.
 
-Human steps that remain: admission changes, score moves with cited evidence
-(days 2–6), and the two sign-offs. Everything else — pull, snapshot, hash,
-carry, validate, commit, publish — needs no hands.
+Fully autonomous by default: the scheduled run pulls, carries, validates,
+commits and publishes with zero hands. Humans only author new judgement
+(score moves with evidence, admissions, corrections) and are paged solely
+by `--strict` failures. Everything else — pull, snapshot, hash, carry,
+validate, commit, publish — needs no hands.
 
 Automation modes: default publishes whenever validation passes and only
 logs policy smells, so clean months ship with zero humans. Pass `--strict`
