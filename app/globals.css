@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "../src/site/tokens.css";
-@import "lenis/dist/lenis.css";
 
 :root {
   color-scheme: light;

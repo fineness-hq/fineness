@@ -3,7 +3,6 @@ import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
 import Preloader from "../src/site/components/Preloader";
-import SmoothScroll from "../src/site/components/SmoothScroll";
 import { LATEST_EDITION } from "../src/site/editions";
 
 // Fonts: Inter for display/body, Geist_Mono (self-hosted variable font,
@@ -56,7 +55,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <SmoothScroll />
         <Preloader edition={LATEST_EDITION.edition} />
         {children}
       </body>
