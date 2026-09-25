@@ -137,19 +137,6 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                   <ShieldCheck size={15} className="text-[var(--gold)]" />
                   <span>METHODOLOGY SPEC</span>
                 </Link>
-
-                <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--gold)]/30 bg-[var(--tint)] font-mono text-xs text-[var(--gold)] shadow-xs">
-                  <div className="relative h-6 w-6 rounded-md overflow-hidden shrink-0 border border-[var(--gold)]/50">
-                    <Image
-                      src="/images/cat-stamper-8bit.jpg"
-                      alt="Chief Stamper Cat"
-                      fill
-                      sizes="24px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <span className="font-bold text-[11px]">FROZEN</span>
-                </div>
               </div>
             </div>
 
