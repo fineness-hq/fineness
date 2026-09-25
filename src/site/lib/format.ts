@@ -8,9 +8,9 @@ export function usd(value: number | null): string {
   return `$${value}`;
 }
 
-/** Compact cell form. Null renders as an em dash. */
+/** Compact cell form. Null renders as n/a. */
 export function dash(value: number | null): string {
-  if (value == null) return '—';
+  if (value == null) return 'n/a';
   return usd(value);
 }
 

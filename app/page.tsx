@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import EditionView from '../src/site/EditionView';
 import { deltasFor, LATEST_EDITION, SOURCES } from '../src/site/editions';
 import { parseRawSliders, parseWeights } from '../src/site/weight-url';
 
 export const metadata: Metadata = {
-  title: `Fineness — Edition ${LATEST_EDITION.edition}`,
+  title: `Fineness : Edition ${LATEST_EDITION.edition}`,
   description:
     'Monthly ranked register scoring tokenized asset venues on a 0–1000 fineness scale. Editorial judgement on public information, not audits or ratings.',
 };

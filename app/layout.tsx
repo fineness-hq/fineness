@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -24,7 +24,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fineness — Tokenized Asset Venue Register",
+  title: "Fineness : Tokenized Asset Venue Register",
   description:
     "Monthly ranked register scoring tokenized asset venues on a 0-1000 fineness scale. Editorial judgement on public information, not audits or ratings.",
   icons: {

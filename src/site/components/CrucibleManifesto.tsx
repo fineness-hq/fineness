@@ -164,7 +164,7 @@ export default function CrucibleManifesto() {
             From wrapper to backing.
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed max-w-lg mx-auto">
-            Drag the caliper from thin backing to documented backing — the gap the register scores. An illustration, not a venue.
+            Drag the caliper from thin backing to documented backing: the gap the register scores. An illustration, not a venue.
           </p>
         </div>
 
@@ -229,7 +229,7 @@ export default function CrucibleManifesto() {
                     When the backing file is empty
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                    No named custodian, no verifiable inventory, no volume series. The score lands below the hallmark — listed, not certified.
+                    No named custodian, no verifiable inventory, no volume series. The score lands below the hallmark: listed, not certified.
                   </p>
 
                   <div className="mt-3.5 space-y-1.5 font-mono text-[11px] text-[var(--ink-2)]">

@@ -32,7 +32,7 @@ const REFINERY_STATIONS: Station[] = [
     badge: 'STAGE I // INGESTION',
     title: 'The Monthly Pull',
     subtitle: 'Published figures in, gaps stay null',
-    desc: 'At each snapshot cut, the ingest job pulls published volume, fee and TVL figures plus contract verification. A missing figure stays null and renders as not published — never fabricated, never inferred.',
+    desc: 'At each snapshot cut, the ingest job pulls published volume, fee and TVL figures plus contract verification. A missing figure stays null and renders as not published: never fabricated, never inferred.',
     icon: Database,
     primaryDetails: [
       { label: 'SNAPSHOT CADENCE', value: 'MONTHLY · DAY 1', note: 'Frozen snapshot cut' },
@@ -53,7 +53,7 @@ const REFINERY_STATIONS: Station[] = [
     badge: 'STAGE II // SCORING',
     title: 'The 5-Criterion Weighing',
     subtitle: 'House weights on editorial scores 0 to 10',
-    desc: 'Snapshot in hand, each venue is scored 0 to 10 on asset, traction, transparency, compliance and durability. Weighted mean times 100, rounded once. Same inputs, same output — readers reproduce it in the browser.',
+    desc: 'Snapshot in hand, each venue is scored 0 to 10 on asset, traction, transparency, compliance and durability. Weighted mean times 100, rounded once. Same inputs, same output. Readers reproduce it in the browser.',
     icon: Scale,
     primaryDetails: [
       { label: 'ASSET · 30%', value: 'BACKING EVIDENCE', note: 'Custody, redemption, verifiability' },
@@ -73,7 +73,7 @@ const REFINERY_STATIONS: Station[] = [
     stationNumber: 'BAY 03',
     badge: 'STAGE III // FREEZE',
     title: 'The Frozen Edition',
-    subtitle: 'Ranked, hashed, published — then immutable',
+    subtitle: 'Ranked, hashed, published, then immutable',
     desc: 'Fineness 0 to 1000 is written into the edition JSON beside its SHA-256 snapshot hash. Deltas compute against the prior edition at house weights only. A published edition never changes silently.',
     icon: Stamp,
     primaryDetails: [

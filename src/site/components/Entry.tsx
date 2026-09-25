@@ -115,7 +115,7 @@ export default function Entry({
         <div className="flex items-center gap-2 font-mono text-[11px]">
           {unscored ? (
             <span className="rounded border border-[var(--rule-2)] bg-[var(--surface-alt)] px-2.5 py-1 font-extrabold uppercase tracking-wider text-[var(--ink-3)] shadow-xs">
-              Prelaunch — unscored
+              Prelaunch: unscored
             </span>
           ) : (
           <>
@@ -208,7 +208,7 @@ export default function Entry({
           {venue.facts.map(([figure, note]) => (
             <li key={`${figure}-${note}`} className="flex items-baseline gap-2">
               <span className="mono font-bold tabular-nums text-[var(--ink)]">{figure}</span>
-              <span>— {note}</span>
+              <span>· {note}</span>
             </li>
           ))}
         </ul>
@@ -320,7 +320,7 @@ export default function Entry({
       >
         {/* Rank Number */}
         <span className="mono flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-xs font-black tabular-nums text-[var(--ink)] shadow-2xs group-hover:border-[var(--dark)] group-hover:bg-[var(--dark)] group-hover:text-white transition-all">
-          {rank === 0 ? '—' : String(rank).padStart(2, '0')}
+          {rank === 0 ? 'n/a' : String(rank).padStart(2, '0')}
         </span>
 
         {/* Venue Info */}

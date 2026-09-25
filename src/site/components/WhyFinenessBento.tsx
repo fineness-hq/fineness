@@ -88,7 +88,7 @@ export default function WhyFinenessBento() {
                 Separate backing evidence from hype
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                The register measures one gap: venues marketed as real-world-asset platforms whose only real asset exposure is the pairing. Eight of ten venues clear the hallmark — two do not.
+                The register measures one gap: venues marketed as real-world-asset platforms whose only real asset exposure is the pairing. Eight of ten venues clear the hallmark: two do not.
               </p>
             </div>
 
@@ -141,7 +141,7 @@ export default function WhyFinenessBento() {
                 Follow movement month over month
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Every edition carries fineness and rank movement against the prior edition — computed at house weights only, so reader reweighting never rewrites history.
+                Every edition carries fineness and rank movement against the prior edition: computed at house weights only, so reader reweighting never rewrites history.
               </p>
             </div>
 
@@ -199,7 +199,7 @@ export default function WhyFinenessBento() {
                 Unbribable Scorer Integrity
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Zero listing fees, zero foundation grants, zero marketing tolls. No venue can buy placement. A venue goes quiet for 60 days, goes dark, or fails pairing on re-review — it is struck from the register.
+                Zero listing fees, zero foundation grants, zero marketing tolls. No venue can buy placement. A venue goes quiet for 60 days, goes dark, or fails pairing on re-review: it is struck from the register.
               </p>
             </div>
 
@@ -248,7 +248,7 @@ export default function WhyFinenessBento() {
                 House weights, reader reweighting
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-                Asset (30%), traction (25%), transparency (20%), compliance (15%) and durability (10%) balance into one fineness figure — and your own weights serialize into a shareable URL.
+                Asset (30%), traction (25%), transparency (20%), compliance (15%) and durability (10%) balance into one fineness figure, and your own weights serialize into a shareable URL.
               </p>
             </div>
 

@@ -22,7 +22,7 @@ const SHORT_BACKING: Record<string, string> = {
   'inventory-index': 'INDEX',
   collectible: 'VAULT',
   synthetic: 'SYNTH',
-  none: '—',
+  none: 'NONE',
 };
 
 /**
@@ -75,7 +75,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
             </span>
           </div>
 
-          {/* Mode pills — abbreviated to fit the mini card */}
+          {/* Mode pills, abbreviated to fit the mini card */}
           <div className="flex items-center gap-0.5 rounded bg-[var(--surface-alt)] p-0.5 font-mono text-[9px]">
             <button
               type="button"

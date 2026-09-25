@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import EditionView from '../../../src/site/EditionView';
 import { deltasFor, KNOWN_EDITION_IDS, EDITIONS, LATEST_EDITION, SOURCES } from '../../../src/site/editions';
@@ -20,7 +20,7 @@ interface EditionPageProps {
 export async function generateMetadata({ params }: { params: Promise<{ edition: string }> }): Promise<Metadata> {
   const { edition } = await params;
   return {
-    title: `Fineness — Edition ${edition}`,
+    title: `Fineness : Edition ${edition}`,
     description: `Permanent record of the Fineness register for edition ${edition}. Scores are editorial judgements on public information.`,
   };
 }

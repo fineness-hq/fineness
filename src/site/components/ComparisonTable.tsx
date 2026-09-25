@@ -144,7 +144,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
 
                   <td className="mono px-4 py-3 text-right text-sm font-bold tabular-nums text-[var(--ink)]">
                     {v.status === 'prelaunch' ? (
-                      <span className="text-xs uppercase tracking-wider text-[var(--ink-3)]">—</span>
+                      <span className="text-xs uppercase tracking-wider text-[var(--ink-3)]">n/a</span>
                     ) : (
                     <div className="inline-flex items-center gap-2">
                       <span className="text-base font-black">
@@ -169,7 +169,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
         </div>
 
         <div className="mt-3 flex items-center justify-between text-xs font-mono text-[var(--ink-3)]">
-          <span>DAILY VOLUME LEADER: {dash(venues[0]?.metrics.dailyVolumeUsd ?? null)} ({venues[0]?.name ?? '—'})</span>
+          <span>DAILY VOLUME LEADER: {dash(venues[0]?.metrics.dailyVolumeUsd ?? null)} ({venues[0]?.name ?? 'n/a'})</span>
           <span className="text-[var(--gold)] font-bold">CLICK VENUE FOR FULL BREAKDOWN ↗</span>
         </div>
       </Reveal>

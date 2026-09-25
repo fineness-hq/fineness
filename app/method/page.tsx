@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -16,7 +16,7 @@ import Masthead from '../../src/site/components/Masthead';
 import { LATEST_EDITION } from '../../src/site/editions';
 
 export const metadata: Metadata = {
-  title: 'Fineness — Methodology & Standing Standard',
+  title: 'Fineness â€” Methodology & Standing Standard',
   description:
     'Standing methodology and admission standard of the Fineness register. Scoring weights, karat bands, admission rules, and integrity constraints.',
 };
@@ -73,7 +73,7 @@ const BANDS = [
     range: '916 to 1000',
     color: '#0F1419',
     goldPct: '91.6% - 100%',
-    desc: 'Top band on the 0–1000 scale. No venue in the current register reaches it.',
+    desc: 'Top band on the 0â€“1000 scale. No venue in the current register reaches it.',
   },
   {
     name: '18k',
@@ -230,7 +230,7 @@ export default function MethodPage() {
                     <span>SWISS METALLURGICAL SCALE</span>
                   </span>
                   <span className="text-[10px] text-[var(--gold)] font-bold bg-[var(--tint)] px-2 py-0.5 rounded border border-[var(--gold)]/30">
-                    0 — 1000 FINENESS
+                    0 â€” 1000 FINENESS
                   </span>
                 </div>
 
@@ -264,7 +264,7 @@ export default function MethodPage() {
       </div>
 
       {/* SECTION 1: 5-PILLAR SCORING ENGINE */}
-      <section aria-labelledby="scoring-title" className="page-wrap py-16 border-b border-[var(--rule)]">
+      <section id="criteria" aria-labelledby="scoring-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
@@ -337,7 +337,7 @@ export default function MethodPage() {
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-[var(--gold)]/20 font-mono text-[10px] text-[var(--gold)] font-bold">
-              ✓ VERIFIABLE IN BROWSER & CLIENT ENGINE
+              âœ“ VERIFIABLE IN BROWSER & CLIENT ENGINE
             </div>
           </div>
         </div>
@@ -374,7 +374,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 2: KARAT SPECTRUM & HALLMARK GATE */}
-      <section aria-labelledby="bands-title" className="page-wrap py-16 border-b border-[var(--rule)]">
+      <section id="bands" aria-labelledby="bands-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
@@ -474,7 +474,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 3: ADMISSION STANDARD */}
-      <section aria-labelledby="admission-title" className="page-wrap py-16 border-b border-[var(--rule)]">
+      <section id="admission" aria-labelledby="admission-title" className="page-wrap py-16 border-b border-[var(--rule)]">
         <div className="pb-6 border-b border-[var(--rule)]">
           <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
             ADMISSION CHARTER // FOUR CONDITIONS
@@ -518,7 +518,7 @@ export default function MethodPage() {
       </section>
 
       {/* SECTION 4: EDITORIAL INTEGRITY */}
-      <section aria-labelledby="integrity-title" className="page-wrap py-16">
+      <section id="null" aria-labelledby="integrity-title" className="page-wrap py-16">
         <div className="pb-6 border-b border-[var(--rule)]">
           <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
             EDITORIAL INTEGRITY // ZERO-TOLL MANDATE
@@ -535,7 +535,7 @@ export default function MethodPage() {
           {INTEGRITY_PILLARS.map((item, idx) => (
             <div key={idx} className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 flex items-center gap-3">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--tint)] text-[var(--gold)] font-mono text-xs font-bold">
-                ✓
+                âœ“
               </span>
               <div>
                 <h3 className="text-xs sm:text-sm font-bold text-[var(--ink)]">{item.title}</h3>

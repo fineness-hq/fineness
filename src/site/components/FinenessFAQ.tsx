@@ -18,7 +18,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'How is backing evidence checked?',
-    a: 'Analysts read public material only: verified contracts and docs, published volume series, and the pairing record — who custodies it, whether it redeems, how it verifies. A missing figure stays null and renders as not published, never as zero.',
+    a: 'Analysts read public material only: verified contracts and docs, published volume series, and the pairing record: who custodies it, whether it redeems, how it verifies. A missing figure stays null and renders as not published, never as zero.',
   },
   {
     q: 'Can a protocol pay to improve its Karat hallmark?',

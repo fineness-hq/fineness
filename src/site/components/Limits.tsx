@@ -18,7 +18,7 @@ const LIMITS_DATA = [
     canonId: 'silence',
     canonLabel: 'CANON: DISCLOSURE INTEGRITY',
     title: 'Non-Publication Integrity',
-    desc: 'A missing metric renders as not published (—), never defaulted to zero. Absence of disclosure is distinct from proven insolvency.',
+    desc: 'A missing metric renders as not published (n/a), never defaulted to zero. Absence of disclosure is distinct from proven insolvency.',
     icon: EyeOff,
   },
   {

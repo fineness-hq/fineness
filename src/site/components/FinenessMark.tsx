@@ -7,7 +7,7 @@ interface FinenessMarkProps {
 }
 
 /**
- * Geometric "F" Hallmark Mark — Freebuff-inspired polygonal architecture.
+  * Geometric "F" Hallmark Mark. Polygonal architecture.
  * Two nested right-angle polygon brackets forming the sovereign "F" hallmark.
  */
 export default function FinenessMark({

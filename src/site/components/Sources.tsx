@@ -33,7 +33,7 @@ export default function Sources({ sources, disclosures = [] }: SourcesProps) {
               <div>
                 <p className="text-sm font-semibold text-[var(--ink)]">{entry.name}</p>
                 <p className="mono text-xs text-[var(--ink-3)]">
-                  {id} — {entry.type}
+                  {id}: {entry.type}
                 </p>
               </div>
             </div>

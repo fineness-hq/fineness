@@ -153,7 +153,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
                     <span className="h-3 w-3 rounded-full bg-[#F59E0B] shadow-xs" />
                     <span className="h-3 w-3 rounded-full bg-[#10B981] shadow-xs" />
                     <span className="ml-2 text-[11px] text-white/40 hidden sm:inline">
-                      fineness-terminal — bash
+                      fineness-terminal: bash
                     </span>
                   </div>
 

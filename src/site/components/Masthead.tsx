@@ -51,7 +51,7 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
           </nav>
         </div>
       </header>
-      <div aria-hidden="true" className="tera-header-spacer" />
+      <div aria-hidden="true" id="top" className="tera-header-spacer" />
     </>
   );
 }

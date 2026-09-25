@@ -61,7 +61,7 @@ const BANDS: BandSpec[] = [
     name: 'Below hallmark',
     from: 0,
     to: 374,
-    karat: '—',
+    karat: 'n/a',
     purity: '0 - 374 / 1000',
     color: 'var(--band-none)',
     goldEquivalent: 'Listed, not certified',
@@ -98,7 +98,7 @@ export default function ScaleTable() {
               <WordText text="The Hallmark Karat Scale" />
             </h2>
             <p className="prose mt-1 max-w-[68ch] text-sm leading-relaxed text-[var(--ink-2)]">
-              Fineness runs 0 to 1000. The gate sits at 375 — everything below it
+              Fineness runs 0 to 1000. The gate sits at 375: everything below it
               is listed but not certified.
             </p>
           </div>

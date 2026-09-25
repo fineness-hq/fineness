@@ -44,7 +44,7 @@ export function checkAdmission(venues: Venue[]): AdmissionFinding[] {
       failed.push("C2: pairing claims no real world backing");
     }
     if (!hasMarketEvidence(v)) {
-      failed.push("C3: no published market figures — confirm a completed launch manually");
+      failed.push("C3: no published market figures, confirm a completed launch manually");
     }
     if (v.links?.site == null && v.links?.docs == null) {
       failed.push("C4: no reachable interface or docs under operator control");
@@ -63,7 +63,7 @@ export function checkAdmission(venues: Venue[]): AdmissionFinding[] {
 export function scopeNote(venues: Venue[]): string | null {
   const offChain = venues.filter((v) => !v.resident).length;
   if (offChain >= WATCHLIST_SPLIT_AT) {
-    return `scope: ${offChain} off-chain venues reach the split threshold — open a resident register plus watch list`;
+    return `scope: ${offChain} off-chain venues reach the split threshold: open a resident register plus watch list`;
   }
   return null;
 }

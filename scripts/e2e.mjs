@@ -1,4 +1,4 @@
-// End-to-end check: boots production server, asserts all routes, then stops.
+﻿// End-to-end check: boots production server, asserts all routes, then stops.
 // English only. Run: npm run e2e (requires `npm run build` first).
 import { execFile, spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -94,7 +94,7 @@ async function main() {
   };
 
   try {
-    // Latest frozen edition drives home expectations — no hardcoded figures.
+    // Latest frozen edition drives home expectations : no hardcoded figures.
     const editionFiles = fs.readdirSync('data/editions').filter((f) => f.endsWith('.json')).sort();
     const latest = JSON.parse(fs.readFileSync(`data/editions/${editionFiles[editionFiles.length - 1]}`, 'utf8'));
     const top = latest.venues[0];

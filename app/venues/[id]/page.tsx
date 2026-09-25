@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: VenuePageProps): Promise<Meta
   const { id } = await params;
   const venue = [...EDITIONS].reverse().flatMap((e) => e.venues).find((v) => v.id === id);
   return {
-    title: venue ? `Fineness — ${venue.name} (${venue.fineness}/1000)` : 'Fineness — Venue Dossier',
+    title: venue ? `Fineness : ${venue.name} (${venue.fineness}/1000)` : 'Fineness : Venue Dossier',
     description: venue
       ? `${venue.name} fineness dossier across editions. ${venue.thesis}`
       : 'Venue history across Fineness editions.',

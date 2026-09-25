@@ -77,7 +77,7 @@ export default function FloatingMascot() {
           else nextQuote();
         }}
         className="relative group flex items-center gap-2 rounded-full border-2 border-[var(--gold)] bg-[#0C1014] p-1.5 pr-3 shadow-xl hover:shadow-[0_0_20px_rgba(196,139,15,0.4)] transition-all cursor-pointer"
-        aria-label="Chief Scorer Mascot — Click for scoring quote"
+        aria-label="Chief Scorer Mascot: click for scoring quote"
       >
         <div className="relative h-10 w-10 rounded-full overflow-hidden border border-[var(--gold)]/60 bg-black">
           <Image

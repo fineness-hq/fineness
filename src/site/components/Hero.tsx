@@ -165,7 +165,7 @@ export default function Hero({ edition, dataAsOf, snapshotHash, peak, venues }: 
                 </Link>
               </div>
               <p className="tera-editionbar-progress">
-                {peak >= 750 ? `PEAK ${peak} — A VENUE CLEARED 18 KARAT` : `PEAK ${peak} — NOTHING CLEARS 18 KARAT`}
+                {peak >= 750 ? `PEAK ${peak}: A VENUE CLEARED 18 KARAT` : `PEAK ${peak}: NOTHING CLEARS 18 KARAT`}
               </p>
             </motion.div>
             <motion.div

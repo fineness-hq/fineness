@@ -52,7 +52,7 @@ describe('acceptance criteria', () => {
 
   it('null rendering: all-null metrics render fully with no zeros', () => {
     expect(usd(null)).toBe('not published');
-    expect(dash(null)).toBe('—');
+    expect(dash(null)).toBe('n/a');
     const allNull = venues.filter(
       (v) =>
         v.metrics.cumulativeVolumeUsd == null &&
