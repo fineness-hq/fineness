@@ -13,6 +13,9 @@ import type { Venue } from "../types";
 
 export const STANDARD_FROM = "2026-10";
 
+/** Split threshold (brief §16 Q1): resident register + watch list. */
+export const WATCHLIST_SPLIT_AT = 3;
+
 export interface AdmissionFinding {
   id: string;
   failed: string[];
@@ -49,4 +52,18 @@ export function checkAdmission(venues: Venue[]): AdmissionFinding[] {
     if (failed.length > 0) out.push({ id: v.id, failed });
   }
   return out;
+}
+
+/**
+ * Register scope note (brief §16 Q1). The register stays a single
+ * cross-chain ranking while off-chain venues are few; at
+ * WATCHLIST_SPLIT_AT non-resident venues the desk splits into a resident
+ * register plus a watch list. Informational, never blocking.
+ */
+export function scopeNote(venues: Venue[]): string | null {
+  const offChain = venues.filter((v) => !v.resident).length;
+  if (offChain >= WATCHLIST_SPLIT_AT) {
+    return `scope: ${offChain} off-chain venues reach the split threshold — open a resident register plus watch list`;
+  }
+  return null;
 }

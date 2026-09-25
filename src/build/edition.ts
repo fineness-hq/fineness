@@ -26,6 +26,9 @@ export interface EditionInput {
 /**
  * Merge snapshot metrics with editorial records, score at house weights,
  * sort by fineness descending with alphabetical tiebreak, assign ranks.
+ * Prelaunch venues are carried unscored into a holding pen: they keep
+ * working scores for the record but take rank 0 and sort after every
+ * ranked venue, so absence is never confused with failure.
  */
 export function buildEdition(
   snapshot: Snapshot,
@@ -45,7 +48,14 @@ export function buildEdition(
     };
   });
   scored.sort((a, b) => b.fineness - a.fineness || a.name.localeCompare(b.name));
-  const venues = scored.map((v, i) => ({ ...v, rank: i + 1 }));
+  const ranked = scored.filter((v) => v.status !== "prelaunch");
+  const pen = scored
+    .filter((v) => v.status === "prelaunch")
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const venues = [
+    ...ranked.map((v, i) => ({ ...v, rank: i + 1 })),
+    ...pen.map((v) => ({ ...v, rank: 0 })),
+  ];
   return {
     edition: input.edition,
     published: input.published,

@@ -522,10 +522,10 @@ expect(() => fineness(s, {asset:1,traction:1,transparency:1,compliance:1,durabil
 
 ## 16. Open questions
 
-1. **Off chain competitors.** StonkFun runs on Solana and is ranked alongside Robinhood Chain venues. Does the register stay cross chain, or split into a resident register and a watch list
+1. **Off chain competitors.** StonkFun runs on Solana and is ranked alongside Robinhood Chain venues. Does the register stay cross chain, or split into a resident register and a watch list. **Resolved 2026-09-25: single ranking until three off-chain venues, then split (`docs/REGISTER-SCOPE.md`, `scopeNote`).**
 2. **Score stability policy.** How much new evidence justifies moving a criterion score by one point. Without a rule, monthly scores will drift on analyst mood rather than on the market. **Blocking for Edition 02**
-3. **Prelaunch venues.** CSL scores 220 largely for not existing yet. Consider a prelaunch holding pen that is listed but unscored, so absence is not confused with failure
-4. **Correction threshold.** What size of error triggers a correction note against a frozen edition, and who signs it off
+3. **Prelaunch venues.** CSL scores 220 largely for not existing yet. Consider a prelaunch holding pen that is listed but unscored, so absence is not confused with failure. **Resolved 2026-09-25: `prelaunch` status lists venues unscored and unranked (`rank: 0`), forward-only, frozen editions untouched (`docs/REGISTER-SCOPE.md`).**
+4. **Correction threshold.** What size of error triggers a correction note against a frozen edition, and who signs it off. **Resolved 2026-09-25: figure/score/rank/band/source errors get dated notes with two sign-offs (`signedBy`, enforced); prose slips fix silently next edition; latest plus prior edition only (`docs/REGISTER-SCOPE.md`, `docs/RUNBOOK.md`).**
 5. **Data licensing.** Bitquery and DefiLlama terms must be reviewed before automated pulls run on a schedule and are republished. **Blocking for Edition 02**
 
 ***

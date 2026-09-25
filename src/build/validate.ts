@@ -72,6 +72,12 @@ export function validateEdition(
         fail(v.id, `metric ${key} must be null or a finite number >= 0`);
       }
     }
+    if (v.status === "prelaunch" && v.rank !== 0) {
+      fail(v.id, "prelaunch venues are unranked (rank 0)");
+    }
+    if (v.status !== "prelaunch" && (!Number.isInteger(v.rank) || v.rank < 1)) {
+      fail(v.id, "ranked venues need rank >= 1");
+    }
     if (fineness(v.scores) !== v.fineness) {
       fail(v.id, "fineness does not recompute from scores");
     }
@@ -110,6 +116,10 @@ export function validateEdition(
       c.originalFigure.trim().length === 0
     ) {
       throw new Error("each correction needs {date YYYY-MM-DD, note, originalFigure}");
+    }
+    const signers = (c.signedBy ?? []).filter((s) => typeof s === "string" && s.trim().length > 0);
+    if (signers.length < 2) {
+      throw new Error("each correction needs at least two reviewer sign-offs");
     }
   }
 }

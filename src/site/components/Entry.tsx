@@ -81,6 +81,8 @@ export default function Entry({
   const [copiedContract, setCopiedContract] = useState<string | null>(null);
   const panelId = `entry-panel-${venue.id}`;
   const buttonId = `entry-button-${venue.id}`;
+  // Prelaunch venues are listed, not scored: no fineness, no band, no rank.
+  const unscored = venue.status === 'prelaunch';
 
   const copyAddress = async (addr: string) => {
     try {
@@ -111,6 +113,12 @@ export default function Entry({
         </div>
 
         <div className="flex items-center gap-2 font-mono text-[11px]">
+          {unscored ? (
+            <span className="rounded border border-[var(--rule-2)] bg-[var(--surface-alt)] px-2.5 py-1 font-extrabold uppercase tracking-wider text-[var(--ink-3)] shadow-xs">
+              Prelaunch — unscored
+            </span>
+          ) : (
+          <>
           <span
             className="rounded border px-2.5 py-1 font-extrabold uppercase tracking-wider shadow-xs"
             style={{
@@ -124,6 +132,8 @@ export default function Entry({
           <span className="rounded bg-[var(--dark)] px-2.5 py-1 font-bold text-white shadow-xs">
             {displayFineness} / 1000 PURITY
           </span>
+          </>
+          )}
         </div>
       </div>
 
@@ -298,7 +308,7 @@ export default function Entry({
     <article
       aria-labelledby={buttonId}
       className="group relative border-b border-[var(--rule)] bg-[var(--surface)] transition-all hover:bg-[var(--tint)]/40"
-      style={{ borderLeft: `4px solid ${BAND_COLOR[displayBand]}` }}
+      style={{ borderLeft: `4px solid ${unscored ? 'var(--rule-2)' : BAND_COLOR[displayBand]}` }}
     >
       <button
         id={buttonId}
@@ -310,7 +320,7 @@ export default function Entry({
       >
         {/* Rank Number */}
         <span className="mono flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--rule)] bg-[var(--surface-alt)] text-xs font-black tabular-nums text-[var(--ink)] shadow-2xs group-hover:border-[var(--dark)] group-hover:bg-[var(--dark)] group-hover:text-white transition-all">
-          {String(rank).padStart(2, '0')}
+          {rank === 0 ? '—' : String(rank).padStart(2, '0')}
         </span>
 
         {/* Venue Info */}
@@ -342,6 +352,11 @@ export default function Entry({
         </div>
 
         {/* Precision Purity Gauge in Row */}
+        {unscored ? (
+          <span className="mono hidden md:inline-block shrink-0 rounded border border-[var(--rule-2)] bg-[var(--surface-alt)] px-2 py-1 text-[10px] font-black uppercase tracking-wider text-[var(--ink-3)]">
+            Prelaunch
+          </span>
+        ) : (
         <div className="hidden md:flex flex-col items-end gap-1 shrink-0 w-36">
           <div className="flex items-center justify-between w-full text-[10px] font-mono">
             <span className="text-[var(--ink-3)] font-semibold">PURITY GAUGE</span>
@@ -361,8 +376,14 @@ export default function Entry({
             />
           </div>
         </div>
+        )}
 
         {/* Score & Band Stamp */}
+        {unscored ? (
+          <span className="mono shrink-0 rounded border border-[var(--rule-2)] bg-[var(--surface-alt)] px-2 py-1 text-[10px] font-black uppercase tracking-wider text-[var(--ink-3)]">
+            Unscored
+          </span>
+        ) : (
         <div className="flex items-center gap-2.5 shrink-0 font-mono">
           <div className="flex flex-col items-end">
             <span className="text-lg font-black tabular-nums text-[var(--ink)] leading-none">
@@ -381,6 +402,7 @@ export default function Entry({
             {displayBand}
           </span>
         </div>
+        )}
 
         {/* Accordion Chevron */}
         <ChevronDown

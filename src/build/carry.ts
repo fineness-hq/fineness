@@ -63,7 +63,7 @@ export function buildNextEdition(
   });
   const deltas = computeDeltas(edition.venues, prev.venues, prev.edition);
   for (const v of edition.venues) {
-    if (deltas[v.id]) v.delta = deltas[v.id];
+    if (v.status !== 'prelaunch' && deltas[v.id]) v.delta = deltas[v.id];
   }
   return edition;
 }

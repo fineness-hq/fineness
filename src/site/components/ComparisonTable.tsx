@@ -143,6 +143,9 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
                   </td>
 
                   <td className="mono px-4 py-3 text-right text-sm font-bold tabular-nums text-[var(--ink)]">
+                    {v.status === 'prelaunch' ? (
+                      <span className="text-xs uppercase tracking-wider text-[var(--ink-3)]">—</span>
+                    ) : (
                     <div className="inline-flex items-center gap-2">
                       <span className="text-base font-black">
                         {v.fineness}<span className="text-[10px] font-bold text-[var(--gold)] ml-0.5">/1000</span>
@@ -157,6 +160,7 @@ export default function ComparisonTable({ venues }: ComparisonTableProps) {
                         {band(v.fineness)}
                       </span>
                     </div>
+                    )}
                   </td>
                 </tr>
               ))}

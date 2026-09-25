@@ -81,6 +81,8 @@ export interface CorrectionNote {
   date: string;
   note: string;
   originalFigure: string;
+  /** Two reviewer sign-offs, consistent with the runbook. */
+  signedBy: string[];
 }
 
 export interface EditionHeader {

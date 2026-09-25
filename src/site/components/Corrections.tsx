@@ -28,7 +28,9 @@ export default function Corrections({ corrections = [] }: CorrectionsProps) {
               key={`${c.date}-${i}`}
               className="border-b border-[var(--rule)] px-4 py-3 last:border-0"
             >
-              <p className="mono text-xs tabular-nums text-[var(--ink-3)]">{c.date}</p>
+              <p className="mono text-xs tabular-nums text-[var(--ink-3)]">
+                {c.date} · signed {c.signedBy.join(', ')}
+              </p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--ink-2)]">{c.note}</p>
               <p className="mono mt-1 text-xs text-[var(--ink)]">
                 Original figure stands:{' '}

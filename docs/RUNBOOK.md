@@ -88,3 +88,10 @@ A published edition never changes silently. Corrections ship as dated
 correction notes appended to the edition, with the original figure kept
 visible. Rebuilding an edition from its snapshot must reproduce byte
 identical fineness values and ordering.
+
+Correction rule (answers brief §16 Q4, after MSCI corrections practice):
+any error in a published figure, score, band, rank, or source reference
+ships a dated note signed by two reviewers (`signedBy`, enforced in
+`validateEdition`). Pure prose slips (typos, grammar) fix silently in the
+next edition with the fix logged in the commit message. Corrections apply
+to the latest and immediately prior edition only; older history stands.

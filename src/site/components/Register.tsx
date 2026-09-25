@@ -51,9 +51,21 @@ export default function Register({
   }
 
   const reweighted = useMemo(
-    () => applyWeights(venues.filter((v) => v.status !== 'struck'), weights),
+    () => applyWeights(venues.filter((v) => v.status !== 'struck' && v.status !== 'prelaunch'), weights),
     [venues, weights],
   );
+
+  const pen = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return venues.filter(
+      (v) =>
+        v.status === 'prelaunch' &&
+        (!q ||
+          v.name.toLowerCase().includes(q) ||
+          v.chain.toLowerCase().includes(q) ||
+          v.pairing.assetType.toLowerCase().includes(q)),
+    );
+  }, [venues, search]);
 
   const displayed = useMemo(() => {
     let list = reweighted;
@@ -260,6 +272,34 @@ export default function Register({
             )
           )}
         </div>
+
+        {/* Prelaunch holding pen: listed, unscored, unranked */}
+        {pen.length > 0 && (
+          <div className="border-t border-[var(--rule)] bg-[var(--surface-2)]/50 px-5 py-4">
+            <p className="mono text-[11px] font-bold uppercase tracking-widest text-[var(--ink-2)]">
+              Prelaunch holding pen — listed, not scored
+            </p>
+            <p className="mt-1 text-xs text-[var(--ink-3)]">
+              No completed launch yet, so absence here is not failure. Promoted to the ranked
+              register on the first live market.
+            </p>
+            <div role="list" aria-label="Prelaunch venues" className="mt-3 overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--surface)]">
+              {pen.map((venue) => (
+                <div key={venue.id} role="listitem">
+                  <Entry
+                    venue={venue}
+                    displayFineness={venue.fineness}
+                    displayBand={band(venue.fineness)}
+                    rank={0}
+                    delta={undefined}
+                    expanded={expandedIds.has(venue.id)}
+                    onToggle={() => toggle(venue.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
