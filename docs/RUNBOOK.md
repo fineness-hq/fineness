@@ -57,6 +57,11 @@ Human steps that remain: admission changes, score moves with cited evidence
 (days 2–6), and the two sign-offs. Everything else — pull, snapshot, hash,
 carry, validate, commit, publish — needs no hands.
 
+Automation modes: default publishes whenever validation passes and only
+logs policy smells, so clean months ship with zero humans. Pass `--strict`
+to invert it — any score-move, admission, or scope warning fails the run
+before anything is written, so humans are called in on exception only.
+
 ## Build and verify
 
 ```bash

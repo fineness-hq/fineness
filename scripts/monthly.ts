@@ -106,12 +106,21 @@ async function main(): Promise<void> {
     validateEdition(edition, sources);
     const warnings = warnScoreMoves(edition, prev);
     for (const w of warnings) console.log(`warn: ${w}`);
-    for (const f of checkAdmission(edition.venues)) {
+    const admission = checkAdmission(edition.venues);
+    for (const f of admission) {
       for (const reason of f.failed) console.log(`admission: ${f.id} ${reason}`);
     }
     const scope = scopeNote(edition.venues);
     if (scope) console.log(scope);
     if (review) for (const n of review.notes) console.log(`note: ${n}`);
+    // --strict: humans only on exception. Any policy smell fails the run
+    // before anything is written, so clean months ship untouched.
+    if (
+      process.argv.some((a) => a === '--strict') &&
+      (warnings.length > 0 || admission.length > 0 || scope !== null)
+    ) {
+      throw new Error('strict mode: run halted for human review (warnings above)');
+    }
     await atomicWrite(
       join(editionsDir, `${editionId}.json`),
       JSON.stringify(edition, null, 2) + '\n',
