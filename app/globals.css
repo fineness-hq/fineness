@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../src/site/tokens.css";
+@import "lenis/dist/lenis.css";
 
 :root {
   color-scheme: light;
@@ -48,7 +49,14 @@ html {
   animation: tera-panel-in 0.26s ease both;
 }
 
+/* Inertial scroll optimization */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
+  -webkit-overflow-scrolling: touch;
   margin: 0;
   background: var(--ground);
   color: var(--ink);

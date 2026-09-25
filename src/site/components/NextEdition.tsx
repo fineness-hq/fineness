@@ -11,7 +11,7 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-/** Next month name after a YYYY-MM edition, e.g. 2026-11 -> December 2026. */
+/** Next month name after a YYYY-MM edition, e.g. 2026-10 -> November 2026. */
 function nextMonth(currentEdition: string): string {
   const match = currentEdition.match(/^(\d{4})-(\d{2})$/);
   if (!match) return 'next month';

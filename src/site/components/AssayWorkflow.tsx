@@ -102,8 +102,8 @@ const REFINERY_STATIONS: Station[] = [
 export default function AssayWorkflow() {
   const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const railPctRef = useRef<HTMLSpanElement>(null);
   const [maxTranslate, setMaxTranslate] = useState(1200);
-  const [scrollPct, setScrollPct] = useState(0);
   const [activeStationIndex, setActiveStationIndex] = useState(0);
   const reduce = useReducedMotion();
 
@@ -132,22 +132,19 @@ export default function AssayWorkflow() {
     stiffness: 85,
     damping: 24,
     mass: 0.6,
-    restDelta: 0.0005,
+    restDelta: 0.001,
   });
 
   const x = useTransform(smoothProgress, [0, 1], [0, -maxTranslate]);
 
-  // Synchronize telemetry and active bay without re-rendering the animation loop
+  // Synchronize telemetry and active bay without triggering full component re-renders
   useEffect(() => {
     const unsubscribe = smoothProgress.on('change', (latest) => {
-      setScrollPct(Math.round(latest * 100));
-      if (latest < 0.33) {
-        setActiveStationIndex(0);
-      } else if (latest < 0.66) {
-        setActiveStationIndex(1);
-      } else {
-        setActiveStationIndex(2);
+      if (railPctRef.current) {
+        railPctRef.current.textContent = `RAIL: ${Math.round(latest * 100)}%`;
       }
+      const nextIdx = latest < 0.33 ? 0 : latest < 0.66 ? 1 : 2;
+      setActiveStationIndex((prev) => (prev !== nextIdx ? nextIdx : prev));
     });
     return () => unsubscribe();
   }, [smoothProgress]);
@@ -211,7 +208,7 @@ export default function AssayWorkflow() {
 
             <div className="hidden sm:flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--gold)] font-bold">
               <Radio size={13} className="animate-pulse" />
-              <span>RAIL: {scrollPct}%</span>
+              <span ref={railPctRef}>RAIL: 0%</span>
             </div>
           </div>
         </div>

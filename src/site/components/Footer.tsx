@@ -137,15 +137,9 @@ export default function Footer({ edition }: FooterProps) {
             </p>
             <ul className="mt-4 space-y-2.5 font-mono text-xs">
               <li>
-                <Link href="/editions/2026-11" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
-                  <span>Edition 2026-11</span>
-                  <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/editions/2026-10" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center justify-between">
                   <span>Edition 2026-10</span>
-                  <span className="text-[10px] text-[var(--ink-3)]">FROZEN</span>
+                  <span className="text-[10px] text-emerald-500 font-bold">LATEST</span>
                 </Link>
               </li>
               <li>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
 import {
@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   Sliders,
   Crosshair,
-  Compass,
 } from 'lucide-react';
 
 /**
@@ -19,7 +18,6 @@ import {
  */
 export default function WhyFinenessBento() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [caliperPct, setCaliperPct] = useState(0);
   const reduce = useReducedMotion();
 
   // Framer Motion scroll and spring dampening
@@ -32,19 +30,11 @@ export default function WhyFinenessBento() {
     stiffness: 80,
     damping: 24,
     mass: 0.6,
-    restDelta: 0.0005,
+    restDelta: 0.001,
   });
 
   const leftColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [28, -28]);
   const rightColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [-28, 28]);
-  const caliperScale = useTransform(smoothProgress, [0.1, 0.9], [0, 1]);
-
-  useEffect(() => {
-    return smoothProgress.on('change', (v) => {
-      const clamped = Math.max(0, Math.min(100, Math.round(v * 100)));
-      setCaliperPct(clamped);
-    });
-  }, [smoothProgress]);
 
   return (
     <section
@@ -72,20 +62,10 @@ export default function WhyFinenessBento() {
             </p>
           </div>
 
-          {/* Vernier Caliper Calibrated Readout */}
-          <div className="shrink-0 flex flex-col items-end font-mono">
-            <div className="flex items-center gap-2 text-xs font-bold text-[var(--gold)] mb-1">
-              <Compass size={14} className="animate-spin" />
-              <span>VERNIER CALIPER: {caliperPct}%</span>
-            </div>
-            {/* Caliper Hairline */}
-            <div className="w-48 h-2 rounded-full bg-[var(--surface-alt)] border border-[var(--rule)] overflow-hidden relative">
-              <motion.div
-                className="absolute inset-y-0 left-0 bg-[var(--gold)] w-full origin-left will-change-transform"
-                style={{ scaleX: reduce ? 1 : caliperScale }}
-              />
-            </div>
-            <span className="text-[10px] text-[var(--ink-3)] mt-1">AXIS DEPTH: 4 INSTITUTIONAL QUADRANTS</span>
+          {/* Architectural Badge */}
+          <div className="shrink-0 flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded-lg border border-[var(--rule)] bg-[var(--surface)] text-[var(--ink-2)]">
+            <span className="h-2 w-2 rounded-full bg-[var(--gold)]" />
+            <span className="font-bold text-[var(--ink)]">4 STRUCTURAL DECKS</span>
           </div>
         </div>
 

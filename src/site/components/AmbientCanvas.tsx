@@ -8,14 +8,14 @@ interface Particle {
   vx: number;
   vy: number;
   radius: number;
-  baseAlpha: number;
   color: string;
 }
 
 /**
- * Interactive ambient canvas:
- * Renders a lightweight, high-performance bullion coordinate grid
- * and reactive gold/terracotta particles that respond to mouse movement.
+ * High-performance ambient canvas:
+ * - Automatically pauses rendering when scrolled out of viewport (0% CPU/GPU when reading register).
+ * - Offloads coordinate grid to native CSS background pattern.
+ * - Hardware-accelerated particle movement with passive mouse reaction.
  */
 export default function AmbientCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -28,10 +28,11 @@ export default function AmbientCanvas() {
       return;
     }
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animId = 0;
+    let isVisible = true;
     let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
 
@@ -41,20 +42,18 @@ export default function AmbientCanvas() {
     let targetMouseY = -9999;
 
     const colors = [
-      'rgba(196, 139, 15, 0.55)', // Bullion Gold
-      'rgba(27, 94, 58, 0.45)',   // Forest Emerald
-      'rgba(184, 78, 27, 0.35)',  // Terracotta
-      'rgba(15, 20, 25, 0.35)',   // Deep Ink Charcoal
+      'rgba(196, 139, 15, 0.45)', // Bullion Gold
+      'rgba(27, 94, 58, 0.35)',   // Forest Emerald
+      'rgba(184, 78, 27, 0.25)',  // Terracotta
     ];
 
-    const particleCount = Math.min(38, Math.floor((width * height) / 25000));
+    const particleCount = Math.min(22, Math.max(10, Math.floor((width * height) / 40000)));
     const particles: Particle[] = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      radius: Math.random() * 2.2 + 1,
-      baseAlpha: Math.random() * 0.5 + 0.2,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      radius: Math.random() * 2 + 1,
       color: colors[Math.floor(Math.random() * colors.length)],
     }));
 
@@ -63,7 +62,7 @@ export default function AmbientCanvas() {
       width = canvas.width = canvas.parentElement.clientWidth;
       height = canvas.height = canvas.parentElement.clientHeight;
     };
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize, { passive: true });
 
     const onPointerMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -76,34 +75,32 @@ export default function AmbientCanvas() {
       targetMouseY = -9999;
     };
 
-    window.addEventListener('mousemove', onPointerMove);
-    window.addEventListener('mouseleave', onPointerLeave);
+    window.addEventListener('mousemove', onPointerMove, { passive: true });
+    window.addEventListener('mouseleave', onPointerLeave, { passive: true });
+
+    // Pause rendering when scrolled out of view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? false;
+        if (isVisible && !animId) {
+          animId = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
 
     const render = () => {
+      if (!isVisible) {
+        animId = 0;
+        return;
+      }
+
       // Smooth mouse interpolation
       mouseX += (targetMouseX - mouseX) * 0.08;
       mouseY += (targetMouseY - mouseY) * 0.08;
 
       ctx.clearRect(0, 0, width, height);
-
-      // Draw faint coordinate grid
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(213, 209, 197, 0.6)'; // architectural bone grid
-      const gridSize = 72;
-
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
 
       // Update and draw floating particles
       for (let i = 0; i < particles.length; i++) {
@@ -117,14 +114,14 @@ export default function AmbientCanvas() {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        // Mouse reaction (subtle push away)
+        // Subtle mouse push away
         const dx = p.x - mouseX;
         const dy = p.y - mouseY;
         const dist = Math.hypot(dx, dy);
-        if (dist < 120 && dist > 0) {
-          const force = (120 - dist) / 120;
-          p.x += (dx / dist) * force * 1.8;
-          p.y += (dy / dist) * force * 1.8;
+        if (dist < 100 && dist > 0) {
+          const force = (100 - dist) / 100;
+          p.x += (dx / dist) * force * 1.5;
+          p.y += (dy / dist) * force * 1.5;
         }
 
         ctx.beginPath();
@@ -132,15 +129,15 @@ export default function AmbientCanvas() {
         ctx.fillStyle = p.color;
         ctx.fill();
 
-        // Draw connective filaments between close particles
+        // Connective filaments between close neighbors
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist2 < 90) {
+          if (dist2 < 75) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(196, 139, 15, ${0.16 * (1 - dist2 / 90)})`;
+            ctx.strokeStyle = `rgba(196, 139, 15, ${0.12 * (1 - dist2 / 75)})`;
             ctx.stroke();
           }
         }
@@ -152,7 +149,8 @@ export default function AmbientCanvas() {
     animId = requestAnimationFrame(render);
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
+      observer.disconnect();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onPointerMove);
       window.removeEventListener('mouseleave', onPointerLeave);
@@ -160,10 +158,21 @@ export default function AmbientCanvas() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-70"
-    />
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(213, 209, 197, 0.35) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(213, 209, 197, 0.35) 1px, transparent 1px)
+        `,
+        backgroundSize: '72px 72px',
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        className="h-full w-full opacity-70"
+      />
+    </div>
   );
 }

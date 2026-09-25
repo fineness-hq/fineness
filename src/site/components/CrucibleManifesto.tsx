@@ -35,7 +35,8 @@ export default function CrucibleManifesto() {
   const [isDragging, setIsDragging] = useState(false);
   const [isSmelting, setIsSmelting] = useState(false);
   const [hasSmelted, setHasSmelted] = useState(false);
-  const [displaySliderPct, setDisplaySliderPct] = useState(50);
+  const thinBackingRef = useRef<HTMLSpanElement>(null);
+  const docBackingRef = useRef<HTMLSpanElement>(null);
 
   // Motion value for manual dragging and spring-driven scrolling
   const manualSliderPos = useMotionValue(50);
@@ -51,7 +52,7 @@ export default function CrucibleManifesto() {
     stiffness: 90,
     damping: 24,
     mass: 0.5,
-    restDelta: 0.0005,
+    restDelta: 0.001,
   });
 
   // Sync scroll to slider position if not manually dragging
@@ -76,10 +77,16 @@ export default function CrucibleManifesto() {
   const clipPathValue = useTransform(activeSlider, (v) => `inset(0 0 0 ${100 - v}%)`);
   const caliperLeft = useTransform(activeSlider, (v) => `${100 - v}%`);
 
-  // Update numerical percentage text smoothly
+  // Update numerical percentage text directly on DOM refs without triggering full component re-renders
   useEffect(() => {
     return activeSlider.on('change', (v) => {
-      setDisplaySliderPct(Math.round(v));
+      const rounded = Math.round(v);
+      if (thinBackingRef.current) {
+        thinBackingRef.current.textContent = `THIN BACKING (${100 - rounded}%)`;
+      }
+      if (docBackingRef.current) {
+        docBackingRef.current.textContent = `DOCUMENTED BACKING (${rounded}%)`;
+      }
     });
   }, [activeSlider]);
 
@@ -199,7 +206,7 @@ export default function CrucibleManifesto() {
           <div className="w-full flex items-center justify-between pb-2 font-mono text-xs text-[var(--ink-3)]">
             <span className="flex items-center gap-1.5 text-red-600 font-bold">
               <FileX size={14} />
-              <span>THIN BACKING ({100 - displaySliderPct}%)</span>
+              <span ref={thinBackingRef}>THIN BACKING (50%)</span>
             </span>
 
             <span className="text-[11px] text-[var(--ink-3)] hidden sm:inline">
@@ -208,7 +215,7 @@ export default function CrucibleManifesto() {
 
             <span className="flex items-center gap-1.5 text-[var(--gold)] font-bold">
               <Award size={14} />
-              <span>DOCUMENTED BACKING ({displaySliderPct}%)</span>
+              <span ref={docBackingRef}>DOCUMENTED BACKING (50%)</span>
             </span>
           </div>
 
