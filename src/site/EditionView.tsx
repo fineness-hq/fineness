@@ -16,9 +16,9 @@ import StatRow from './components/StatRow';
 import StruckList from './components/StruckList';
 import LogoRow from './components/LogoRow';
 import CrucibleManifesto from './components/CrucibleManifesto';
-import AssayWorkflow from './components/AssayWorkflow';
+import ScoringWorkflow from './components/ScoringWorkflow';
 import WhyFinenessBento from './components/WhyFinenessBento';
-import AssayFAQ from './components/AssayFAQ';
+import FinenessFAQ from './components/FinenessFAQ';
 import ProtocolCTA from './components/ProtocolCTA';
 import FloatingMascot from './components/FloatingMascot';
 
@@ -61,7 +61,7 @@ export default function EditionView({
 
       {/* Educational & Narrative Sections ("What is Fineness & The Crucible?") */}
       <CrucibleManifesto />
-      <AssayWorkflow />
+      <ScoringWorkflow />
       <WhyFinenessBento />
 
       <ScaleTable />
@@ -77,7 +77,7 @@ export default function EditionView({
       <Limits />
 
       {/* Primer FAQ & Open Protocol Developer CTA */}
-      <AssayFAQ />
+      <FinenessFAQ />
       <ProtocolCTA edition={edition.edition} />
 
       <NextEdition currentEdition={edition.edition} />

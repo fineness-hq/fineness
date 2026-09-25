@@ -7,35 +7,35 @@ import { Stamp, Sparkles, Coffee } from 'lucide-react';
 
 interface AuditorCatProps {
   className?: string;
-  /** Venues assayed in this edition - honest base for the counter. */
+  /** Venues scored in this edition - honest base for the counter. */
   baseCount?: number;
 }
 
 /**
- * The Bureaucrat Auditor Cat Mascot (Seamless Editorial Hero):
+ * The Fineness Cat Mascot (Seamless Editorial Hero):
  * Large, borderless, and integrated directly into the background canvas.
  * Features:
  * - Grand scale: ~480px tall, zero card wrapping
  * - Real 2-frame physical stamping animation (arm winds up high and slams down)
- * - Impact shockwave & dynamic certificate stamp imprint reveal ("24K ASSAYED")
+ * - Impact shockwave & dynamic certificate stamp imprint reveal ("24K SCORED")
  * - Lazy tail swish loop
  * - Steaming espresso cup rising vapor particles
  * - On-chain ticker tape ribbon
- * - Interactive click-to-stamp & rapid assay mode
+ * - Interactive click-to-stamp & rapid scoring mode
  * - 3D cursor perspective tilt tracking
  */
 function formatNumber(n: number) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-const STAMP_PHRASES = ['24K ASSAYED', 'CRUCIBLE PASS', 'HALLMARK 375+', 'PHYSICAL BACKED', '18K CLEARED'];
+const STAMP_PHRASES = ['24K SCORED', 'CRUCIBLE PASS', 'HALLMARK 375+', 'PHYSICAL BACKED', '18K CLEARED'];
 
 export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCatProps) {
   const reduce = useReducedMotion();
   const [stampCount, setStampCount] = useState(baseCount);
   const [isArmUp, setIsArmUp] = useState(false);
   const [stampActive, setStampActive] = useState(false);
-  const [stampText, setStampText] = useState('24K ASSAYED');
+  const [stampText, setStampText] = useState('24K SCORED');
   const [isRapid, setIsRapid] = useState(false);
 
   // Mouse tilt tracking
@@ -129,8 +129,8 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
       onClick={handleManualStamp}
       style={{ perspective: 1000 }}
       role="region"
-      aria-label="The Bureaucrat Assayer Cat, real stamping mascot"
-      title="Click cat to speed up assay stamping!"
+      aria-label="The Fineness Cat, real stamping mascot"
+      title="Click cat to speed up stamping!"
     >
       {/* Floating Status Bar (Direct on background) */}
       <div className="w-full flex items-center justify-end gap-2 px-1 mb-1 font-mono text-[11px]">
@@ -140,14 +140,14 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--action)]" />
           </span>
           <span className="font-bold tracking-wider text-[var(--ink)]">
-            CHIEF ASSAYER
+            CHIEF SCORER
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 rounded-full border border-[var(--rule)] bg-[var(--surface)]/90 backdrop-blur-xs px-2.5 py-0.5 shadow-xs text-[var(--gold)]">
           <Coffee className="h-3 w-3" />
           <span suppressHydrationWarning className="font-semibold tabular-nums">
-            {formatNumber(stampCount)} ASSAYED
+            {formatNumber(stampCount)} SCORED
           </span>
         </div>
       </div>
@@ -241,7 +241,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
             >
               <Image
                 src="/cat-up.png"
-                alt="Assayer Cat arm raised high ready to stamp"
+                alt="Fineness Cat arm raised high ready to stamp"
                 fill
                 priority
                 sizes="(max-width: 640px) 380px, 510px"
@@ -262,7 +262,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
             >
               <Image
                 src="/cat-down.png"
-                alt="Assayer Cat arm stamping certificate down"
+                alt="Fineness Cat arm stamping certificate down"
                 fill
                 priority
                 sizes="(max-width: 640px) 380px, 510px"
@@ -335,7 +335,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
       <div className="w-full flex items-center justify-end text-[9px] font-mono text-[var(--ink-3)] mt-1 px-1">
         <span className="flex items-center gap-1">
           <Sparkles className="h-3 w-3 text-[var(--gold)]" />
-          <span>CLICK CAT TO SPEED UP ASSAY</span>
+          <span>CLICK CAT TO SPEED UP SCORING</span>
           <span className="text-[var(--gold)] font-bold ml-1">
             {isRapid ? 'RAPID' : 'ACTIVE'}
           </span>

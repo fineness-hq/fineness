@@ -28,7 +28,7 @@ const SHORT_BACKING: Record<string, string> = {
 /**
  * Web3 Crucible Stage:
  * Features:
- * - Unboxed Grand Bureaucrat Auditor Cat on the background
+ * - Unboxed Grand Fineness Cat on the background
  * - Overlapping Glassmorphic Crucible Leaderboard HUD floating on the left
  * - Multi-metric toggles (PURITY / BACKING / 24H VOL)
  * - Animated Karat progress bars & 375 hallmark cutoffs
@@ -47,7 +47,7 @@ export default function HeroChart({ venues, ready }: HeroChartProps) {
 
   return (
     <div className="relative w-full max-w-[560px] select-none flex flex-col items-center justify-center">
-      {/* 1. The Grand Bureaucrat Auditor Cat (Seamless on Background Canvas) */}
+      {/* 1. The Fineness Cat (Seamless on Background Canvas) */}
       <div className="relative w-full">
         <AuditorCat className="w-full" baseCount={venues.length} />
       </div>

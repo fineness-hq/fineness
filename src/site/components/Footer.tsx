@@ -9,7 +9,7 @@ interface FooterProps {
 
 /**
  * Footer:
- * Architectural Swiss Gold Assay Desk Directory.
+  * Site directory with edition archive and source links.
  * Redesigned with zero dummy forms, zero fake venues, and 100% verified working routes.
  */
 export default function Footer({ edition }: FooterProps) {
@@ -214,7 +214,7 @@ export default function Footer({ edition }: FooterProps) {
         <div className="flex items-center gap-3">
           <span>FINENESS HQ © 2026</span>
           <span>•</span>
-          <span>SWISS PRECISION ASSAY DESK</span>
+          <span>FINENESS SCORING DESK</span>
         </div>
 
         <div className="flex items-center gap-4">

@@ -11,7 +11,7 @@ const LINKS: Array<[string, string, string]> = [
   ['CRUC', 'Manifesto', '/#crucible-disclosure'],
   ['FLOW', 'Workflow', '/#refinery-pipeline'],
   ['BENTO', 'Bento', '/#utility-suite'],
-  ['ASSAY', 'Comparison', '/#comparison'],
+  ['CMP', 'Comparison', '/#comparison'],
   ['REGUL', 'Regulated', '/#regulated'],
   ['FAQ', 'FAQ', '/#faq'],
   ['PROV', 'Sources', '/#sources'],

@@ -53,7 +53,7 @@ function rawFromWeights(weights: Weights): RawSliders {
 
 /**
  * Web3 Weight Synthesizer Console:
- * Interactive audio-equalizer style assay desk with live percent meters,
+ * Interactive audio-equalizer style scoring desk with live percent meters,
  * animated level tracks, shareable state encoding in URL, and quick presets.
  */
 export default function WeightPanel({
@@ -107,7 +107,7 @@ export default function WeightPanel({
               id="weights-title"
               className="font-[var(--font-inter)] text-lg font-bold tracking-tight text-[var(--ink)]"
             >
-              Assay Weight Synthesizer
+              Fineness Weight Synthesizer
             </h2>
           </div>
           <p className="mt-1 text-xs text-[var(--ink-2)]">

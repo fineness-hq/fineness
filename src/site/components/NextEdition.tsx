@@ -25,7 +25,7 @@ export default function NextEdition({ currentEdition, nextDue }: NextEditionProp
   return (
     <section aria-labelledby="next-title" id="next" className="page-wrap py-10">
       <Reveal>
-      <p className="eyebrow">DISPATCH // UPCOMING ASSAY CYCLE</p>
+      <p className="eyebrow">DISPATCH // UPCOMING EDITION CYCLE</p>
       <h2
         id="next-title"
         className="mt-2 font-[var(--font-inter)] text-2xl font-bold tracking-tight text-[var(--ink)]"

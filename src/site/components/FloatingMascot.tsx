@@ -26,7 +26,7 @@ export default function FloatingMascot() {
   }
 
   return (
-    <aside aria-label="Chief Assayer Mascot Widget" className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <aside aria-label="Chief Scorer Mascot Widget" className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Speech Bubble */}
       <AnimatePresence>
         {isOpen && (
@@ -40,7 +40,7 @@ export default function FloatingMascot() {
             <div className="flex items-center justify-between pb-1.5 border-b border-[var(--rule)] mb-1.5">
               <span className="text-[10px] font-bold text-[var(--gold)] flex items-center gap-1">
                 <Sparkles size={11} className="text-[var(--gold)]" />
-                <span>CHIEF ASSAYER CAT</span>
+                <span>CHIEF SCORER CAT</span>
               </span>
               <button
                 type="button"
@@ -77,12 +77,12 @@ export default function FloatingMascot() {
           else nextQuote();
         }}
         className="relative group flex items-center gap-2 rounded-full border-2 border-[var(--gold)] bg-[#0C1014] p-1.5 pr-3 shadow-xl hover:shadow-[0_0_20px_rgba(196,139,15,0.4)] transition-all cursor-pointer"
-        aria-label="Chief Assayer Mascot — Click for assay quote"
+        aria-label="Chief Scorer Mascot — Click for scoring quote"
       >
         <div className="relative h-10 w-10 rounded-full overflow-hidden border border-[var(--gold)]/60 bg-black">
           <Image
             src="/images/cat-inspector-8bit.jpg"
-            alt="Chief Assayer Cat Mascot"
+            alt="Chief Scorer Cat Mascot"
             fill
             sizes="40px"
             className="object-cover"
@@ -90,7 +90,7 @@ export default function FloatingMascot() {
         </div>
         <div className="hidden sm:flex flex-col items-start text-left font-mono">
           <span className="text-[10px] font-black text-[var(--gold)] leading-none">
-            CHIEF ASSAYER
+            CHIEF SCORER
           </span>
           <span className="text-[9px] text-emerald-400 font-semibold leading-none mt-0.5">
             CALM VIGILANCE

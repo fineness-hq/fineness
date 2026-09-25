@@ -22,15 +22,15 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Can a protocol pay to improve its Karat hallmark?',
-    a: 'Never. Fineness operates strictly as an independent editorial assay desk. We accept zero token sponsorships, listing fees, or marketing bribes. All math is deterministic, public, and open-source.',
+    a: 'Never. Fineness operates strictly as an independent editorial scoring desk. We accept zero token sponsorships, listing fees, or marketing bribes. All math is deterministic, public, and open-source.',
   },
   {
-    q: 'Why is the Assayer Cat our chief mascot?',
-    a: 'The Assayer Cat is calm, unhurried vigilance: immune to hype, parked at his desk with an espresso, stamping every frozen edition as it publishes.',
+    q: 'Why is the Fineness Cat our chief mascot?',
+    a: 'The Fineness Cat is calm, unhurried vigilance: immune to hype, parked at his desk with an espresso, stamping every frozen edition as it publishes.',
   },
 ];
 
-export default function AssayFAQ() {
+export default function FinenessFAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
   const reduce = useReducedMotion();
 
@@ -116,7 +116,7 @@ export default function AssayFAQ() {
             })}
           </div>
 
-          {/* Chief Assayer Mascot Card (5 cols) */}
+          {/* Chief Scorer Mascot Card (5 cols) */}
           <div className="lg:col-span-5 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-5 shadow-xs relative overflow-hidden flex flex-col justify-between h-full">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_top_right,rgba(196,139,15,0.12),transparent_70%)] pointer-events-none" />
             
@@ -127,7 +127,7 @@ export default function AssayFAQ() {
                   CHIEF MASCOT
                 </span>
                 <span className="text-[10px] text-[var(--ink-3)] uppercase tracking-wider font-semibold">
-                  SWISS ASSAY DESK
+                  SWISS SCORING DESK
                 </span>
               </div>
 
@@ -135,7 +135,7 @@ export default function AssayFAQ() {
               <div className="relative mt-3.5 h-44 sm:h-48 w-full rounded-lg overflow-hidden border border-[var(--rule)] bg-[#0C1014] shadow-inner group">
                 <Image
                   src="/images/cat-inspector-8bit.jpg"
-                  alt="Chief Swiss Gold Assayer Cat Inspecting Bullion with Loupe"
+                    alt="Chief Fineness Cat Inspecting Evidence with Loupe"
                   fill
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
@@ -156,7 +156,7 @@ export default function AssayFAQ() {
                 Calm, Unhurried Vigilance
               </h3>
               <p className="mt-1 text-xs text-[var(--ink-2)] leading-relaxed">
-                Immune to crypto hype and narrative churn. Parked at his assay desk with an espresso, inspecting every bar and stamping frozen editions.
+                    Immune to crypto hype and narrative churn. Parked at his scoring desk with an espresso, inspecting every figure and stamping frozen editions.
               </p>
             </div>
 

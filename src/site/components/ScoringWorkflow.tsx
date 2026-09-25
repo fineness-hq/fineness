@@ -92,14 +92,14 @@ const REFINERY_STATIONS: Station[] = [
 ];
 
 /**
- * AssayWorkflow:
+ * ScoringWorkflow:
  * Hardware-accelerated 60/120fps Pinned Horizontal Conveyor Rail.
  * Features:
  * - Spring-dampened motion values via Framer Motion useSpring for liquid inertia.
  * - Hardware accelerated translate3d with will-change: transform.
  * - Zero layout reflow or transition-conflict stutters.
  */
-export default function AssayWorkflow() {
+export default function ScoringWorkflow() {
   const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const railPctRef = useRef<HTMLSpanElement>(null);
@@ -299,7 +299,7 @@ export default function AssayWorkflow() {
                           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
                             <Image
                               src="/images/cat-scanner-8bit.jpg"
-                              alt="Chief Assayer Cat Scanning Gold Bullion"
+                              alt="Chief Scorer Cat Scanning Evidence"
                               fill
                               sizes="(max-width: 768px) 100vw, 300px"
                               className="object-cover object-center opacity-85 hover:opacity-100 transition-opacity"
@@ -308,7 +308,7 @@ export default function AssayWorkflow() {
                             <div className="absolute bottom-2 inset-x-2 flex items-center justify-between font-mono text-[9px] z-10">
                               <span className="text-[var(--gold)] font-bold flex items-center gap-1">
                                 <ScanLine size={11} className="text-[var(--gold)] animate-pulse" />
-                                <span>BAY 01 · CHIEF ASSAYER</span>
+                                <span>BAY 01 · CHIEF SCORER</span>
                               </span>
                               <span className="text-white/70 bg-black/60 px-1.5 py-0.5 rounded border border-white/10">
                                 SNAPSHOT SCAN
@@ -321,7 +321,7 @@ export default function AssayWorkflow() {
                           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded bg-[#0A0D12]">
                             <Image
                               src="/images/cat-smelter-8bit.jpg"
-                              alt="Cat Assayer Smelting Gold Bullion"
+                              alt="Scorer Cat Weighing Evidence"
                               fill
                               sizes="(max-width: 768px) 100vw, 300px"
                               className="object-cover object-center opacity-90 hover:opacity-100 transition-opacity"

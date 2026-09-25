@@ -94,7 +94,7 @@ export default function Entry({
 
   const detail = (
     <div className="border-t border-[var(--rule)] bg-[var(--surface-alt)]/40 px-5 py-6">
-      {/* Official Assay Dossier Header */}
+      {/* Official Venue Dossier Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] pb-4 mb-4">
         <div className="flex items-center gap-2">
           <span className="flex h-6 w-6 items-center justify-center rounded bg-[var(--gold)] text-white shadow-xs">
@@ -105,7 +105,7 @@ export default function Entry({
               OFFICIAL VENUE DOSSIER // {venue.name}
             </h3>
             <p className="mono text-[10px] text-[var(--ink-3)]">
-              CRUCIBLE REPRODUCIBLE ASSAY LEDGER
+              FINENESS SCORING LEDGER
             </p>
           </div>
         </div>
@@ -223,24 +223,27 @@ export default function Entry({
                 key={`${c.label}-${c.address}`}
                 className="mono flex items-center justify-between gap-2 rounded bg-[var(--surface)] p-2 text-xs border border-[var(--rule)]"
               >
-                <div className="flex items-center gap-1.5 overflow-hidden">
+                <div className="flex min-w-0 flex-1 items-center gap-1.5">
                   <ShieldCheck
                     size={13}
                     className={c.verified ? 'text-[var(--ok)] shrink-0' : 'text-[var(--ink-3)] shrink-0'}
                   />
                   <span className="font-semibold text-[var(--ink)] shrink-0">{c.label}:</span>
-                  <span className="truncate text-[var(--ink-2)]" title={c.address}>
-                    {c.address.slice(0, 10)}…{c.address.slice(-4)}
+                  <span
+                    className="mono no-scrollbar min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-[11px] tracking-wider text-[var(--ink-2)]"
+                    title={c.address}
+                  >
+                    {c.address}
                   </span>
-                  <span className="text-[10px] text-[var(--ink-3)]">
+                  <span className="shrink-0 text-[10px] text-[var(--ink-3)]">
                     {c.verified ? '(verified)' : '(unverified)'}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => copyAddress(c.address)}
-                  className="shrink-0 p-1 text-[var(--ink-3)] hover:text-[var(--ink)]"
-                  title="Copy address"
+                  className="shrink-0 self-start rounded border border-transparent p-1.5 text-[var(--ink-3)] transition-all hover:border-[var(--gold)] hover:text-[var(--ink)]"
+                  title="Copy full address"
                 >
                   {copiedContract === c.address ? (
                     <Check size={12} className="text-[var(--ok)]" />

@@ -149,7 +149,7 @@ const INTEGRITY_PILLARS = [
 
 /**
  * MethodPage:
- * Luxury Swiss Gold Assay Methodology and Admission Charter.
+ * Standing methodology and scoring charter.
  */
 export default function MethodPage() {
   return (
@@ -158,14 +158,14 @@ export default function MethodPage() {
 
       {/* Hero Header */}
       <div className="relative border-b border-[var(--rule)] bg-[var(--surface-alt)] py-16 md:py-24 overflow-hidden">
-        {/* Atmospheric Swiss Assay Laboratory Backdrop */}
+            {/* Illustration backdrop */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         >
           <Image
-            src="/images/swiss-assay-lab.jpg"
-            alt="Swiss Gold Bullion Assay Laboratory"
+            src="/images/scoring-lab.jpg"
+            alt="Illustrative scoring laboratory"
             fill
             sizes="100vw"
             className="object-cover object-center filter brightness-50 contrast-125 opacity-20"
@@ -234,11 +234,11 @@ export default function MethodPage() {
                   </span>
                 </div>
 
-                {/* Assay Desk Visual */}
+                {/* Scoring desk visual */}
                 <div className="relative mt-3 h-48 sm:h-56 w-full rounded-xl overflow-hidden border border-[var(--rule)] bg-[#0A0D12]">
                   <Image
-                    src="/images/swiss-assay-lab.jpg"
-                    alt="Swiss Bullion Assay Desk"
+                    src="/images/scoring-lab.jpg"
+                    alt="Illustrative scoring desk"
                     fill
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"

@@ -179,7 +179,7 @@ export default function WhyFinenessBento() {
             </div>
           </motion.div>
 
-          {/* DECK 3: ASSAYER'S SANCTUARY (Cols 1-5) */}
+          {/* DECK 3: SCORER'S SANCTUARY (Cols 1-5) */}
           <motion.div
             style={{ y: leftColY }}
             className="lg:col-span-5 rounded-2xl border-2 border-[var(--rule)] bg-[var(--surface-alt)] p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:border-[var(--gold)]/80 transition-colors duration-250 relative group overflow-hidden will-change-transform"
@@ -196,19 +196,19 @@ export default function WhyFinenessBento() {
               </div>
 
               <h3 className="mt-4 font-[var(--font-inter)] text-xl font-black text-[var(--ink)] leading-snug">
-                Unbribable Assayer Integrity
+                Unbribable Scorer Integrity
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
                 Zero listing fees, zero foundation grants, zero marketing tolls. No venue can buy placement. A venue goes quiet for 60 days, goes dark, or fails pairing on re-review — it is struck from the register.
               </p>
             </div>
 
-            {/* Assayer Cat Seal Visual */}
+            {/* Cat Seal Visual */}
             <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 flex items-center gap-4 font-mono">
               <div className="relative h-14 w-14 rounded-xl border-2 border-[var(--gold)] overflow-hidden shrink-0 shadow-md">
                 <Image
                   src="/images/cat-inspector-8bit.jpg"
-                  alt="Assayer Cat Integrity Seal"
+                      alt="Scorer Cat Integrity Seal"
                   fill
                   sizes="64px"
                   className="object-cover"

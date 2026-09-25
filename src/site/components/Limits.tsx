@@ -45,7 +45,7 @@ export default function Limits() {
       <Reveal>
         <div className="border-b border-[var(--rule)] pb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <p className="eyebrow">ASSAY CHARTER // METHODOLOGICAL BOUNDARIES</p>
+            <p className="eyebrow">FINENESS CHARTER // METHODOLOGICAL BOUNDARIES</p>
             <h2
               id="limits-title"
               className="mt-1 font-[var(--font-inter)] text-3xl font-extrabold tracking-tight text-[var(--ink)]"
