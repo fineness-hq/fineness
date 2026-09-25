@@ -56,7 +56,12 @@ standard", brief section 7). The baseline is therefore still calibrating:
 
 ## Enforcement
 
-- Human process first: the day 4 to 6 score review checks every moved score
+- Autonomous operation: the AI analyst proposes inside the ±1 cap with
+  rewritten rationale, and the code gates sign off — `validateEdition`
+  hard-fails bad ranges, `warnScoreMoves` flags cap breaches and
+  unchanged rationale, `--strict` halts the run on any smell. No human
+  review step blocks publishing.
+- Human process (optional): the day 4 to 6 score review checks every moved score
   against rules 1, 2, and 4.
 - Machine assist (non-blocking): `validateEdition` may gain a warning (never a
   hard failure) when a score moves without a rationale change, to flag likely
