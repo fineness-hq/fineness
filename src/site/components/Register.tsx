@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import { HOUSE_WEIGHTS, band } from '../../scoring/fineness';
+import { HOUSE_WEIGHTS, band, CRITERIA } from '../../scoring/fineness';
 import type { Criterion, Weights } from '../../scoring/fineness';
 import type { Delta } from '../../build/deltas';
 import type { Venue } from '../../types';
-import { applyWeights } from '../weight-url';
+import { applyWeights, HOUSE_RAW } from '../weight-url';
 import CutLine from './CutLine';
 import Entry from './Entry';
 import { WordText } from './Stagger';
@@ -38,7 +38,17 @@ export default function Register({
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState('');
   const [bandFilter, setBandFilter] = useState<BandFilter>('all');
+  // Bumped to remount WeightPanel on house reset (sliders live inside it).
+  const [panelKey, setPanelKey] = useState(0);
+  const [forceHouse, setForceHouse] = useState(false);
   const reduce = useReducedMotion();
+
+  const isHouse = CRITERIA.every((c) => Math.abs(weights[c] - HOUSE_WEIGHTS[c]) < 1e-9);
+
+  function resetToHouse() {
+    setForceHouse(true);
+    setPanelKey((k) => k + 1);
+  }
 
   const reweighted = useMemo(
     () => applyWeights(venues.filter((v) => v.status !== 'struck'), weights),
@@ -121,7 +131,29 @@ export default function Register({
       </div>
 
       <div className="mt-6 overflow-hidden rounded-lg border border-[var(--rule)] shadow-sm bg-[var(--surface)]">
-        <WeightPanel initialRaw={initialRaw} onWeightsChange={setWeights} />
+        {!isHouse && (
+          <div
+            role="status"
+            className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--gold)]/50 bg-[var(--tint)] px-5 py-2.5"
+          >
+            <p className="mono text-xs text-[var(--ink)]">
+              <span className="font-bold text-[var(--gold)]">Custom weights active</span>
+              {' — showing your ranking, not the house register.'}
+            </p>
+            <button
+              type="button"
+              onClick={resetToHouse}
+              className="mono rounded border border-[var(--rule)] bg-[var(--surface)] px-2.5 py-1 text-[11px] font-bold text-[var(--ink)] transition-all hover:border-[var(--dark)]"
+            >
+              Reset to house weights
+            </button>
+          </div>
+        )}
+        <WeightPanel
+          key={panelKey}
+          initialRaw={forceHouse ? { ...HOUSE_RAW } : initialRaw}
+          onWeightsChange={setWeights}
+        />
 
         {/* Table filter bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--rule)] bg-[var(--surface-alt)] px-5 py-3 text-xs">
