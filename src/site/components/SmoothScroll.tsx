@@ -5,8 +5,8 @@ import Lenis from 'lenis';
 
 /**
  * Global smooth inertial scrolling via Lenis.
- * Provides frictionless, 120fps GPU-accelerated smooth scrolling
- * across the entire application while respecting prefers-reduced-motion.
+ * Provides feather-light, responsive 120fps GPU-accelerated smooth scrolling.
+ * Never hijacks mobile touch gestures or causes rubber-band stutter.
  */
 export default function SmoothScroll() {
   useEffect(() => {
@@ -16,13 +16,13 @@ export default function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.6,
+      touchMultiplier: 1.0,
       autoRaf: true,
     });
 

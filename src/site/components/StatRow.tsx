@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Activity, ShieldAlert, Award, Calendar } from 'lucide-react';
 import type { Venue } from '../../types';
 import CountUp from './CountUp';
@@ -41,13 +41,7 @@ export default function StatRow({ venues, dataAsOf }: StatRowProps) {
     offset: ['start end', 'end start'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 25,
-    restDelta: 0.001,
-  });
-
-  const laserScaleX = useTransform(smoothProgress, [0, 0.4], reduce ? [1, 1] : [0, 1]);
+  const laserScaleX = useTransform(scrollYProgress, [0, 0.4], reduce ? [1, 1] : [0, 1]);
 
   return (
     <section

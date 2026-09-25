@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
 import { WordText } from './Stagger';
 
@@ -79,14 +79,8 @@ export default function ScaleTable() {
     offset: ['start end', 'end start'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
   const needleX = useTransform(
-    smoothProgress,
+    scrollYProgress,
     [0.15, 0.75],
     reduce ? ['37.5%', '37.5%'] : ['2%', '96%'],
   );

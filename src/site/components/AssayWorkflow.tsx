@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Scale,
   Database,
@@ -128,18 +128,11 @@ export default function AssayWorkflow() {
     offset: ['start start', 'end end'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 85,
-    damping: 24,
-    mass: 0.6,
-    restDelta: 0.001,
-  });
-
-  const x = useTransform(smoothProgress, [0, 1], [0, -maxTranslate]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, -maxTranslate]);
 
   // Synchronize telemetry and active bay without triggering full component re-renders
   useEffect(() => {
-    const unsubscribe = smoothProgress.on('change', (latest) => {
+    const unsubscribe = scrollYProgress.on('change', (latest) => {
       if (railPctRef.current) {
         railPctRef.current.textContent = `RAIL: ${Math.round(latest * 100)}%`;
       }
@@ -147,7 +140,7 @@ export default function AssayWorkflow() {
       setActiveStationIndex((prev) => (prev !== nextIdx ? nextIdx : prev));
     });
     return () => unsubscribe();
-  }, [smoothProgress]);
+  }, [scrollYProgress]);
 
   // Jump to specific station
   const jumpToStation = (index: number) => {

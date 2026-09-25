@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import {
   Lock,
   TrendingUp,
@@ -26,15 +26,8 @@ export default function WhyFinenessBento() {
     offset: ['start end', 'end start'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 24,
-    mass: 0.6,
-    restDelta: 0.001,
-  });
-
-  const leftColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [28, -28]);
-  const rightColY = useTransform(smoothProgress, [0, 1], reduce ? [0, 0] : [-28, 28]);
+  const leftColY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [28, -28]);
+  const rightColY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [-28, 28]);
 
   return (
     <section

@@ -47,30 +47,22 @@ export default function CrucibleManifesto() {
     offset: ['start start', 'end end'],
   });
 
-  // Spring dampening on scroll for liquid silk motion
-  const smoothScrollProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 24,
-    mass: 0.5,
-    restDelta: 0.001,
-  });
-
-  // Sync scroll to slider position if not manually dragging
+  // Sync scroll to slider position directly without double-spring latency
   useEffect(() => {
-    const unsubscribe = smoothScrollProgress.on('change', (latest) => {
+    const unsubscribe = scrollYProgress.on('change', (latest) => {
       if (isDragging) return;
-      // Map scroll progress (0.0 to 1.0) to reveal (20% to 88%)
-      const target = 20 + latest * 68;
+      // Map scroll progress (0.0 to 1.0) to reveal (18% to 86%)
+      const target = 18 + latest * 68;
       manualSliderPos.set(target);
     });
     return () => unsubscribe();
-  }, [smoothScrollProgress, isDragging, manualSliderPos]);
+  }, [scrollYProgress, isDragging, manualSliderPos]);
 
-  // Spring-smoothed active slider value for clip-path and blade needle
+  // Single fast-settling spring for instant, lag-free caliper motion
   const activeSlider = useSpring(manualSliderPos, {
-    stiffness: 160,
-    damping: 25,
-    mass: 0.35,
+    stiffness: 260,
+    damping: 30,
+    mass: 0.18,
     restDelta: 0.001,
   });
 
@@ -169,7 +161,7 @@ export default function CrucibleManifesto() {
             alt="Swiss Gold Bullion Vault"
             fill
             sizes="100vw"
-            className="object-cover object-center filter brightness-60 contrast-125 opacity-35"
+            className="object-cover object-center opacity-30"
             priority={false}
           />
           <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_30%,var(--surface-alt)_85%]" />
