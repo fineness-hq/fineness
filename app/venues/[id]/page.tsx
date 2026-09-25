@@ -228,7 +228,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
                   <span className="text-lg text-[var(--ink-3)] font-normal"> / 1000</span>
                 </div>
                 <span className="text-[10px] mt-1 text-[var(--ink-2)]">
-                  {isHallmarked ? 'CERTIFIED INSTITUTIONAL HALLMARK' : 'BELOW 375 HALLMARK GATE'}
+                  {isHallmarked ? 'CERTIFIED HALLMARK' : 'LISTED BUT NOT CERTIFIED'}
                 </span>
               </div>
             </div>
@@ -551,7 +551,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
             Current Evaluation Breakdown
           </h2>
           <p className="prose mt-1 max-w-[68ch] text-xs sm:text-sm text-[var(--ink-2)]">
-                Detailed criteria ratings out of 10 with documented editorial rationale and house weight contributions.
+            Detailed criteria scores out of 10 with documented editorial rationale and house weight contributions.
           </p>
         </div>
 

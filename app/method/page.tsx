@@ -199,7 +199,7 @@ export default function MethodPage() {
 
               <p className="prose mt-4 max-w-[68ch] text-sm sm:text-base leading-relaxed text-[var(--ink-2)]">
                 The methodology is the product. Every score is deterministically reproducible from published public inputs.
-                Scores are editorial judgements on public information. Fineness is never an audit, a credit rating, or financial advice.
+                Scores are editorial judgements on public information. Fineness is not an audit, a credit rating, or investment advice.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs">
@@ -378,7 +378,7 @@ export default function MethodPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--rule)]">
           <div>
             <p className="eyebrow text-[var(--gold)] font-mono text-xs tracking-widest">
-              PURITY SPECTRUM // KARAT RATINGS
+              PURITY SPECTRUM // KARAT BANDS
             </p>
             <h2
               id="bands-title"
@@ -461,9 +461,9 @@ export default function MethodPage() {
                   <td className="px-4 py-3 tabular-nums text-[var(--ink)]">{b.range}</td>
                   <td className="px-4 py-3 text-[var(--ink-2)]">
                     {b.range.includes('Under') ? (
-                      <span className="text-red-600 font-bold">Uncertified</span>
+                      <span className="text-red-600 font-bold">Listed but not certified</span>
                     ) : (
-                      <span className="text-emerald-600 font-bold">Certified Institutional Hallmark</span>
+                      <span className="text-emerald-600 font-bold">Certified Hallmark</span>
                     )}
                   </td>
                 </tr>

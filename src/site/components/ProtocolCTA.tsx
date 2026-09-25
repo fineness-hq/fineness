@@ -305,7 +305,7 @@ const certified = editionData.venues.filter(v => v.fineness >= 375);`,
 
                   <div className="flex items-center gap-3">
                     <span>CORS: *</span>
-                    <span className="text-[var(--gold)] font-bold">PUBLIC PUBLIC ENCLAVE</span>
+                    <span className="text-[var(--gold)] font-bold">PUBLIC ARCHIVE ENCLAVE</span>
                   </div>
                 </div>
 

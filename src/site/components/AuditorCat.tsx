@@ -7,7 +7,7 @@ import { Stamp, Sparkles, Coffee } from 'lucide-react';
 
 interface AuditorCatProps {
   className?: string;
-  /** Venues assayed in this edition — honest base for the counter. */
+  /** Venues assayed in this edition - honest base for the counter. */
   baseCount?: number;
 }
 
@@ -97,7 +97,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
           if (!isMounted) return;
           setStampActive(false);
 
-          // 4. Brief pause before next audit cycle
+          // 4. Brief pause before next stamp cycle
           timer = setTimeout(runCycle, pauseDuration);
         }, downHoldDuration);
       }, upDuration);
@@ -129,7 +129,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
       onClick={handleManualStamp}
       style={{ perspective: 1000 }}
       role="region"
-      aria-label="The Bureaucrat Assayer Cat — Real Stamping Mascot"
+      aria-label="The Bureaucrat Assayer Cat, real stamping mascot"
       title="Click cat to speed up assay stamping!"
     >
       {/* Floating Status Bar (Direct on background) */}
@@ -152,7 +152,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
         </div>
       </div>
 
-      {/* 3D Cat Stage — Seamlessly Sitting on Background Canvas.
+      {/* 3D Cat Stage - Seamlessly Sitting on Background Canvas.
           Bottom fades into the page bg so the cut edge melts away. */}
       <div
         className="relative flex h-[400px] sm:h-[470px] md:h-[530px] w-full items-center justify-end overflow-visible"
@@ -311,7 +311,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
               </div>
             )}
 
-            {/* Main Certified Stamp Imprint — big slam, double ring, grunge tilt */}
+            {/* Main Certified Stamp Imprint - big slam, double ring, grunge tilt */}
             <motion.div
               className="absolute left-[36%] bottom-[27%] z-30 pointer-events-none rotate-[-6deg] rounded-md border-[3px] border-[var(--band-high)] bg-[var(--surface)]/95 px-3 py-1.5 shadow-lg"
               style={{ boxShadow: 'inset 0 0 0 1px var(--surface), inset 0 0 0 2px var(--band-high), 0 6px 16px rgba(15,20,25,0.25)' }}
@@ -337,7 +337,7 @@ export default function AuditorCat({ className = '', baseCount = 0 }: AuditorCat
           <Sparkles className="h-3 w-3 text-[var(--gold)]" />
           <span>CLICK CAT TO SPEED UP ASSAY</span>
           <span className="text-[var(--gold)] font-bold ml-1">
-            {isRapid ? '⚡ RAPID' : '• ACTIVE'}
+            {isRapid ? 'RAPID' : 'ACTIVE'}
           </span>
         </span>
       </div>

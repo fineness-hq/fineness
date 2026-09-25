@@ -27,7 +27,7 @@ export default function NotFound() {
           </h1>
 
           <p className="mt-3 text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">
-            The requested venue dossier, edition snapshot, or document hash has not been struck or admitted to the sovereign metallurgical register.
+            The requested venue dossier, edition snapshot, or document hash has not been admitted to the Fineness register.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 font-mono text-xs">
