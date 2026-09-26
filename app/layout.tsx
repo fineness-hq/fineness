@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -29,9 +29,11 @@ export const metadata: Metadata = {
     "Monthly ranked register scoring tokenized asset venues on a 0-1000 fineness scale. Editorial judgement on public information, not audits or ratings.",
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon.png', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
+    apple: '/favicon.png',
   },
 };
 
