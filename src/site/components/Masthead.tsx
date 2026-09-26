@@ -18,7 +18,7 @@ export default function Masthead({ edition, latestEdition }: MastheadProps) {
         <div className="page-wrap tera-header-in">
           <Link href="/" className="tera-brand" aria-label="Fineness home">
             <XSlide className="tera-brand-slide">
-              <FinenessMark size={22} color="var(--gold)" />
+              <FinenessMark size={46} className="-mr-3.5" />
               <span className="tera-brand-word">FINENESS</span>
               <span className="tera-brand-ed">{edition}</span>
             </XSlide>

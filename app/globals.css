@@ -338,8 +338,10 @@ html.js [data-xslide='hidden'] {
 }
 .tera-load-mark .tera-mark,
 .tera-load-mark .tera-load-svg-mark {
-  width: 64px;
-  height: 64px;
+  width: auto;
+  max-width: 148px;
+  height: 104px;
+  object-fit: contain;
   animation: tera-load-float 2.4s ease-in-out infinite;
   filter: drop-shadow(0 0 16px rgba(196, 139, 15, 0.4));
 }

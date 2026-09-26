@@ -127,13 +127,13 @@ export default function Preloader({ edition = '2026-10' }: { edition?: string })
         ))}
       </div>
       <div className="tera-load-top flex items-center gap-2">
-        <FinenessMark size={16} color="var(--gold)" />
+        <FinenessMark size={32} className="-mr-2.5" />
         <span className="tera-load-brand">FINENESS</span>
         <span className="tera-load-edition">Edition {edition}</span>
       </div>
       <div className="tera-load-center">
         <div className="tera-load-mark" aria-hidden="true">
-          <FinenessMark size={64} color="var(--gold)" className="tera-load-svg-mark" />
+          <FinenessMark size={110} className="tera-load-svg-mark" />
         </div>
         <p className="tera-load-title" aria-hidden="true">
           {title.split('').map((ch, i) => (

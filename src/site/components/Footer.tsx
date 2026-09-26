@@ -21,7 +21,7 @@ export default function Footer({ edition }: FooterProps) {
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
           <div className="max-w-xl">
             <Link href="/" className="inline-flex items-center gap-3 group" aria-label="Fineness Home">
-              <FinenessMark size={28} color="var(--gold)" />
+              <FinenessMark size={52} className="-mr-4" />
               <span className="font-[var(--font-inter)] text-2xl sm:text-3xl font-black tracking-tight text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
                 FINENESS
               </span>
