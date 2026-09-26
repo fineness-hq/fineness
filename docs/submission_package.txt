@@ -1,0 +1,206 @@
+================================================================================
+PROJECT SUBMISSION & HANDOVER REPORT — FINENESS
+Monthly register scoring tokenized asset venues 0-1000 on backing purity
+Generated: September 2026
+================================================================================
+
+--------------------------------------------------------------------------------
+SECTION 1: BRIEF
+--------------------------------------------------------------------------------
+Status: Completed
+- Repository: https://github.com/fineness-hq/fineness
+- Branch: main
+
+
+--------------------------------------------------------------------------------
+SECTION 2: DEV KERJA
+--------------------------------------------------------------------------------
+1. Live Production Web URL:
+   https://fineness-sepia.vercel.app
+
+2. Latest Edition (live register):
+   https://fineness-sepia.vercel.app/editions/2026-10
+
+3. Machine JSON (verbatim edition data):
+   https://fineness-sepia.vercel.app/editions/2026-10.json
+
+4. Methodology (standing document):
+   https://fineness-sepia.vercel.app/method
+
+5. GitHub Repository:
+   https://github.com/fineness-hq/fineness
+   Branch: main
+
+6. Tech Stack & Architecture:
+   - Framework: Next.js 16.3.4 (App Router) + React 19 + TypeScript 5 (strict)
+   - Styling: Tailwind CSS v4 + framer-motion (light editorial theme)
+   - Scoring: pure function fineness() — weighted mean x 100, rounded once;
+     house weights 30/25/20/15/10; hallmark 375; bands 22k/18k/14k/9k
+   - Data Providers: Bitquery (volume), DefiLlama (fees/TVL), chain explorer
+     (verification) — monthly pull, nulls never fabricated
+   - AI Review: OpenAI-compatible endpoint, temp 0; model proposes inside a
+     +/-1 cap, code disposes (clamp, rationale-required, known ids only)
+   - Automation: GitHub Actions cron day 1 05:00 UTC + scripts/monthly.ts;
+     hands-free with test/tsc/lint/build gates; --strict halts on any smell
+   - No wallet, no accounts, no database, no paid-placement path
+   - Testing: Vitest — 74 tests across 14 files
+
+7. Frozen Edition Facts (2026-10):
+   - Snapshot hash: sha256:4b69e671aedc1a8d31a4365abd087477fbc084f85b95b00de1ab90ec43dc9f59
+   - Top venue: Pons, 745 / 14k. Certified 8 of 10, below hallmark 2.
+   - Nothing in the category clears 18 karat.
+
+8. Documentation Index:
+   - Project Report (report.md): https://github.com/fineness-hq/fineness/blob/main/docs/report.md
+   - Developer Brief (source of truth): https://github.com/fineness-hq/fineness/blob/main/DEVELOPER_BRIEF.md
+   - Methodology: https://github.com/fineness-hq/fineness/blob/main/docs/METHOD.md
+   - Runbook: https://github.com/fineness-hq/fineness/blob/main/docs/RUNBOOK.md
+   - Score Policy: https://github.com/fineness-hq/fineness/blob/main/docs/SCORE-POLICY.md
+   - Register Scope (Q1/Q3/Q4 decisions): https://github.com/fineness-hq/fineness/blob/main/docs/REGISTER-SCOPE.md
+   - Acceptance Record: https://github.com/fineness-hq/fineness/blob/main/docs/ACCEPTANCE.md
+   - Main Repository README: https://github.com/fineness-hq/fineness/blob/main/README.md
+
+
+--------------------------------------------------------------------------------
+SECTION 3: QUALITY ASSURANCE (QA) REPORT
+--------------------------------------------------------------------------------
+[PASS] 1. AI Slop & Code Quality Check:
+   - Strict TypeScript compilation: Zero errors (verified via `npx tsc --noEmit`).
+   - ESLint: 0 errors (verified via `npm run lint`).
+   - Clean modular layout: scoring in `src/scoring/`, providers in
+     `src/ingest/`, pipeline in `src/build/`, review in `src/llm/`,
+     site in `src/site/` + `app/`.
+   - Real deterministic logic: weighted-mean scoring, content hashing,
+     alphabetical tiebreaks, retention rules; no fake delays.
+
+[PASS] 2. Responsive UI & Cross-Device Compatibility:
+   - Desktop (1920px): Full landing, register, tables in own scroll containers.
+   - Mobile (390px): No page-level horizontal scroll; tables scroll inside
+     containers without visible scrollbars; grids collapse single-column.
+
+[PASS] 3. End-to-End Application Flow:
+   - Monthly run: pull -> snapshot+hash -> AI review (capped) -> carry ->
+     validate -> commit+push -> deploy. Verified by execution on real data.
+   - Reader: open latest edition -> adjust weight sliders -> live re-sort ->
+     share ?w= link reproducing the ranking before first paint.
+   - Venue: expand entry -> scores, rationale, metrics (null renders
+     "not published"/"n/a", never zero), contracts with copy, links.
+   - Dossier: /venues/:id history across editions with sparkline.
+   - Machine: /editions/:id.json byte-matches the shipped file (e2e asserts).
+
+[PASS] 4. Animation & Performance:
+   - Preloader with stages + Esc skip + focus trap + reduced-motion bypass.
+   - Scroll reveals honoring prefers-reduced-motion; no-JS fallback renders
+     full content (reweighting is the only JS-required enhancement).
+
+[PASS] 5. GitHub Repository Cleanliness:
+   - README.md: project overview and links.
+   - Frozen editions: data/editions/2026-09.json + 2026-10.json with matching
+     snapshots (hash-verified in tests).
+   - Sensitive Data: `.env.local` gitignored; LLM + Bitquery keys live in
+     environment/CI secrets only, values never committed.
+
+
+--------------------------------------------------------------------------------
+SECTION 4: VIDEO & REPORT.MD
+--------------------------------------------------------------------------------
+
+A. VIDEO ASSETS
+1. Video Launch (Cinematic AI Teaser / Promo):
+   Status: [CREATED BY USER]
+
+
+B. PROJECT REPORT (REPORT.MD SPECIFICATION)
+
+# FINENESS — PROJECT REPORT & APPLICATION ARCHITECTURE
+
+1. PROJECT DESCRIPTION
+Fineness is a monthly ranked register of venues that launch or trade
+tokenized assets. Each venue receives a fineness score from 0 to 1000,
+derived from five weighted criteria (asset 30, traction 25, transparency
+20, compliance 15, durability 10). The register prices the gap between
+RWA marketing and actual backing: most venues sell memecoins while the
+real asset appears only as the pairing. A pure build-time pipeline pulls
+public figures into hashed snapshots and freezes permanent edition pages
+plus verbatim JSON. Live: 2 frozen editions, 10 venues each, peak 745
+(Pons, 14k) — nothing clears 18 karat.
+
+2. CORE CAPABILITIES
+- Deterministic Scoring: weighted mean x 100, rounded once; reader parity
+  between build output and browser recompute.
+- Shareable Reweighting: five sliders + presets serialize into ?w= URLs
+  with before-first-paint ranking and a custom-weights banner + reset.
+- Frozen Editions: content-hashed snapshots, alphabetical tiebreaks,
+  house-weight deltas, struck dates, correction notes with dual sign-off.
+- Editorial Integrity: no paid placement path, resolving sourceIds,
+  null discipline, never described as audit or rating.
+- Full Autonomy: cron + AI review inside policy caps + gates; --strict
+  halts on any smell; humans only on exception.
+
+3. END-TO-END APPLICATION FLOW (USER & SYSTEM WORKFLOW)
+[Step 1: Monthly run]
+- Cron day 1 (or npm run monthly): pull providers -> atomic snapshot ->
+  hash -> AI review (capped) or carry -> validate -> atomic edition ->
+  tests pass -> commit+push -> Vercel deploys.
+[Step 2: Read]
+- Visitor opens https://fineness-sepia.vercel.app, reads the latest frozen
+  edition: hero proof bar, telemetry, ticker, register, comparison tables.
+[Step 3: Reweight]
+- Sliders/presets recompute the ranking live; the URL updates; opening
+  that URL reproduces the sender ranking before first paint.
+[Step 4: Inspect]
+- Expand any venue: per-criterion scores with rationale, key figures,
+  contracts with copy, official links. Dossier pages show cross-edition
+  history with sparkline.
+[Step 5: Build on it]
+- Fetch /editions/<id>.json: venues, scores, bands, ranks, metrics,
+  sources — the same data the page renders.
+
+
+C. OFFICIAL X (TWITTER) ACCOUNT
+- Profile URL: https://x.com/finenesslabs
+- Handle: @finenesslabs
+- Username / Email: [USER_FILL_HERE]
+- Password: [USER_FILL_HERE]
+
+
+--------------------------------------------------------------------------------
+SECTION 5: VERIFIKASI (PRE-LAUNCH CHECKLIST)
+--------------------------------------------------------------------------------
+[x] 1. Cek Kelengkapan File Repositori:
+    - Web Application: https://github.com/fineness-hq/fineness
+    - Scoring Engine: https://github.com/fineness-hq/fineness/blob/main/src/scoring/fineness.ts
+    - Monthly Pipeline: https://github.com/fineness-hq/fineness/blob/main/scripts/monthly.ts
+    - Project Report (report.md): https://github.com/fineness-hq/fineness/blob/main/docs/report.md
+    - Developer Brief: https://github.com/fineness-hq/fineness/blob/main/DEVELOPER_BRIEF.md
+    - README.md: https://github.com/fineness-hq/fineness/blob/main/README.md
+
+[x] 2. Cek Live Deployment:
+    - Web Live: https://fineness-sepia.vercel.app
+    - Latest Edition: https://fineness-sepia.vercel.app/editions/2026-10
+    - Machine JSON: https://fineness-sepia.vercel.app/editions/2026-10.json
+    - Methodology: https://fineness-sepia.vercel.app/method
+
+[x] 3. Template Chat Konfirmasi:
+--------------------------------------------------------------------------------
+Halo tim / lead,
+
+Proyek FINENESS (Monthly register scoring tokenized asset venues 0-1000
+on backing purity) sudah selesai 100% dan siap untuk ditinjau / diluncurkan:
+
+- Web Live: https://fineness-sepia.vercel.app
+- Latest Edition: https://fineness-sepia.vercel.app/editions/2026-10
+- Machine JSON: https://fineness-sepia.vercel.app/editions/2026-10.json
+- GitHub Repo: https://github.com/fineness-hq/fineness
+- Project Report (report.md): https://github.com/fineness-hq/fineness/blob/main/docs/report.md
+
+"Ready to launch!"
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+SECTION 6: FINISH
+--------------------------------------------------------------------------------
+Status: ALL DELIVERABLES COMPLETED & VERIFIED.
+Project hand-off complete.
+================================================================================
