@@ -16,16 +16,16 @@ Status: Completed
 SECTION 2: DEV KERJA
 --------------------------------------------------------------------------------
 1. Live Production Web URL:
-   https://fineness-sepia.vercel.app
+   https://fineness.tech
 
 2. Latest Edition (live register):
-   https://fineness-sepia.vercel.app/editions/2026-10
+   https://fineness.tech/editions/2026-10
 
 3. Machine JSON (verbatim edition data):
-   https://fineness-sepia.vercel.app/editions/2026-10.json
+   https://fineness.tech/editions/2026-10.json
 
 4. Methodology (standing document):
-   https://fineness-sepia.vercel.app/method
+   https://fineness.tech/method
 
 5. GitHub Repository:
    https://github.com/fineness-hq/fineness
@@ -143,7 +143,7 @@ plus verbatim JSON. Live: 2 frozen editions, 10 venues each, peak 745
   hash -> AI review (capped) or carry -> validate -> atomic edition ->
   tests pass -> commit+push -> Vercel deploys.
 [Step 2: Read]
-- Visitor opens https://fineness-sepia.vercel.app, reads the latest frozen
+- Visitor opens https://fineness.tech, reads the latest frozen
   edition: hero proof bar, telemetry, ticker, register, comparison tables.
 [Step 3: Reweight]
 - Sliders/presets recompute the ranking live; the URL updates; opening
@@ -176,10 +176,10 @@ SECTION 5: VERIFIKASI (PRE-LAUNCH CHECKLIST)
     - README.md: https://github.com/fineness-hq/fineness/blob/main/README.md
 
 [x] 2. Cek Live Deployment:
-    - Web Live: https://fineness-sepia.vercel.app
-    - Latest Edition: https://fineness-sepia.vercel.app/editions/2026-10
-    - Machine JSON: https://fineness-sepia.vercel.app/editions/2026-10.json
-    - Methodology: https://fineness-sepia.vercel.app/method
+    - Web Live: https://fineness.tech
+    - Latest Edition: https://fineness.tech/editions/2026-10
+    - Machine JSON: https://fineness.tech/editions/2026-10.json
+    - Methodology: https://fineness.tech/method
 
 [x] 3. Template Chat Konfirmasi:
 --------------------------------------------------------------------------------
@@ -188,9 +188,9 @@ Halo tim / lead,
 Proyek FINENESS (Monthly register scoring tokenized asset venues 0-1000
 on backing purity) sudah selesai 100% dan siap untuk ditinjau / diluncurkan:
 
-- Web Live: https://fineness-sepia.vercel.app
-- Latest Edition: https://fineness-sepia.vercel.app/editions/2026-10
-- Machine JSON: https://fineness-sepia.vercel.app/editions/2026-10.json
+- Web Live: https://fineness.tech
+- Latest Edition: https://fineness.tech/editions/2026-10
+- Machine JSON: https://fineness.tech/editions/2026-10.json
 - GitHub Repo: https://github.com/fineness-hq/fineness
 - Project Report (report.md): https://github.com/fineness-hq/fineness/blob/main/docs/report.md
 

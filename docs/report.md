@@ -2,10 +2,10 @@
 
 **Monthly register scoring tokenized asset venues 0–1000 on what actually backs the token**
 
-- **Web Application:** https://fineness-sepia.vercel.app
-- **Latest Edition:** https://fineness-sepia.vercel.app/editions/2026-10
-- **Machine JSON:** https://fineness-sepia.vercel.app/editions/2026-10.json
-- **Methodology:** https://fineness-sepia.vercel.app/method
+- **Web Application:** https://fineness.tech
+- **Latest Edition:** https://fineness.tech/editions/2026-10
+- **Machine JSON:** https://fineness.tech/editions/2026-10.json
+- **Methodology:** https://fineness.tech/method
 - **GitHub Repository:** https://github.com/fineness-hq/fineness
 - **X Profile:** https://x.com/finenesslabs
 
@@ -145,4 +145,4 @@ A build-time pipeline (nothing computes at request time) pulls public figures in
 - **Live E2E:** All route checks green (`npm run e2e`) — home content, edition pages, verbatim JSON, custom-weight banner, method, all 10 venue dossiers, 404s.
 - **Determinism:** Rebuilding any edition from its snapshot reproduces byte-identical fineness values and ordering (verified by execution, not just reading).
 - **Security & Privacy:** `.env.local` git-ignored (LLM + Bitquery keys server/CI-side only); no wallet, no accounts, no paid-placement path; security headers (`nosniff`, strict referrer, `DENY` framing).
-- **Production Deployment:** Live on Vercel (`fineness-sepia.vercel.app`), auto-deployed on push to main.
+- **Production Deployment:** Live at `fineness.tech` (hosted on Vercel), auto-deployed on push to main.
