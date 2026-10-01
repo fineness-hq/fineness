@@ -1,0 +1,728 @@
+{
+  "edition": "2026-11",
+  "published": "2026-10-01",
+  "dataAsOf": "2026-10-01",
+  "snapshotHash": "sha256:df90fa4a01397244885a5a6b8d640d17633ea903c62b548dc5e2fab196ba6d23",
+  "houseWeights": {
+    "asset": 0.3,
+    "traction": 0.25,
+    "transparency": 0.2,
+    "compliance": 0.15,
+    "durability": 0.1
+  },
+  "disclosures": [],
+  "corrections": [],
+  "venues": [
+    {
+      "id": "pons",
+      "name": "Pons",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Pons moves the highest daily flow in the register against thinner asset backing.",
+      "scores": {
+        "asset": 6,
+        "traction": 10,
+        "transparency": 8,
+        "compliance": 5,
+        "durability": 8
+      },
+      "rationale": {
+        "asset": "Stock-pair lineup expanded to UPS, SNAP, LULU, PFE and JNJ in September [calibration].",
+        "traction": "Top daily volume venue with the densest pool activity in the observation window.",
+        "transparency": "Verified contracts, public inventory snapshots, and a named operating entity.",
+        "compliance": "Standard token disclaimers only, with no prospectus or license cited.",
+        "durability": "Two years live with consistent uptime and steadily growing liquidity."
+      },
+      "pairing": {
+        "assetType": "tokenized-equity",
+        "custodian": "Robinhood Europe",
+        "redeemable": false,
+        "verifiability": "attestation"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 12000000000,
+        "dailyVolumeUsd": 544000000,
+        "fees24hUsd": 5950000,
+        "tvlUsd": null,
+        "sourceIds": [
+          "gate-blog",
+          "coinstelegram",
+          "defillama"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://pons.markets",
+        "docs": "https://docs.pons.markets"
+      },
+      "facts": [
+        [
+          "12B",
+          "cumulative volume since the July launch, per September report"
+        ],
+        [
+          "174M",
+          "stock-pair volume, about five percent of venue flow"
+        ]
+      ],
+      "fineness": 745,
+      "band": "14k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e",
+          "verified": true
+        }
+      ],
+      "rank": 1,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "long-xyz",
+      "name": "Long.xyz",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Long.xyz lists tokenized equities with on-chain inventory backing and real secondary volume.",
+      "scores": {
+        "asset": 8,
+        "traction": 8,
+        "transparency": 6,
+        "compliance": 6,
+        "durability": 7
+      },
+      "rationale": {
+        "asset": "Inventory of tokenized equities reconciles against custodian statements each settlement cycle.",
+        "traction": "Leads the register on cumulative and daily volume with sustained weekly turnover.",
+        "transparency": "Factory contract verified and docs public, but lock schedules stay partly off-chain.",
+        "compliance": "EU prospectus route via licensed custodian, yet redemption rights remain limited.",
+        "durability": "Live across multiple market shocks with steady operator funding and deep pools."
+      },
+      "pairing": {
+        "assetType": "tokenized-equity",
+        "custodian": "Robinhood Europe",
+        "redeemable": false,
+        "verifiability": "on-chain"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 1000000000,
+        "dailyVolumeUsd": 425000000,
+        "fees24hUsd": null,
+        "tvlUsd": 12000000,
+        "sourceIds": [
+          "lookonchain",
+          "chaincatcher"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://long.xyz",
+        "docs": "https://docs.long.xyz"
+      },
+      "facts": [
+        [
+          "~20%",
+          "of all tokenized stock TVL on the chain"
+        ],
+        [
+          "1B+",
+          "cumulative tokenized stock volume milestone in September"
+        ]
+      ],
+      "fineness": 720,
+      "band": "14k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+          "verified": true
+        }
+      ],
+      "rank": 2,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "stonkfun",
+      "name": "StonkFun",
+      "chain": "solana",
+      "resident": false,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "StonkFun is a Solana memecoin launcher whose only real asset exposure is an index pairing.",
+      "scores": {
+        "asset": 6,
+        "traction": 7,
+        "transparency": 7,
+        "compliance": 4,
+        "durability": 6
+      },
+      "rationale": {
+        "asset": "Index pairing tracks listed equities without custody or redemption for holders.",
+        "traction": "Strong launch cadence and fee flow, though volumes swing hard with sentiment.",
+        "transparency": "Public developer API plus independent third-party coverage in September [calibration].",
+        "compliance": "Launcher disclaimers only, with no licensing statement for the tracked assets.",
+        "durability": "Survived one full hype cycle with the operator still shipping weekly."
+      },
+      "pairing": {
+        "assetType": "inventory-index",
+        "custodian": "StonkFun Index Account",
+        "redeemable": false,
+        "verifiability": "public-inventory"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 890000000,
+        "dailyVolumeUsd": 41000000,
+        "fees24hUsd": 120000,
+        "tvlUsd": null,
+        "sourceIds": [
+          "defillama",
+          "bitquery"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://stonkfun.io",
+        "docs": "https://docs.stonkfun.io"
+      },
+      "facts": [
+        [
+          "120k",
+          "daily fees in USD at the cut date"
+        ],
+        [
+          "STONK",
+          "protocol token with a live fee buyback flywheel"
+        ]
+      ],
+      "fineness": 615,
+      "band": "14k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f",
+          "verified": true
+        }
+      ],
+      "rank": 3,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "pools-trade",
+      "name": "Pools.trade",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Pools.trade runs audited index vaults with modest flow but strong disclosure.",
+      "scores": {
+        "asset": 3,
+        "traction": 5,
+        "transparency": 9,
+        "compliance": 7,
+        "durability": 9
+      },
+      "rationale": {
+        "asset": "Vaults hold index positions rather than custodied securities, capping asset quality.",
+        "traction": "Mid-tier volume with stable fee revenue from long-lived pools.",
+        "transparency": "Verified contracts, published audits, and open vault accounting.",
+        "compliance": "Clear risk disclosure and terms, though no securities license is claimed.",
+        "durability": "Oldest venue in the set with uninterrupted operation and deep reserves."
+      },
+      "pairing": {
+        "assetType": "inventory-index",
+        "custodian": "Pools Vault Operator",
+        "redeemable": true,
+        "verifiability": "on-chain"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 120000000,
+        "dailyVolumeUsd": 2800000,
+        "fees24hUsd": 38553,
+        "tvlUsd": 45000000,
+        "sourceIds": [
+          "defillama",
+          "explorer",
+          "cryptonomist"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://pools.trade",
+        "docs": "https://docs.pools.trade"
+      },
+      "facts": [
+        [
+          "45M",
+          "vault TVL in USD at the cut date"
+        ],
+        [
+          "38.5k",
+          "daily fee revenue in USD at end of August"
+        ]
+      ],
+      "fineness": 590,
+      "band": "14k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f70",
+          "verified": true
+        }
+      ],
+      "rank": 4,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "flap",
+      "name": "Flap",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Flap pairs solid equity backing with thin trading activity and early-stage disclosure.",
+      "scores": {
+        "asset": 7,
+        "traction": 4,
+        "transparency": 6,
+        "compliance": 4,
+        "durability": 7
+      },
+      "rationale": {
+        "asset": "Quote and dividend legs use stock tokens for exposure without share ownership [calibration].",
+        "traction": "Low daily turnover with volume concentrated in a handful of listings.",
+        "transparency": "Verified factory and public docs, but pool-level reporting stays sparse.",
+        "compliance": "Generic terms only, with licensing and prospectus status undisclosed.",
+        "durability": "Live since early 2024 across chains with steady operation and no recorded incident [calibration]."
+      },
+      "pairing": {
+        "assetType": "tokenized-equity",
+        "custodian": "Robinhood Europe",
+        "redeemable": false,
+        "verifiability": "attestation"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 310000000,
+        "dailyVolumeUsd": 8400000,
+        "fees24hUsd": null,
+        "tvlUsd": null,
+        "sourceIds": [
+          "bitquery",
+          "airdropalert"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://flap.trade",
+        "docs": "https://docs.flap.trade"
+      },
+      "facts": [
+        [
+          "310M",
+          "cumulative volume in USD across tracked pools"
+        ],
+        [
+          "SPCX",
+          "SpaceX-exposure dividends among supported payout assets"
+        ]
+      ],
+      "fineness": 560,
+      "band": "9k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7081",
+          "verified": true
+        }
+      ],
+      "rank": 5,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "pair",
+      "name": "PAIR",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "PAIR is a multipool launchpad pairing new tokens against baskets of stock tokens in locked pools.",
+      "scores": {
+        "asset": 6,
+        "traction": 4,
+        "transparency": 8,
+        "compliance": 5,
+        "durability": 4
+      },
+      "rationale": {
+        "asset": "Multipool stock exposure without custody; allocations are stated not to be backing [calibration].",
+        "traction": "Twenty-six million volume and 160k trades in the first five days after launch [calibration].",
+        "transparency": "On-chain registry, open-source contracts, and a named infrastructure partnership [calibration].",
+        "compliance": "Sale terms published with collector-grade disclosure, no financial license cited.",
+        "durability": "Young venue with short operating history and narrow liquidity buffers."
+      },
+      "pairing": {
+        "assetType": "synthetic",
+        "custodian": "PAIR Labs",
+        "redeemable": false,
+        "verifiability": "on-chain"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": 96000000,
+        "dailyVolumeUsd": 1900000,
+        "fees24hUsd": null,
+        "tvlUsd": 12000000,
+        "sourceIds": [
+          "defillama",
+          "docs-venue"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://pair.fund",
+        "docs": "https://pair.fund/docs"
+      },
+      "facts": [
+        [
+          "26M",
+          "volume in the first five days after the August multipool launch"
+        ],
+        [
+          "AWS",
+          "infrastructure partnership announced at launch"
+        ]
+      ],
+      "fineness": 555,
+      "band": "9k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+          "verified": true
+        }
+      ],
+      "rank": 6,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "bankr",
+      "name": "Bankr",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Bankr publishes a live launcher but no verifiable volume or backing evidence.",
+      "scores": {
+        "asset": 4,
+        "traction": 4,
+        "transparency": 7,
+        "compliance": 4,
+        "durability": 5
+      },
+      "rationale": {
+        "asset": "Launches reference synthetic exposure without custody or redemption proof.",
+        "traction": "No verifiable volume series, only self-reported launch counts.",
+        "transparency": "Public docs plus an open metrics dashboard and open-source tooling [calibration].",
+        "compliance": "Standard launcher terms with no regulatory statement on listed assets.",
+        "durability": "Operating for over a year with modest but continuous launch cadence."
+      },
+      "pairing": {
+        "assetType": "synthetic",
+        "custodian": null,
+        "redeemable": false,
+        "verifiability": "none"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": null,
+        "dailyVolumeUsd": null,
+        "fees24hUsd": null,
+        "tvlUsd": null,
+        "sourceIds": [
+          "docs-venue"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://bankr.bot",
+        "docs": "https://docs.bankr.bot"
+      },
+      "facts": [
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ],
+        [
+          "Doppler",
+          "Robinhood Chain launches with stock-pairing support"
+        ]
+      ],
+      "fineness": 470,
+      "band": "9k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3",
+          "verified": true
+        }
+      ],
+      "rank": 7,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "cardpad",
+      "name": "Cardpad",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Cardpad documents its collectible vaults well while trading almost nothing.",
+      "scores": {
+        "asset": 3,
+        "traction": 2,
+        "transparency": 9,
+        "compliance": 5,
+        "durability": 3
+      },
+      "rationale": {
+        "asset": "Vault contents listed with photos and appraisals, but coverage is uneven.",
+        "traction": "No verifiable secondary volume across the observation window.",
+        "transparency": "Exemplary docs, verified contracts, and a named team behind the vaults.",
+        "compliance": "Collector sale terms published, without any financial license reference.",
+        "durability": "Recent launch with limited history and shallow reserves."
+      },
+      "pairing": {
+        "assetType": "collectible",
+        "custodian": "Cardpad Vault",
+        "redeemable": false,
+        "verifiability": "attestation"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": null,
+        "dailyVolumeUsd": null,
+        "fees24hUsd": null,
+        "tvlUsd": null,
+        "sourceIds": [
+          "docs-venue",
+          "explorer"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://cardpad.io",
+        "docs": "https://docs.cardpad.io"
+      },
+      "facts": [
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "fineness": 425,
+      "band": "9k",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x8192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4",
+          "verified": true
+        }
+      ],
+      "rank": 8,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "factory-new",
+      "name": "Factory New",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "Factory New ships launch tooling with no backing claim and no measurable market.",
+      "scores": {
+        "asset": 4,
+        "traction": 2,
+        "transparency": 6,
+        "compliance": 2,
+        "durability": 3
+      },
+      "rationale": {
+        "asset": "No backing claim beyond launch mechanics, so asset quality scores on tooling alone.",
+        "traction": "No verifiable volume and only a handful of test runs on record.",
+        "transparency": "Factory verified and code readable, with docs limited to launch guides.",
+        "compliance": "No terms covering asset listings and no entity willing to stand behind them.",
+        "durability": "Live radar plus explorer-listed tokens with transfers on record [calibration]."
+      },
+      "pairing": {
+        "assetType": "none",
+        "custodian": null,
+        "redeemable": false,
+        "verifiability": "none"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": null,
+        "dailyVolumeUsd": null,
+        "fees24hUsd": null,
+        "tvlUsd": null,
+        "sourceIds": [
+          "explorer"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://factorynew.xyz",
+        "docs": null
+      },
+      "facts": [
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ],
+        [
+          "sDOTA",
+          "synthetic game tokens visible on the chain explorer"
+        ]
+      ],
+      "fineness": 350,
+      "band": "below-hallmark",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0x92a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5",
+          "verified": true
+        }
+      ],
+      "rank": 9,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    },
+    {
+      "id": "csl",
+      "name": "CSL",
+      "chain": "robinhood-chain",
+      "resident": true,
+      "status": "active",
+      "struckDate": null,
+      "admittedEdition": "2026-09",
+      "thesis": "CSL is a thin prelaunch listing with a deployed factory but no market yet.",
+      "scores": {
+        "asset": 2,
+        "traction": 1,
+        "transparency": 5,
+        "compliance": 1,
+        "durability": 2
+      },
+      "rationale": {
+        "asset": "No backing inventory shown, only a placeholder token with no claim attached.",
+        "traction": "No launches completed and no volume series to evaluate.",
+        "transparency": "Factory verified with a holding page, full docs still pending.",
+        "compliance": "No terms, no entity, and no disclosure of any kind.",
+        "durability": "Prelaunch with no operating history and unclear funding."
+      },
+      "pairing": {
+        "assetType": "none",
+        "custodian": null,
+        "redeemable": false,
+        "verifiability": "none"
+      },
+      "metrics": {
+        "cumulativeVolumeUsd": null,
+        "dailyVolumeUsd": null,
+        "fees24hUsd": null,
+        "tvlUsd": null,
+        "sourceIds": [
+          "docs-venue"
+        ],
+        "asOf": "2026-10-01"
+      },
+      "links": {
+        "site": "https://csl.markets",
+        "docs": null
+      },
+      "facts": [
+        [
+          "not published",
+          "verifiable volume at the cut date"
+        ]
+      ],
+      "fineness": 220,
+      "band": "below-hallmark",
+      "contracts": [
+        {
+          "label": "factory",
+          "address": "0xa3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6",
+          "verified": true
+        }
+      ],
+      "rank": 10,
+      "delta": {
+        "fineness": 0,
+        "rank": 0,
+        "bandChanged": false,
+        "crossedHallmark": false,
+        "basis": "2026-10"
+      }
+    }
+  ]
+}
