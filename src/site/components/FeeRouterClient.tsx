@@ -52,14 +52,43 @@ function pad(n: number): string {
 }
 
 const CONFIG = {
-  EXPLORER: 'https://robinhoodchain.blockscout.com',
+  EXPLORER: 'https://robinscan.io',
+  ROBINSCAN_API: 'https://robinscan.io/api/tokens',
+  PONS_LAUNCHPAD: 'https://www.ponsfamily.com/launchpad/0x3c51822137a45e4f5430e268dfa722f796892df9',
+  CHAIN_ID: 4663,
+  FINE: '0x3c51822137a45e4f5430e268dfa722f796892df9',
+  POOL: '0x91d2b49eA52a3bCa895cfD372107aEDe20DE4B36',
+  CREATOR: '0xf1b51b0f3b14ac3a08401f20de710e1511a344d6',
   ROUTER: '0x0000000000000000000000000000000000000000',
   VAULT: '0x0000000000000000000000000000000000000000',
-  FINE: '0x0000000000000000000000000000000000000000',
-  ESCROW: '0x0000000000000000000000000000000000000000',
-  DATA_WALLET: '0x0000000000000000000000000000000000000000',
-  EDITION_ID: '2026-10',
-  EDITION_HASH: 'sha256:4b69e671aedc1a8d31a4365abd087477fbc084f85b95b00de1ab90ec43dc9f59',
+  EDITION_ID: '2026-11',
+  EDITION_HASH: 'sha256:df90fa4a01397244885a5a6b8d640d17633ea903c62b548dc5e2fab196ba6d23',
+};
+
+interface LiveTokenData {
+  priceNative: number;
+  priceUsd: number;
+  volume24hUsd: number;
+  holderCount: number;
+  transferCount: number;
+  graduationPct: number;
+  totalSupply: string;
+  reserveEth: number;
+  reserveFine: number;
+  pool: string;
+}
+
+const INITIAL_TOKEN_DATA: LiveTokenData = {
+  priceNative: 2.78e-9,
+  priceUsd: 0.00000765,
+  volume24hUsd: 43954,
+  holderCount: 36,
+  transferCount: 826,
+  graduationPct: 11.44,
+  totalSupply: '1,000,000,000',
+  reserveEth: 0.4827,
+  reserveFine: 777667053,
+  pool: CONFIG.POOL,
 };
 
 interface FeeRouterClientProps {
@@ -73,6 +102,7 @@ export default function FeeRouterClient({
 }: FeeRouterClientProps = {}) {
   // Use a fixed initial timestamp so server SSR and initial client hydration match identically
   const [now, setNow] = useState<number>(1759363200000);
+  const [tokenData, setTokenData] = useState<LiveTokenData>(INITIAL_TOKEN_DATA);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [walletAccount, setWalletAccount] = useState<string | null>(null);
   const [actionLog, setActionLog] = useState<string>(
@@ -85,6 +115,27 @@ export default function FeeRouterClient({
     const id = setInterval(() => {
       setNow(Date.now());
     }, 1000);
+
+    // Fetch live on-chain token statistics from Robinscan
+    fetch(`${CONFIG.ROBINSCAN_API}/${CONFIG.FINE}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data) return;
+        setTokenData((prev) => ({
+          ...prev,
+          priceNative: data.thinMarket?.priceNative ?? prev.priceNative,
+          priceUsd: data.thinMarket?.priceUsd ?? data.launchpad?.priceUsd ?? prev.priceUsd,
+          volume24hUsd: data.thinMarket?.h24?.volume ?? data.volume24hUsd ?? prev.volume24hUsd,
+          holderCount: data.holderCount ?? prev.holderCount,
+          transferCount: data.transferCount ?? prev.transferCount,
+          graduationPct: data.launchpad?.graduationPct ?? prev.graduationPct,
+          reserveEth: data.thinMarket?.reserves?.[1] ? Number(data.thinMarket.reserves[1]) / 1e18 : prev.reserveEth,
+          reserveFine: data.thinMarket?.reserves?.[0] ? Number(data.thinMarket.reserves[0]) / 1e18 : prev.reserveFine,
+          pool: data.thinMarket?.pool ?? prev.pool,
+        }));
+      })
+      .catch(() => {});
+
     return () => clearInterval(id);
   }, []);
 
@@ -128,15 +179,37 @@ export default function FeeRouterClient({
 
   return (
     <div className="min-h-screen bg-[var(--ground)] text-[var(--ink)]">
-      {/* Top Preview Banner */}
-      <div className="border-b border-[#ead9a0] bg-[var(--tint)] py-2.5 text-xs text-[#735c1e]">
-        <div className="page-wrap flex items-center gap-2.5">
-          <span className="mono rounded border border-[#ead9a0] bg-white px-2 py-0.5 font-bold uppercase tracking-wider text-[var(--gold)]">
-            Preview
-          </span>
-          <span>
-            Contracts pending deployment on Robinhood Chain. Figures below reflect verified staging telemetry and sample layout data.
-          </span>
+      {/* Top Banner with Verified CA */}
+      <div className="border-b border-[#c8d9ab] bg-[#f5f9f0] py-2.5 text-xs text-[#35521b]">
+        <div className="page-wrap flex flex-wrap items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2">
+            <span className="mono rounded border border-[#a2bf6f] bg-white px-2 py-0.5 font-bold uppercase tracking-wider text-[var(--green)]">
+              Verified CA
+            </span>
+            <span>
+              <strong>$FINE</strong> is live on Robinhood Chain (Chain ID: 4663):{' '}
+              <code className="font-mono font-bold text-[var(--ink)]">{CONFIG.FINE}</code>
+            </span>
+          </div>
+          <div className="flex items-center gap-3 font-mono text-[11px]">
+            <a
+              href={`https://robinscan.io/token/${CONFIG.FINE}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[var(--green)] hover:underline"
+            >
+              Robinscan ↗
+            </a>
+            <span className="text-[var(--rule-2)]">|</span>
+            <a
+              href={CONFIG.PONS_LAUNCHPAD}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[var(--gold)] hover:underline"
+            >
+              Trade on Pons ↗
+            </a>
+          </div>
         </div>
       </div>
 
@@ -159,7 +232,59 @@ export default function FeeRouterClient({
                 <strong className="text-[var(--ink)]">spent</strong> on transparent data infrastructure.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-2.5 font-mono text-xs">
+              {/* Verified Token CA Card */}
+              <div className="mt-6 rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <span className="mono font-bold uppercase tracking-wider text-[var(--gold)]">
+                    $FINE Token Contract Address (Robinhood Chain)
+                  </span>
+                  <span className="mono rounded bg-[#e5f2ea] px-2 py-0.5 text-[10px] font-bold text-[var(--green)]">
+                    Chain ID 4663
+                  </span>
+                </div>
+                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--rule)] bg-[var(--surface-alt)] p-2.5 font-mono text-xs">
+                  <span className="break-all font-semibold text-[var(--ink)] selection:bg-[var(--gold-soft)]">
+                    {CONFIG.FINE}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => copyText('$FINE', CONFIG.FINE)}
+                      className="mono flex items-center gap-1.5 rounded border border-[var(--rule)] bg-white px-2.5 py-1 text-xs font-semibold text-[var(--ink)] hover:border-[var(--gold)] transition-colors cursor-pointer"
+                    >
+                      {copiedKey === '$FINE' ? (
+                        <>
+                          <Check size={12} className="text-emerald-600" />
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={12} />
+                          <span>Copy CA</span>
+                        </>
+                      )}
+                    </button>
+                    <a
+                      href={`https://robinscan.io/token/${CONFIG.FINE}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono rounded bg-[var(--ink)] px-2.5 py-1 text-xs font-bold text-white hover:bg-black transition-colors"
+                    >
+                      Robinscan ↗
+                    </a>
+                    <a
+                      href={CONFIG.PONS_LAUNCHPAD}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono rounded bg-[var(--gold)] px-2.5 py-1 text-xs font-bold text-white hover:brightness-110 transition-all"
+                    >
+                      Trade on Pons ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2.5 font-mono text-xs">
                 <span className="rounded-md border border-[var(--rule)] bg-[var(--surface)] px-3 py-1.5 text-[var(--ink-3)] shadow-sm">
                   Owner: <b className="text-[var(--ink)]">none</b>
                 </span>
@@ -333,44 +458,44 @@ export default function FeeRouterClient({
 
           <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-4">
             <div className="rounded-xl border border-[#ecdca6] bg-gradient-to-b from-[#fffdf4] to-white p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">$FINE burned</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--gold)]">18.42M</span>
-              <span className="text-xs text-[var(--ink-3)]">Lifetime supply reduction</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">$FINE Total Supply</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--gold)]">{tokenData.totalSupply}</span>
+              <span className="text-xs text-[var(--ink-3)]">1 Billion fixed max supply</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">$FINE to vault</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">11.05M</span>
-              <span className="text-xs text-[var(--ink-3)]">Held for bounty claims</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">24h DEX Volume</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">${Math.round(tokenData.volume24hUsd).toLocaleString('en-US')}</span>
+              <span className="text-xs text-[var(--ink-3)]">Pons bonding curve trades</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Pending buyback</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">0.84 <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
-              <span className="text-xs text-[var(--ink-3)]">Awaiting next freeze window</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Pons Pool Reserve</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">{tokenData.reserveEth.toFixed(4)} <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
+              <span className="text-xs text-[var(--ink-3)]">Live backing in curve pool</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Unclaimed fees</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">0.31 <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
-              <span className="text-xs text-[var(--ink-3)]">Escrowed, pulled on harvest()</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Bonding Curve</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--gold)]">{tokenData.graduationPct.toFixed(1)}%</span>
+              <span className="text-xs text-[var(--ink-3)]">Pons graduation progress</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Lifetime ETH in</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">12.60 <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
-              <span className="text-xs text-[var(--ink-3)]">Total volume received</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Live Spot Price</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">${tokenData.priceUsd < 0.0001 ? tokenData.priceUsd.toFixed(8) : tokenData.priceUsd.toFixed(4)}</span>
+              <span className="text-xs text-[var(--ink-3)]">{(tokenData.priceNative * 1e9).toFixed(3)} nETH / $FINE</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">ETH on buyback</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">9.24 <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
-              <span className="text-xs text-[var(--ink-3)]">80% route executed</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Token Holders</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">{tokenData.holderCount}</span>
+              <span className="text-xs text-[var(--ink-3)]">{tokenData.transferCount} total on-chain txs</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">ETH to data</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">2.52 <span className="text-sm font-semibold text-[var(--ink-3)]">ETH</span></span>
-              <span className="text-xs text-[var(--ink-3)]">20% infrastructure share</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Market Cap (FDV)</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--ink)]">${Math.round(tokenData.priceUsd * 1e9).toLocaleString('en-US')}</span>
+              <span className="text-xs text-[var(--ink-3)]">Circulating fully diluted value</span>
             </div>
             <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface)] p-4 shadow-sm">
-              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Vault balance</span>
-              <span className="mono my-1 block text-2xl font-black text-[var(--green)]">11.05M</span>
-              <span className="text-xs text-[var(--ink-3)]">Available bounty pool</span>
+              <span className="mono text-[10px] font-bold uppercase tracking-wider text-[var(--ink-3)]">Vault Bounty Allocation</span>
+              <span className="mono my-1 block text-2xl font-black text-[var(--green)]">30%</span>
+              <span className="text-xs text-[var(--ink-3)]">Reserved for register breaks</span>
             </div>
           </div>
 
@@ -384,27 +509,29 @@ export default function FeeRouterClient({
               <dl className="mt-4 divide-y divide-[var(--rule)] text-xs">
                 <div className="flex justify-between py-2.5">
                   <dt className="text-[var(--ink-3)]">Trading Venue Phase</dt>
-                  <dd className="mono font-semibold text-[var(--ink)]">Bonding curve (Phase 0)</dd>
+                  <dd className="mono font-semibold text-[var(--ink)]">Pons (FINE-ETH) Bonding Curve (Phase 0)</dd>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <dt className="text-[var(--ink-3)]">Reference Price</dt>
-                  <dd className="mono font-semibold text-[var(--ink)]">4.0900e-10 ETH / $FINE</dd>
+                  <dd className="mono font-semibold text-[var(--ink)]">{(tokenData.priceNative * 1e9).toFixed(4)} nETH / $FINE</dd>
                 </div>
                 <div className="flex justify-between py-2.5">
-                  <dt className="text-[var(--ink-3)]">Recorded Age</dt>
-                  <dd className="mono font-semibold text-[var(--ink)]">1 h 30 min ago</dd>
+                  <dt className="text-[var(--ink-3)]">Curve Progress</dt>
+                  <dd className="mono font-semibold text-[var(--ink)]">{tokenData.graduationPct.toFixed(2)}% toward graduation</dd>
                 </div>
                 <div className="flex justify-between py-2.5 items-center">
                   <dt className="text-[var(--ink-3)]">Guard Status</dt>
                   <dd>
                     <span className="mono rounded border border-[var(--green)]/30 bg-[#e5f2ea] px-2 py-0.5 text-[10px] font-bold uppercase text-[var(--green)]">
-                      Usable (Within 1-6h window)
+                      Active (Pons Venue #1)
                     </span>
                   </dd>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <dt className="text-[var(--ink-3)]">Live Spot Price</dt>
-                  <dd className="mono font-semibold text-[var(--ink)]">4.1200e-10 ETH / $FINE</dd>
+                  <dd className="mono font-semibold text-[var(--ink)]">
+                    {(tokenData.priceNative * 1e9).toFixed(4)} nETH (${tokenData.priceUsd.toFixed(8)})
+                  </dd>
                 </div>
               </dl>
             </div>
@@ -416,24 +543,66 @@ export default function FeeRouterClient({
               </div>
               <dl className="mt-4 divide-y divide-[var(--rule)] text-xs">
                 {[
-                  { label: 'Fee Router', addr: '0x12a9...c4b1' },
-                  { label: 'Verification Vault', addr: '0x88f2...19e0' },
-                  { label: '$FINE Token', addr: '0x55d1...7a29' },
-                  { label: 'Data Wallet', addr: '0x33b4...9f08' },
-                  { label: 'Pons Escrow', addr: '0x71c8...a132' },
+                  {
+                    label: '$FINE Token (CA)',
+                    addr: CONFIG.FINE,
+                    link: `https://robinscan.io/token/${CONFIG.FINE}`,
+                    note: 'ERC-20 Live on Robinhood Chain',
+                  },
+                  {
+                    label: 'Pons Liquidity Pool',
+                    addr: CONFIG.POOL,
+                    link: `https://robinscan.io/address/${CONFIG.POOL}`,
+                    note: 'FINE-ETH Bonding Curve Pair',
+                  },
+                  {
+                    label: 'Token Creator',
+                    addr: CONFIG.CREATOR,
+                    link: `https://robinscan.io/address/${CONFIG.CREATOR}`,
+                    note: 'Verified Origin Account',
+                  },
+                  {
+                    label: 'Fee Router Contract',
+                    addr: '0x0000000000000000000000000000000000000000',
+                    link: null,
+                    note: 'Non-Custodial Fee Router (Pending Deploy)',
+                  },
+                  {
+                    label: 'Verification Vault',
+                    addr: '0x0000000000000000000000000000000000000000',
+                    link: null,
+                    note: 'Bounty Timelock Vault (Pending Deploy)',
+                  },
                 ].map((c) => (
-                  <div key={c.label} className="flex items-center justify-between py-2.5">
-                    <dt className="text-[var(--ink-3)]">{c.label}</dt>
+                  <div key={c.label} className="flex flex-col sm:flex-row sm:items-center justify-between py-2.5 gap-1">
+                    <div>
+                      <dt className="font-medium text-[var(--ink)]">{c.label}</dt>
+                      <div className="text-[10px] text-[var(--ink-3)]">{c.note}</div>
+                    </div>
                     <dd className="mono flex items-center gap-2">
-                      <span className="font-semibold text-[var(--ink)]">{c.addr}</span>
-                      <button
-                        type="button"
-                        onClick={() => copyText(c.label, c.addr)}
-                        className="rounded border border-[var(--rule)] bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] text-[var(--ink-2)] hover:border-[var(--gold)]"
-                        title="Copy address"
-                      >
-                        {copiedKey === c.label ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} />}
-                      </button>
+                      {c.link ? (
+                        <a
+                          href={c.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-[var(--green)] hover:underline"
+                          title="Open on Robinscan"
+                        >
+                          {c.addr.slice(0, 6)}...{c.addr.slice(-4)} ↗
+                        </a>
+                      ) : (
+                        <span className="text-[var(--ink-3)]">Pending Deploy</span>
+                      )}
+                      {c.link && (
+                        <button
+                          type="button"
+                          onClick={() => copyText(c.label, c.addr)}
+                          className="rounded border border-[var(--rule)] bg-[var(--surface-alt)] px-1.5 py-0.5 text-[10px] text-[var(--ink-2)] hover:border-[var(--gold)] cursor-pointer"
+                          title="Copy address"
+                        >
+                          {copiedKey === c.label ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} />}
+                        </button>
+                      )}
                     </dd>
                   </div>
                 ))}

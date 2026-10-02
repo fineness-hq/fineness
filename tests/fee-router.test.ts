@@ -21,6 +21,8 @@ describe('fee router route & components', () => {
     expect(client).toContain('30%');
     expect(client).toContain('20%');
     expect(client).toContain('currentFreeze');
+    expect(client).toContain('0x3c51822137a45e4f5430e268dfa722f796892df9');
+    expect(client).toContain('robinscan.io');
   });
 
   it('menu button includes fee router link', () => {
