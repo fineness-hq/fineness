@@ -89,6 +89,12 @@ export default function Footer({ edition }: FooterProps) {
                 </Link>
               </li>
               <li>
+                <Link href="/fee-router" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors flex items-center gap-1.5">
+                  <span>Fee Router ($FINE)</span>
+                  <ArrowUpRight size={12} className="text-[var(--gold)]" />
+                </Link>
+              </li>
+              <li>
                 <Link href="/#faq" className="text-[var(--ink-2)] hover:text-[var(--gold)] transition-colors">
                   Primer & FAQ
                 </Link>

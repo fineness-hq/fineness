@@ -5,6 +5,7 @@ import type { Delta } from '../build/deltas';
 import type { Edition, SourceRegistry } from '../types';
 import edition202609 from '../../data/editions/2026-09.json';
 import edition202610 from '../../data/editions/2026-10.json';
+import edition202611 from '../../data/editions/2026-11.json';
 import sourcesData from '../../data/sources.json';
 
 function loadEditions(): Edition[] {
@@ -24,6 +25,7 @@ function loadEditions(): Edition[] {
   return [
     edition202609 as unknown as Edition,
     edition202610 as unknown as Edition,
+    edition202611 as unknown as Edition,
   ];
 }
 

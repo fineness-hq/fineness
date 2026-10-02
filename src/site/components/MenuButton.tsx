@@ -16,6 +16,7 @@ const LINKS: Array<[string, string, string]> = [
   ['FAQ', 'FAQ', '/#faq'],
   ['PROV', 'Sources', '/#sources'],
   ['CANON', 'Method', '/method'],
+  ['FEE', 'Fee Router', '/fee-router'],
   ['JSON', 'Machine JSON', '/editions/2026-10.json'],
 ];
 

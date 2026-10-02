@@ -1,0 +1,4 @@
+# Ensure content-addressed data files always preserve LF line endings across all platforms
+data/snapshots/*.json text eol=lf
+data/editions/*.json text eol=lf
+data/sources.json text eol=lf

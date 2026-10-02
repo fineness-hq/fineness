@@ -1,4 +1,4 @@
-﻿// End-to-end check: boots production server, asserts all routes, then stops.
+// End-to-end check: boots production server, asserts all routes, then stops.
 // English only. Run: npm run e2e (requires `npm run build` first).
 import { execFile, spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -136,6 +136,11 @@ async function main() {
     const method = await get('/method');
     check('GET /method 200', method.status === 200, `got ${method.status}`);
     check('method explains scoring', /fineness/i.test(method.text) && /weight/i.test(method.text));
+
+    // 5b. Fee Router page.
+    const feeRouter = await get('/fee-router');
+    check('GET /fee-router 200', feeRouter.status === 200, `got ${feeRouter.status}`);
+    check('fee-router explains 50/30/20 routes', feeRouter.text.includes('Freeze Burn') && feeRouter.text.includes('Verification Vault'));
 
     // 6. Venue history pages render with latest fineness (data-driven).
     const ids = latest.venues.map((v) => v.id);
