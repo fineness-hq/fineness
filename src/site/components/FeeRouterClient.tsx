@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useSyncExternalStore } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Copy,
   Check,
@@ -62,17 +62,6 @@ const CONFIG = {
   EDITION_HASH: 'sha256:4b69e671aedc1a8d31a4365abd087477fbc084f85b95b00de1ab90ec43dc9f59',
 };
 
-function subscribeClock(callback: () => void) {
-  const id = setInterval(callback, 1000);
-  return () => clearInterval(id);
-}
-function getClockSnapshot() {
-  return Date.now();
-}
-function getClockServerSnapshot() {
-  return 1759363200000;
-}
-
 interface FeeRouterClientProps {
   editionId?: string;
   editionHash?: string;
@@ -82,12 +71,22 @@ export default function FeeRouterClient({
   editionId = CONFIG.EDITION_ID,
   editionHash = CONFIG.EDITION_HASH,
 }: FeeRouterClientProps = {}) {
-  const now = useSyncExternalStore(subscribeClock, getClockSnapshot, getClockServerSnapshot);
+  // Use a fixed initial timestamp so server SSR and initial client hydration match identically
+  const [now, setNow] = useState<number>(1759363200000);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [walletAccount, setWalletAccount] = useState<string | null>(null);
   const [actionLog, setActionLog] = useState<string>(
     'Wallet not connected. Connect an EVM wallet to call public contract functions.'
   );
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNow(Date.now());
+    const id = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const freeze = useMemo(() => currentFreeze(now), [now]);
   const timeLeft = Math.max(0, freeze.target - now);
@@ -130,8 +129,8 @@ export default function FeeRouterClient({
   return (
     <div className="min-h-screen bg-[var(--ground)] text-[var(--ink)]">
       {/* Top Preview Banner */}
-      <div className="border-b border-[#ead9a0] bg-[var(--tint)] px-4 py-2.5 text-xs text-[#735c1e]">
-        <div className="mx-auto flex max-w-6xl items-center gap-2.5">
+      <div className="border-b border-[#ead9a0] bg-[var(--tint)] py-2.5 text-xs text-[#735c1e]">
+        <div className="page-wrap flex items-center gap-2.5">
           <span className="mono rounded border border-[#ead9a0] bg-white px-2 py-0.5 font-bold uppercase tracking-wider text-[var(--gold)]">
             Preview
           </span>
@@ -143,7 +142,7 @@ export default function FeeRouterClient({
 
       {/* Hero Section */}
       <section className="border-b border-[var(--rule)] bg-gradient-to-b from-[#e8e4d6]/60 to-[var(--ground)] py-14 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <div className="mono mb-3.5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[var(--gold)]">
@@ -180,10 +179,11 @@ export default function FeeRouterClient({
             <div className="lg:col-span-5">
               <div className="rounded-2xl border border-[var(--rule)] bg-[var(--surface)] p-6 shadow-sm">
                 <div className="flex items-center justify-between border-b border-[var(--rule)] pb-4">
-                  <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
+                  <span className="mono text-xs font-bold uppercase tracking-wider text-[var(--gold)]" suppressHydrationWarning>
                     {freeze.open ? 'Freeze Window Closes In' : 'Next Monthly Freeze'}
                   </span>
                   <span
+                    suppressHydrationWarning
                     className={`mono rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                       freeze.open
                         ? 'border border-[var(--green)]/30 bg-[#e5f2ea] text-[var(--green)]'
@@ -194,41 +194,41 @@ export default function FeeRouterClient({
                   </span>
                 </div>
 
-                <div className="my-6 grid grid-cols-4 gap-2 text-center">
+                <div className="my-6 grid grid-cols-4 gap-2 text-center" suppressHydrationWarning>
                   <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] p-3">
-                    <div className="mono text-3xl font-extrabold text-[var(--ink)]">
+                    <div className="mono text-3xl font-extrabold text-[var(--ink)]" suppressHydrationWarning>
                       {pad(days)}
                     </div>
                     <div className="mono text-[10px] uppercase text-[var(--ink-3)]">Days</div>
                   </div>
                   <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] p-3">
-                    <div className="mono text-3xl font-extrabold text-[var(--ink)]">
+                    <div className="mono text-3xl font-extrabold text-[var(--ink)]" suppressHydrationWarning>
                       {pad(hrs)}
                     </div>
                     <div className="mono text-[10px] uppercase text-[var(--ink-3)]">Hours</div>
                   </div>
                   <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] p-3">
-                    <div className="mono text-3xl font-extrabold text-[var(--ink)]">
+                    <div className="mono text-3xl font-extrabold text-[var(--ink)]" suppressHydrationWarning>
                       {pad(mins)}
                     </div>
                     <div className="mono text-[10px] uppercase text-[var(--ink-3)]">Mins</div>
                   </div>
                   <div className="rounded-xl border border-[var(--rule)] bg-[var(--surface-alt)] p-3">
-                    <div className="mono text-3xl font-extrabold text-[var(--ink)]">
+                    <div className="mono text-3xl font-extrabold text-[var(--ink)]" suppressHydrationWarning>
                       {pad(secs)}
                     </div>
                     <div className="mono text-[10px] uppercase text-[var(--ink-3)]">Secs</div>
                   </div>
                 </div>
 
-                <dl className="space-y-2 border-t border-[var(--rule)] pt-4 text-xs">
+                <dl className="space-y-2 border-t border-[var(--rule)] pt-4 text-xs" suppressHydrationWarning>
                   <div className="flex justify-between">
                     <dt className="text-[var(--ink-3)]">Window Opens</dt>
-                    <dd className="mono font-semibold text-[var(--ink)]">{utcStamp(freeze.opens)}</dd>
+                    <dd className="mono font-semibold text-[var(--ink)]" suppressHydrationWarning>{utcStamp(freeze.opens)}</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-[var(--ink-3)]">Window Closes</dt>
-                    <dd className="mono font-semibold text-[var(--ink)]">{utcStamp(freeze.closes)}</dd>
+                    <dd className="mono font-semibold text-[var(--ink)]" suppressHydrationWarning>{utcStamp(freeze.closes)}</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-[var(--ink-3)]">Edition {editionId} Digest</dt>
@@ -248,7 +248,7 @@ export default function FeeRouterClient({
 
       {/* Section 2: Where Every Fee Goes (3 Routes) */}
       <section className="border-b border-[var(--rule)] py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mono text-xs font-semibold uppercase tracking-widest text-[var(--gold)]">
@@ -316,7 +316,7 @@ export default function FeeRouterClient({
 
       {/* Section 3: Router Telemetry */}
       <section className="border-b border-[var(--rule)] py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mono text-xs font-semibold uppercase tracking-widest text-[var(--gold)]">
@@ -445,7 +445,7 @@ export default function FeeRouterClient({
 
       {/* Section 4: Burn History & Bounty Ledger Tables */}
       <section className="border-b border-[var(--rule)] py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             {/* Burn History */}
             <div>
@@ -537,7 +537,7 @@ export default function FeeRouterClient({
 
       {/* Section 5: Monthly Ritual & Safety Bounds */}
       <section className="border-b border-[var(--rule)] py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="mb-10">
             <p className="mono text-xs font-semibold uppercase tracking-widest text-[var(--gold)]">
               Monthly ritual // UTC Timeline
@@ -622,7 +622,7 @@ export default function FeeRouterClient({
 
       {/* Section 6: Guarantees & Web3 Permissionless Action Desk */}
       <section className="py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="page-wrap">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             {/* Guarantees Duo */}
             <div className="space-y-6 lg:col-span-6">
